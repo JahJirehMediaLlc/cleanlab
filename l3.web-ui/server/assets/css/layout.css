@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    background-color: coral;
+}
+
+a{
+    color: burlywood;
+    text-decoration: none;
+}
+
+/*#region naviation */
+
+header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    background-color: brown;
+}
+
+nav{
+    width: 90%;
+    margin: 0px;
+    padding: 0px;
+}
+
+nav > ul{
+    display: flex;
+    justify-content: right;
+    margin: 0px;
+    padding: 0px;
+}
+
+nav li{
+    margin-right: 1em;
+}
+
+.nav-bar-ul, .right-sidebar ul {
+   list-style: none;
+   margin: 0px;
+   padding: 0px;
+}
+
+.hero{
+    display: flex;
+    align-items: center;
+}
+.hero img{
+    width: 3em;
+}
+/*#endregion */
+
+/*#region side-bars */
+
+.control-me{
+    background-color: red;
+    display: none;
+}
+
+#toggle:checked ~ .control-me{
+    background-color: green;
+    display: initial;
+}
+
+aside {
+    background: darkcyan;
+}
+
+.right-sidebar h3 {
+    background: yellow;
+    text-align: center;
+    font-size: large;
+}
+
+.right-sidebar {
+    border: 2px solid green;
+    width: 30%;
+    order: 1;
+    line-height: 1.6rem;
+    margin-right: 3rem;
+}
+.left-sidebar {
+     border: 2px solid green;
+     width: 30%;
+     order: -1;
+     line-height: 1.6rem;
+     margin-left: 3rem;
+ }
+
+ .switch{
+    z-index: 0;
+    margin-top: 3rem;
+ }
+
+/*#endregion */
+
+/*#region main */
+main {
+    border: 3px solid blue;
+    display: flex;
+    margin-top: 5rem;
+}
+
+/*#endregion */
+
+footer {
+    background: darkgreen;
+    margin: 0px;
+    padding: 0;
+}

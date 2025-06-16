@@ -1,0 +1,25 @@
+html{margin: 2rem;}
+
+body {
+    text-align: center;
+    text-align: left;
+}
+
+section {
+    background-color: rgb(62, 62, 71);
+}
+
+article {
+    margin: 1rem;
+    background-color: blue;
+}
+
+.box1 {background-color: cornsilk;height: 1rem;}
+.box2 {background-color: green; height: 3rem;}
+.box3 {background-color: yellow;}
+.box4 {background-color: orange;height: 5rem;}
+.box5 {background-color: cyan}
+.box6 {background-color: magenta;}
+.box7 {background-color: purple;  height: 3rem;}
+.box8 {background-color: turquoise;}
+.box9 {background-color: cornsilk; height: 9rem;}

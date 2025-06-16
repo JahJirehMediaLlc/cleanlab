@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "imageName": "About",
+        "emoji": 128345,
+        "emoji2": "&#128345"
+    },
+    {
+        "id": 21,
+        "imageName": "History",
+        "emoji": 228345,
+        "emoji2": "&#228345"
+    },
+    {
+        "id": 41,
+        "imageName": "Contact",
+        "emoji": 128545,
+        "emoji2": "&#128545"
+    }
+]

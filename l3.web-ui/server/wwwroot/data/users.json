@@ -1,0 +1,96 @@
+[
+{
+"id":"1",
+"first_name": "gary",
+"last_name": "whyte",
+"age": 61,
+"email": "jirehmedia@gmail.com",
+"phone": "888-323-090",
+"address":{
+    "id": "0",
+    "user_id": "1",
+    "street": "1131 valley vista drive",
+    "bldg_apt": "house",
+    "city": "grapevine",
+    "state": "texas",
+    "zip": "75051"
+}
+},
+{
+"id":"2",
+"first_name": "doxy",
+"last_name": "whyte",
+"age": 31,
+"dob": "08/04/1964",
+"ssn":"9708",
+"email": "doxy@hotmail.com",
+"phone": "212-555-1232",
+"address":{
+    "id": "0",
+    "user_id": "1",
+    "street": "1131 valley vista drive",
+    "bldg_apt": "house",
+    "city": "grapevine",
+    "state": "texas",
+    "zip": "75051"
+}
+},
+{
+"id":"3",
+"first_name": "joelle",
+"last_name": "whyte",
+"age": 28,
+"dob": "",
+"ssn":"",
+"email": "jdaag@linkedin.com",
+"phone": "212-765-1232"
+},
+{
+"id":"4",
+"first_name": "zariah",
+"last_name": "whyte",
+"age": 31,
+"dob": "",
+"ssn":"",
+"email": "gmaa@hotmail.com",
+"phone": "232-532-1982"
+},
+{
+    "id":"10",
+    "first_name": "joe",
+    "last_name": "mcelrath",
+    "age": 61,
+    "dob": "",
+"ssn":"",
+    "email": "mcelrath@gmail.com",
+    "phone": "817-353-090",
+    "address":{
+        "id": "0",
+        "user_id": "1",
+        "street": "34 trail ridge",
+        "bldg_apt": "house",
+        "city": "oakcliff",
+        "state": "texas",
+        "zip": "75761"
+    }
+},
+{
+    "id":"100",
+    "first_name": "annie",
+    "last_name": "scott",
+    "age": 61,
+    "dob": "",
+"ssn":"",
+    "email": "scott@gmail.com",
+    "phone": "213-777-0907",
+    "address":{
+        "id": "0",
+        "user_id": "1",
+        "street": "1131 valley vista drive",
+        "bldg_apt": "house",
+        "city": "duncanville",
+        "state": "texas",
+        "zip": "75761"
+    }
+}
+]

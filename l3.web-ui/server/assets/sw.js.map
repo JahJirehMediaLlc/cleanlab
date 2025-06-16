@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../lab-bundler/src-page-mvc/sw/sw.ts"],
+  "sourcesContent": ["//\r\nself.addEventListener('install', (e)=>{\r\n    console.log(\"SW is installed\", e.toString());\r\n\r\n    (e as FetchEvent).waitUntil(caches.open('staticCache')\r\n        .then(cache => {\r\n            return cache.addAll([\r\n                '/app_shell.html',\r\n                '/css/common.css',\r\n                'images/me2.png',\r\n                \"images/icons/icon48.png\",\r\n                \"images/mvc_express.txt\",\r\n                \"images/me.jpg\"\r\n            ])\r\n        }\r\n        ));\r\n});\r\n//\r\nself.addEventListener('fetch', (e) => {\r\n\r\n    console.log(\"SW is Fetching\", (e as FetchEvent).request.url);\r\n\r\n});\r\n//\r\nconsole.log(\"!!! service worker v9\");\r\n"],
+  "mappings": "AACA,KAAK,iBAAiB,WAAW,CAAC,MAAI;AAClC,UAAQ,IAAI,mBAAmB,EAAE,SAAS,CAAC;AAE3C,EAAC,EAAiB,UAAU,OAAO,KAAK,aAAa,EAChD;AAAA,IAAK,WAAS;AACX,aAAO,MAAM,OAAO;AAAA,QAChB;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,QACA;AAAA,MACJ,CAAC;AAAA,IACL;AAAA,EACA,CAAC;AACT,CAAC;AAED,KAAK,iBAAiB,SAAS,CAAC,MAAM;AAElC,UAAQ,IAAI,kBAAmB,EAAiB,QAAQ,GAAG;AAE/D,CAAC;AAED,QAAQ,IAAI,uBAAuB;",
+  "names": []
+}

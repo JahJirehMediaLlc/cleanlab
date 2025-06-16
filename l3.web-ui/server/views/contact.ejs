@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.ico">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/flex.css">
+          
+        <link rel="stylesheet" href="/css/atomic.css">  
+        <link rel="stylesheet" href="/css/styles.css">  
+        <style>
+
+        input{
+        font-size: larger;
+        background-color: cornflowerblue;
+        }
+        
+        label , select{
+        font-size: larger;
+        }
+        
+        body{
+        margin: 2rem;
+        }
+        
+        .console{
+        height: 8rem;
+        overflow: scroll;
+        }
+
+        .menu{
+        display: flex;
+        flex-wrap: nowrap;
+        list-style: none;
+        padding: 0rem;
+        margin: 0rem;
+        gap: 1rem;
+        }
+
+        .border{
+            border: 1px red dashed;
+        }
+
+        .bg_blue{
+            background-color: rgb(3, 3, 85);
+        }
+
+        .bg_grey{
+            background-color: grey;
+        }
+
+        .bg_cyan{
+            background-color: rgb(7, 182, 182);
+        }
+
+        .bg_teal{
+            background-color: teal
+        }
+
+        .padding{
+            padding: 1rem;
+        }
+
+        .margin{
+            margin: 1rem;
+        }
+        </style>
+</head>
+<body>
+<header>
+    <li class="column_item"><a href="/user/index">UMP </a></li>
+    <li class="column_item"><a href="/about">About and Bio </a></li>
+    <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+    <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+</header>
+
+<h1>Contact</h1>
+
+<main class="flex_row flex_nowrap">
+
+    <form id="contact_profile_form" method="get" class="width100" action="http://localhost:3000/contact">
+    
+        <div class="flex_row space_around">
+            <fieldset class="flex_col bg_cyan width50">
+                <legend>Person Details</legend>
+                    <label for="uid" hidden>Name</label>
+                    <input id="uid" name="id" type="text" value="0" hidden>
+            
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text" value="Gary">
+                
+                    <label for="title">Title</label>
+                    <input id="title" name="title" type="text" value="CEO">
+            </fieldset>
+
+            <fieldset class="flex_col bg_cyan width50">
+                <legend>Department Profile</legend>
+                    <label for="departments">Departments</label>
+                    <select id="departments" name="deprtment">
+                        <option value="0">Select Department</option>
+                    </select>
+            
+                    <label for="note">Note</label>
+                    <textarea id="note" name="note">Text</textarea>
+            </fieldset>
+        </div>
+        
+        <button class="button call-to-action" name="btn-submit" value="process_contact">Process Contact</button>
+    </form> 
+</main>
+
+<div id="console" class="console border" >
+console log area
+</div>
+
+<footer>
+    <li class="column_item"><a href="/user/index">UMP </a></li>
+    <li class="column_item"><a href="/about">About and Bio </a></li>
+    <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+    <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+</footer> 
+
+<script src="/bundle/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "file_size": 100,
+    "width": 0,
+    "height": 0,
+    "caption": "",
+    "createDate": "00/00/0000",
+    "fileName": "t1.t",
+    "fileType": "jpg",
+    "src": ""
+  },
+  {
+    "id": 2,
+    "file_size": 1765500,
+    "width": 0,
+    "height": 0,
+    "caption": "",
+    "createDate": "00/00/0000",
+    "fileName": "t2.t",
+    "fileType": "jpg",
+    "src": ""
+  },
+  {
+    "id": 3,
+    "file_size": 54300,
+    "width": 0,
+    "height": 0,
+    "caption": "",
+    "createDate": "00/00/0000",
+    "fileName": "t3.t",
+    "fileType": "jpg",
+    "src": ""
+  }
+]

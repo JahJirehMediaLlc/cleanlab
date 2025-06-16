@@ -1,0 +1,115 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html{
+    margin: 1rem;
+}
+html{
+    background-color: black;
+}
+
+body{
+    background-color: cadetblue;
+}
+
+nav{
+    position: fixed;
+    top: 0rem;
+    z-index: 4;
+    border: 2px solid red;
+    background-color: white;
+  }
+
+nav  ul{
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    width: 90%;
+  }
+
+header{
+    position: sticky;
+    top: 1.2rem;
+
+    z-index: 4;
+}
+
+header,
+footer {
+    background: darkgreen;
+}
+
+main {
+    border: 2px solid blue;
+    
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+.left-sidebar {
+    border: 2px solid red;
+
+    width: 40%;
+    min-width: 35%;
+
+    order: -1;
+}
+
+.main-article {
+    border: 2px solid yellow;
+    background-color: grey;
+}
+.main-article h3{
+    background-color: green;  
+}
+.main-article h2{
+    background-color: wheat;
+}
+.main-article .white-div{
+    position: relative;
+    z-index: 3;
+
+   background-color: white;
+   width: 40%;
+
+   margin-bottom: -5rem;
+   margin-left: 3rem;
+}
+
+.main-article .red-div{
+    position: relative;
+    z-index: 2;
+   
+    color: white;
+    background-color: red;
+
+    margin-bottom: -7rem;
+    margin-left: 13rem;
+
+    width: 15rem;
+    height: 10rem;
+}
+
+.main-article .orange-div{
+    position: relative;
+    z-index: 1;
+
+    background-color: orange;
+    width: 20rem;
+    height: 10rem;
+}
+
+.right-sidebar {
+    border: 2px solid red;
+
+    width: 40%;
+    min-width: 35%;
+    order: 1;
+
+    margin-bottom: 100rem;
+}
+
+

@@ -1,0 +1,10 @@
+{
+    "dba":"The PizzaStore",
+    "circa":"11/03/2023",
+    "address":"P.O. Box 7",
+    "locations":[],
+    "phone":"214-555-0000",
+    "email":"pizza@gmail.com",
+    "owner":"Gary Whyte",
+    "objectives":["Goal1","Goal2","Goal3"]
+}

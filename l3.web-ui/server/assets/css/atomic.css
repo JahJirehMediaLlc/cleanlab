@@ -1,0 +1,225 @@
+html{
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    font-family: 'Cambria, Cochin, Georgia', 'Times New Roman', serif;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+}
+
+.hide{
+    display: none;
+}
+
+img{
+    display: block;
+    max-width: 100%;
+}
+
+.button {
+    padding: .3em;
+    border-radius: 15px;
+    color: white;
+    background-color: rgb(32, 168, 32);
+    border: 2px solid #605d8a;
+}
+
+.button a{
+    color: white;
+}
+
+.button-cta {
+    font-weight: 700;
+    text-align: center;
+}
+
+.warn{
+    color: black;
+    background-color: yellow;
+}
+
+.call_to_ation{
+    color: white;
+    background-color: green;
+}
+.info{
+    color: black;
+    background-color: grey;
+}
+/*#region real-atomic-modules */
+
+.split{
+    display: flex;
+    flex-direction: column;
+}
+
+.split > *{
+flex-basis: 100%;
+}
+
+.center{
+    text-align: center;
+    margin: 0 auto; 
+}
+
+.outline{
+    outline: .1rem solid steelblue;
+}
+
+.reset {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.hide{
+    display: none;
+}
+
+.set-full-screen {
+    height: 100vh;
+}
+
+.rotate-90 {
+
+    transform: rotate(-90deg);
+  
+    /* Legacy vendor prefixes that you probably don't need... */
+  
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+  
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+  
+    /* IE */
+    -ms-transform: rotate(-90deg);
+  
+    /* Opera */
+    -o-transform: rotate(-90deg);
+  
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  
+  }
+
+  
+.rotate {
+
+    transform: rotate(90deg);
+  
+    /* Legacy vendor prefixes that you probably don't need... */
+  
+    /* Safari */
+    -webkit-transform: rotate(90deg);
+  
+    /* Firefox */
+    -moz-transform: rotate(90deg);
+  
+    /* IE */
+    -ms-transform: rotate(90deg);
+  
+    /* Opera */
+    -o-transform: rotate(90deg);
+  
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  
+  }
+/*#endregion */
+
+/*#region transparencies */
+.transparent-background {
+    background-color: rgba(29, 29, 26, 0.32);
+}
+
+.transparent-background2 {
+    background-color: rgba(24, 29, 14, 0.60);
+}
+
+.transparent-background3 {
+    background-color: rgba(24, 29, 14, 0.70);
+}
+
+.transparent-background4 {
+    background-color: rgba(229, 235, 217, 0.7);
+}
+/*#endregion */
+
+/*#region edges */
+.apply-glow {
+    text-shadow: 2px 2px 5px red;
+}
+
+.apply-shadow {
+    text-shadow: 2px 2px rgb(0, 255, 170);
+}
+
+.apply-shadow2 {
+    text-shadow: rgb(20, 17, 3) 2px 0 20px;
+}
+
+.apply-round-corners {
+    border-radius: .5rem;
+    border: 2px solid #73AD21;
+}
+
+.apply-roumd-corners2 {
+    border-radius: 15px;
+    border: 2px solid #284203;
+}
+
+.apply-circle{
+  border-radius: 50%;
+  width: 50vh;
+  height: 50vh
+}
+/*#endregion */
+
+/*#region bgcolors */
+.bg-white-normal{
+    background-color: white;
+}
+
+.bg-white-grey{
+    background-color: rgb(172, 161, 161);
+}
+
+.bg_white_normal{
+    background-color: white;
+}
+
+.bg_white_grey{
+    background-color: rgb(172, 161, 161);
+}
+
+
+.bg-dark-brown,
+.bg-brown-dark{
+    background-color: rgb(138, 48, 16);
+}
+
+.bg-dark-brown-02,
+.bg-brown-dark-02{
+    background-color: rgb(71, 35, 2)
+}
+
+.bg-light-brown,
+.bg-brown-light{
+    background-color: rgb(148, 57, 24);
+}
+
+.bg-light-brown-02,
+.bg-brown-light-02{
+    background-color: rgb(148, 57, 20)
+}
+
+.bg-pale-brown,
+.bg-brown-pale{
+    background-color: rgb(194, 60, 11);
+}
+
+.bg-pale-brown-02,
+.bg-brown-pale-02{
+    background-color: rgb(221, 130, 96);
+}
+
+/*#endregion*/

@@ -1,0 +1,62 @@
+[
+{
+"id":1,
+"contact": {
+"id": 1,
+"firstname": "Gary",
+"lastname": "Whyte",
+"age": 60,
+"email": "dlite@gmail.com",
+"phone": "000-000-0000",
+"kids": "undefined"
+},
+"company": "",
+"phone": "",
+"login":{
+    "userid":"",
+    "userpin": 0,
+    "pwd": "",
+    "email": ""
+}
+},
+{
+"id":2,
+"contact": {
+"id": 2,
+"firstname": "Joelle",
+"lastname": "Whyte",
+"age": 60,
+"email": "dlite@gmail.com",
+"phone": "000-000-0000",
+"kids": "undefined"
+},
+"company": "",
+"phone": "",
+"login": {
+    "userid":"",
+    "userpin": 0,
+    "pwd": "",
+    "email": ""
+}
+},
+{
+"id":3,
+"contact": {
+"id": 3,
+"firstname": "Danielle",
+"lastname": "Whyte",
+"age": 60,
+"email": "dlite@gmail.com",
+"phone": "000-000-0000",
+"kids": "undefined"
+},
+"company": "",
+"phone": "",
+"login":{
+    "userid":"",
+    "userpin": 0,
+    "pwd": "",
+    "email": ""
+}
+}
+]

@@ -1,0 +1,18 @@
+{    
+    "location":"dist/assest/images",
+    "meta" : {
+    "date": "mm/dd/yyyy",
+    "time": "00:00",
+    "meridian":"PM/AM",
+    "size": 0,
+    "filename":"fn.ft"
+    },
+    "owner":"Gary Whyte",
+    "objectives":["Goal1","Goal2","Goal3"],
+    "data":[
+        "clean-architecture-cone.jpg",
+        "clean-architecture.jpg",
+        "AtmState.jpg",
+        "performance-tab-flame-chart.png",
+        "classdiagram.jpg"]
+}   

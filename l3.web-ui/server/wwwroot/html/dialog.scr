@@ -1,0 +1,90 @@
+
+    <main>
+
+        <div id="toolbar" class="dialog toolbar">
+            <nav id="toolbar" class="toolbar">
+                <ul>
+                    <li><a href=""><img src="" alt="Register"><p>Register</p></a></li>
+                    <li><a href=""><img src="" alt="Login"><p>Login</p></a></li>
+                    <li><a href=""><img src="" alt="Session"><p>Session</p></a></li>
+                    <li><a href=""><img src="" alt="Blockchain"><p>Blockchain</p></a></li>
+                    <li><a href=""><img src="" alt="Resumes"><p>Resumes</p></a></li>
+                    <li><a href=""><img src="" alt="Contact Us"><p>Contact Us</p></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div  id="console" class="dialog console">
+            <section>
+                <h1>Console Dialog</h1>
+            </section>
+        </div>
+
+        <div  id="login" class="dialog login">
+            <section>
+                <h1>Login Dialog</h1>
+                <form class="" action="">
+                    <fieldset>
+                        <legend>Login</legend>
+                        <label for="nick_name_login" >Nick Name</label>
+                        <input id="nick_name_login" name="nick_name_login" type="text">
+                        <label for="password_login" >Password</label>
+                        <input id="password_login" name="password_login" type="password">
+                        <div class="button submit_button apply_rounded_corners">Login</div>
+                    </fieldset>
+                </form>
+            </section>
+        </div>
+
+        <div  id="resume" class="dialog resume">
+            <section>
+                <h1>Resume Dialog</h1>
+            </section>
+        </div>
+
+        <div  id="contact-us" class="dialog contact-us">
+            <section>
+                <h1>Contact Us Dialog</h1>
+            </section>
+        </div>
+
+        <div  id="blockchain" class="dialog blockchain">
+            <section>
+                <h1>Blockchain Dialog</h1>
+            </section>
+        </div>
+
+        <div id="register" class="dialog register">
+            <h1>Register Dialog</h1>
+            <form class="" action="">
+                <fieldset>
+                    <legend>Register</legend>
+                    <label for="nick_name_register" >Nick Name</label>
+                    <input id="nick_name_register" name="nick_name_register" type="text">
+                    <label for="email" >Email</label>
+                    <input id="email" name="email" type="email">
+                    <label for="password_register" >Password</label>
+                    <input id="password_register" name="password_register" type="password">
+                    <div class="button submit_button apply_rounded_corners">Register</div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div id="chatroom" class="dialog chatroom">      
+                <section>
+                    <h1>Chatroom Dialog</h1>
+                    <div id="chatroom_console" class="chatroom_console">
+                        Hello, Welcome to the chat roomn
+                    </div>
+                    <form class="" action="#">
+                        <fieldset>
+                            <legend>Send Message</legend>
+                            <input id="message" name="message" type="text">
+                            <div class="button submit_button apply_rounded_corners">Send</div>
+                        </fieldset>
+                    </form>
+                </section>
+           
+        </div>
+
+    </main>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">   
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Form Submitter</title>
+
+<link rel="icon" type="image/x-icon" href="/images/icons/favicon.ico">
+<link rel="stylesheet" href="/css/reset.css">  
+<link rel="stylesheet" href="/css/atomic.css"> 
+<style>
+
+body{
+margin: 2rem;
+}
+
+.bg{
+  background-color: aquamarine;
+}
+
+.bg_grey{
+  background-color: grey;
+}
+
+.border{
+  border: 1px red dashed;
+}
+.console{
+height: 8rem;
+overflow: scroll;
+}
+
+.column{
+display: flex;
+flex-direction: column;
+gap: 1rem;
+}
+
+.column_nogap{
+display: flex;
+flex-direction: column;
+}
+
+.columns{
+display: flex;
+flex-direction: row;
+gap: 1rem;
+}
+
+.columns_nogap{
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+}
+
+.column_item{
+color: white;
+background-color: darkslategrey;
+}
+.column_item a{
+  color: white;
+}
+
+.text-input{ 
+  font-size: larger;
+  background-color: green; 
+  max-width: 50%;
+}
+
+.text_input{ 
+  font-size: larger;
+  background-color: cornflowerblue; 
+  width: 15%;
+}
+
+.inline{
+  display:inline;;
+}
+
+legend{
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.noborder{
+  border-style: none;
+}
+
+label , select{
+  font-size: larger;
+}
+.margins{
+  margin: .3rem;
+}
+.margin_bot{
+  margin-bottom: 1rem;
+}
+
+.margin_top{
+  margin-top: 1rem;
+}
+
+.menu{
+  list-style: none;
+  padding: 0rem;
+  margin: 0rem;
+  text-align: center;
+}
+
+.menu li{
+  width:min-content;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.space_around{
+  justify-content: space-around;
+}
+
+.space_between{
+  justify-content: space-between;
+}
+
+.flex_item_grow{
+  flex-grow: 1;
+  margin: .5rem;
+}
+
+.wrap{
+  flex-wrap: wrap;
+}
+
+.hide{
+  display:none;
+}
+</style> 
+</head>
+<body>
+<header>
+<ul class="menu columns">
+  <li class="column_item"><a href="/user/index">UMP </a></li>
+  <li class="column_item"><a href="/about">About and Bio </a></li>
+  <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+  <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+</ul>
+</header>
+
+<h1 class="margin_top">User Management System</h1>
+
+<main class="margin_top">
+
+  <!-- user_master_form  - Master  -->
+<section>
+  <!-- <h4>User Search</h4> -->
+
+  <form id="user_master_form" name="user_master_form" class="column margin_bot  bg_white_grey" method="get" action="http://localhost:3000/user">
+  
+  <fieldset class="noborder">
+  <legend>User Search and Edit</legend>
+  <!-- User entry or id look up -->
+  <div>
+    <label for="user_id_master">Enter user's id or last name</label>
+    <input id="user_id_master" name="id" class="text_input" type="text" value="">
+    
+    <button id="btn_get" class="button" name="http_verb" value="get" title="GET" type="submit">?</button>
+    
+  </div>
+  <!-- Sort by radio buttons -->
+  <div class="columns">
+    <h4>Sort by:</h4>
+    <input id="q1_name" name="q1" type="checkbox" value="sort-name">
+    <label for="q1_name">Name</label>
+    
+    <input id="q2_age" name="q2" type="checkbox" value="sort-age">
+    <label for="q2_age">Age</label>
+    
+    <input id="q3_deleted" name="q3" type="checkbox" value="show-deleted">
+    <label for="q3_deleted">Deteted</label>
+  </div>
+  <!-- List of users to choose from -->
+  <div>
+    <label for="user_id_list">search results</label>
+    <select id="user_id_list" name="user_id"  class="width100">
+    </select>
+    <button id="btn_edit" class="button" name="http_verb" value="edit" title="Edit" type="submit">Edit</button>
+  </div>
+  
+  </fieldset>
+  
+  </form>
+  
+</section>
+
+
+ <!-- user_details_form -->
+ 
+ 
+  <section class="hide1">
+  <!-- <h4>User Details</h4> -->
+  <form id="user_details_form" name="user_details_form"  method="post" action="http://localhost:3000/user" class="margin_bot bg_white_grey">
+  <!-- inputs: user id-->
+  <fieldset class="margin_bot noborder">
+  <legend>Modify/Delete user</legend>
+  <label for="user_id_details">ID:</label>
+  <input id="user_id_details" name="id" type="text" value="" readonly>
+  
+  <!-- buttons - put, post, post -->
+  
+  <button id="btn_put"  class="button" name="http_verb" value="put" title="PUT" type="submit">+</button>
+  <button id="btn_delete"  class="button" name="http_verb" value="delete" title="DELETE"  type="submit">-</button>
+  <button id="btn_post"  class="button" name="http_verb" value="post" title="POST" type="submit">=</button>
+  
+  </fieldset>
+  <!-- Personal Info -->
+  <fieldset class="margin_bot columns noborder wrap">
+      <legend>Personal Info</legend>
+
+      <!-- bio:first name, last name, age -->
+      <fieldset class="margin_bot column_nogap flex_item_grow noborder">
+      <legend>Bio</legend>
+      <label for="user_first_name">First Name</label>
+      <input id="user_first_name" name="first_name" class="text-input" type="text" value="">
+      
+      <label for="user_last_name">Last Name</label>
+      <input id="user_last_name" name="last_name" class="text-input" type="text" value="">
+      
+      <label for="user_age">Age</label>
+      <input id="user_age" name="age" class="text-input" type="number" value="">
+    
+      <label for="user_dob">DOB</label>
+      <input id="user_dob" name="dob" class="text-input" type="date" value="">
+    
+      <label for="user_ssn">SSN(Last 4 digits)</label>
+      <input id="user_ssn" name="ssn" class="text-input" type="number" value="">
+    </fieldset>
+
+    <!-- Address: street, city, state, zip -->
+    <fieldset class="margin_bot column_nogap flex_item_grow noborder">
+      <legend>Address</legend>
+
+      <label for="user_street">Street</label>
+      <input id="user_street" name="street" class="text-input" type="text" value="">
+    
+      <label for="user_apartment">Apartment#/Building #</label>
+      <input id="user_apartment" name="apartment" class="text-input" type="text" value="">
+      
+      <label for="user_city">City</label>
+      <input id="user_city" name="city" class="text-input" type="text" value="">
+      
+      <label for="user_state">State</label>
+      <input id="user_state" name="state" class="text-input" type="text" value="">
+      
+      <label for="user_zip">Zip</label>
+      <input id="user_zip" name="zip" class="text-input" type="text" value="">
+    </fieldset>
+  </fieldset>
+
+  <!-- Means of Communication: email, phone, ups -->
+
+  <fieldset class="margin_bot noborder columns wrap">
+
+    <legend>Electronic Communication</legend>
+
+    <span>
+        <label for="user_email">Email</label>
+        <input id="user_email" name="email" class="text-input" type="email" value="">
+    </span>
+      
+    <span>
+        <label for="user_phone">Phone</label>
+        <input id="user_phone" name="phone" class="text-input" type="tel" value="">
+    </span>
+
+  </fieldset>
+
+  <!-- Preferred Contact Type -->
+  <fieldset class="margin_bot  noborder">
+    <legend>Preferred Contact Type</legend>
+
+    <label for="preferred_phone">Phone</label>
+    <input id="preferred_phone" name="preferred_contact" type="radio" value="phone">
+    
+    <label for="preferred_email">Email</label>
+    <input id="preferred_email" name="preferred_contact" type="radio" value="email">
+    
+    <label for="preferred_usp">US Postal</label>
+    <input id="preferred_usp" name="preferred_contact" type="radio" value="ups">
+  </fieldset>
+
+</form>
+</section>
+
+<h4>Logs</h4>
+<div class="columns margin_bot">
+  <!-- current log -->
+  <details>
+  <summary>Current Log</summary>
+  <div id="console" name="console" class="console apply-round-corners">
+  ...
+  </div>
+  </details >
+</div>
+</main>
+
+<footer>
+<ul class="menu columns">
+  <ul class="menu columns">
+    <li class="column_item"><a href="/user/index">UMP </a></li>
+    <li class="column_item"><a href="/about">About and Bio </a></li>
+    <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+    <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+  </ul>
+</ul>
+</footer>
+
+<script src="/bundle/user.js"></script>
+</body>
+</html>

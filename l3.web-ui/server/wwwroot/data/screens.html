@@ -1,0 +1,352 @@
+<div id="templates">
+
+    <template id="blank_template">
+        <div>
+            <p>Blank Template</p>
+        </div>
+    </template>
+
+    <template id="logo_template">
+        <style>
+            span{
+                display: inline;
+                font-size: xx-large;
+                color: blueviolet;
+            }
+        </style>
+        <div>
+            <p><span style="color: blueviolet;font-size: xx-large; display: inline;">J</span>ireh <span style="color: blueviolet;font-size: xx-large; display: inline;">M</span>edia <span style="color: blueviolet;font-size: xx-large; display: inline;">C</span>ompany</p>
+            <h3>Gary Whyte</h3>
+        </div>
+    </template>
+
+    <template id="gallery_template">
+
+            <ui-gallery>
+                <ul class="ui_gallery_ul">
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
+                            <figcaption>ArchitecuralDiagrams.jpg</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-devtools-savesettings-function.png" alt="">
+                            <figcaption>a-devtools-savesettings-function</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-depiction-breaking-long-running-tasks-up.png" alt="">
+                            <figcaption>a-depiction-breaking-long-running-tasks-up.pngn</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-task-event-function-call.png" alt="">
+                            <figcaption>a-task-event-function-call.png</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/AtmState.jpg" alt="">
+                            <figcaption>AtmState.jpg</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/browser-dom-tree.gif" alt="">
+                            <figcaption>browser-dom-tree.gif</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-long-task-function-calls.png" alt="">
+                            <figcaption>a-long-task-function-calls.png</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/browser-dns-lookup-latency.jpg" alt="">
+                            <figcaption>browser-dns-lookup-latency.jpg</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/browser-rendering-css-rule.png" alt="">
+                            <figcaption>browser-rendering-css-rule.png</figcaption>
+                        </figure>
+                    </li>
+                </ul>
+            </ui-gallery>
+
+    </template>
+
+    <template id="table_template">
+        <div>
+            <ui-table title="Budget" rows="10" cols="10" borders="2px">
+                <h3>UI-table</h3>
+                <div slot="slot1">Legend data 1</div>
+                <div slot="slot2">Legend data 2</div>
+            </ui-table>
+        </div>
+    </template>
+
+    <template id="tabs_template">
+     
+        <div>
+            <ui-tabs caption="Bible Time Line" orientation="x-axis">
+
+                <ui-tab name="action" value="tab1" topic="Article 1" article_id="1" slot="">
+                    <h3>Article 1</h3>
+                    <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur 
+                    adipisicing elit.</p>
+                    
+                    <p>Animi aspernatur cupiditate esse hic obcaecati sequi totam. 
+                    Aliquam, dolorum eum explicabo, illum inventore modi molestias 
+                    nemo non nulla qui sapiente, vel?</p>
+
+                </ui-tab>
+                <ui-tab name="action" value="tab2" topic="Article 2" article_id="2" slot="">
+                    <h3>Article 2</h3>
+                    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. At expedita
+                        incidunt laboriosam nesciunt porro possimus, rem vero. </p>
+                        
+                        <p>
+                        A ab, beatae commodi consectetur culpa cumque debitis eaque eligendi 
+                        et harum in inventore laudantium maxime natus nihil nostrum officiis
+                        </p>
+
+                        <p>
+                        possimus praesentium quo ratione repellat
+                        similique soluta suscipit temporibus tenetur ut voluptate voluptatum?
+                        </p>
+                          
+                </ui-tab>
+                <ui-tab name="action" value="tab3" topic="Article 3" article_id="3" slot="active">
+                    <h3 class="bg_green">Article 3</h3>
+                    <p>A corporis excepturi fugit itaque laboriosam minima non odio, quae quos recusandae reiciendis sit!
+                        Aliquid architecto ducimus enim, fugiat hic, ipsam nam nisi obcaecati quas, quidem sed suscipit
+                        vero voluptas! Illo minima temporibus ullam. Autem cumque doloremque eius illo maxime neque quasi,
+                        tempora voluptates. Autem eum ex pariatur! Sequi.</p>
+ 
+                    </ui-tab>
+                 <ui-tab name="action" value="tab4" topic="Article 4" article_id="2" slot="">
+                    <h3>Article 4</h3>
+                    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. At expedita
+                        incidunt laboriosam nesciunt porro possimus, rem vero. A ab, beatae commodi
+                        consectetur culpa cumque debitis eaque eligendi et harum in inventore laudantium
+                        maxime natus nihil nostrum officiis possimus praesentium quo ratione repellat
+                        similique soluta suscipit temporibus tenetur ut voluptate voluptatum? </p>
+                </ui-tab>
+                <ui-tab name="action" value="tab5" topic="Article 5" article_id="3" slot="">
+                    <h3>Article 5</h3>
+                    <p>A corporis excepturi fugit itaque laboriosam minima non odio, quae quos recusandae reiciendis sit!
+                        Aliquid architecto ducimus enim, fugiat hic, ipsam nam nisi obcaecati quas, quidem sed suscipit
+                        vero voluptas! Illo minima temporibus ullam. Autem cumque doloremque eius illo maxime neque quasi,
+                        tempora voluptates. Autem eum ex pariatur! Sequi.</p>
+                </ui-tab>
+                <ui-tab name="action" value="tab6" topic="Article 6" article_id="6" slot="">
+                    <h3>Article 6</h3>
+                    <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur 
+                    adipisicing elit.</p>
+                    
+                    <p>Animi aspernatur cupiditate esse hic obcaecati sequi totam. 
+                    Aliquam, dolorum eum explicabo, illum inventore modi molestias 
+                    nemo non nulla qui sapiente, vel?</p>
+
+                </ui-tab>
+
+   
+            </ui-tabs>
+        </div>
+    </template>
+
+    <template id="nav_template">
+        <div>
+            <ui-nav caption="Bible Time Line" orientation="x-axis">
+                <ui-nav-action>Nav Item 1 </ui-nav-action>
+                <ui-nav-action>Nav Item 2 </ui-nav-action>
+                <ui-nav-action>Nav Item 3 </ui-nav-action>
+            </ui-nav>
+        </div>
+    </template>
+
+    <template id="contact_template">
+        <div>
+            <ui-contact style="color:red; margin:0 auto; display: inline-block; text-align: center">
+
+                <ol slot="details" class="contact_details">
+                    <li class="name">joh doe</li>
+                    <li class="phone">123-123-1234</li>
+                    <li class="email">mail@gmail.com</li>
+                    <li class="title">CEO</li>
+                </ol>
+
+                <p slot="copyright">Copyright 2025</p>
+
+                <img slot="me" class="me" src="//localhost:3000/images/me2.png" alt="me" >
+                <img slot="qrc" class="qrc" src="//localhost:3000/images/me.jpg" alt="qrc" >
+                <img slot="me3" class="me3" src="//localhost:3000/images/me3.png" alt="me3" >
+            </ui-contact>
+        </div>
+    </template>
+
+    <template id="composite_template">
+        <div>
+            <h2>Contact</h2>
+            <ui-contact style="color:red; margin:0 auto; display: inline-block; text-align: center">
+                <div>
+                    <ol class="contact_details" slot="details">
+                        <li class="name">joh doe</li>
+                        <li class="phone">123-123-1234</li>
+                        <li class="email">mail@gmail.com</li>
+                        <li class="title">CEO</li>
+                    </ol>
+                </div>
+
+                <p slot="copyright">Copyright 2025</p>
+
+                <img slot="me" class="me" src="//localhost:3000/images/me2.png" alt="me" >
+                <img slot="qrc" class="qrc" src="//localhost:3000/images/me.jpg" alt="qrc" >
+                <img slot="me3" class="me3" src="//localhost:3000/images/me3.png" alt="me3" >
+            </ui-contact>
+            <br><br><br>
+            <h2>Tabs</h2>
+            <ui-tabs caption="Bible Time Line" orientation="x-axis">
+                <ui-tab name="tab1" value="tab1" topic="Tab 1...." article_id="1" slot="">
+                    <h3>Tab 1....</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Animi aspernatur cupiditate esse hic obcaecati sequi totam. Aliquam, dolorum eum explicabo,
+                        illum inventore modi molestias nemo non nulla qui sapiente, vel?
+                    </p>
+                    <p>
+                        A ab, beatae commodi consectetur culpa cumque debitis eaque eligendi et harum in inventore laudantium
+                        maxime natus nihil nostrum officiis possimus praesentium quo ratione repellat
+                        similique soluta suscipit temporibus tenetur ut voluptate voluptatum?
+                    </p>
+                </ui-tab>
+                <ui-tab name="tab2" value="tab2" topic="Tab 2" article_id="2" slot="">
+                    <h3>Tab 2 topic</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. At expedita
+                        incidunt laboriosam nesciunt porro possimus, rem vero
+                    </p>
+
+                    <p>
+                        A ab, beatae commodi consectetur culpa cumque debitis eaque eligendi et harum in inventore laudantium
+                        maxime natus nihil nostrum officiis possimus praesentium quo ratione repellat
+                        similique soluta suscipit temporibus tenetur ut voluptate voluptatum?
+                    </p>
+                </ui-tab>
+                <ui-tab name="tab3" value="tab3" topic="Tab 34545" article_id="3" slot="active">
+                    <h3>Tab 34545</h3>
+                    <p>
+                        A ab, beatae commodi consectetur culpa cumque debitis eaque eligendi et harum in inventore laudantium
+                        maxime natus nihil nostrum officiis possimus praesentium quo ratione repellat
+                        similique soluta suscipit temporibus tenetur ut voluptate voluptatum?
+                    </p>
+                    <p>
+                        A corporis excepturi fugit itaque laboriosam minima non odio, quae quos recusandae reiciendis sit!
+                        Aliquid architecto ducimus enim, fugiat hic, ipsam nam nisi obcaecati quas, quidem sed suscipit
+                        vero voluptas! Illo minima temporibus ullam. Autem cumque doloremque eius illo maxime neque quasi,
+                        tempora voluptates. Autem eum ex pariatur! Sequi.
+                    </p>
+
+                    <p>
+                        A ab, beatae commodi consectetur culpa cumque debitis eaque eligendi et harum in inventore laudantium
+                        maxime natus nihil nostrum officiis possimus praesentium quo ratione repellat
+                        similique soluta suscipit temporibus tenetur ut voluptate voluptatum?
+                    </p>
+                </ui-tab>
+            </ui-tabs>
+            <br><br><br>
+            <h2>Gallery</h2>
+            <ui-gallery>
+                <ul class="ui_gallery_ul">
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
+                            <figcaption>ArchitecuralDiagrams.jpg</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-devtools-savesettings-function.png" alt="">
+                            <figcaption>a-devtools-savesettings-function</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-depiction-breaking-long-running-tasks-up.png" alt="">
+                            <figcaption>a-depiction-breaking-long-running-tasks-up.pngn</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-task-event-function-call.png" alt="">
+                            <figcaption>a-task-event-function-call.png</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/AtmState.jpg" alt="">
+                            <figcaption>AtmState.jpg</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/browser-dom-tree.gif" alt="">
+                            <figcaption>browser-dom-tree.gif</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/a-long-task-function-calls.png" alt="">
+                            <figcaption>a-long-task-function-calls.png</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/browser-dns-lookup-latency.jpg" alt="">
+                            <figcaption>browser-dns-lookup-latency.jpg</figcaption>
+                        </figure>
+                    </li>
+
+                    <li>
+                        <figure>
+                            <img class="gallery_item" src="images/browser-rendering-css-rule.png" alt="">
+                            <figcaption>browser-rendering-css-rule.png</figcaption>
+                        </figure>
+                    </li>
+                </ul>
+            </ui-gallery>
+            <br><br><br>
+            <h2>Table</h2>
+            <ui-table title="Budget" rows="10" cols="10" borders="2px">
+                <h3>UI-table</h3>
+                <div slot="slot1">Legend data 1</div>
+                <div slot="slot2">Legend data 2</div>
+            </ui-table>
+
+        </div>
+    </template>
+
+</div>

@@ -1,0 +1,2791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For statement and Looping</title>
+    <style>
+        page-break{ 
+        break-after:page
+        }
+        
+        body{
+        font-size: x-large;    
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        code {
+        background-color: #f39427;
+        border: 1px solid #999;
+        display: block;
+        padding: 1em;
+        width: fit-content;
+        color:black;
+        }
+        bg-green{
+            background-color: green;
+            color: white;
+        }
+        bg-red{
+            background-color: red;
+            color: white;
+        }
+        bg-blue{
+            background-color: blue;
+            color: white;
+        }
+        bg-purple{
+            background-color: purple;
+            color: white;
+        }
+        bg-range{
+            background-color: orange;
+            color: white;
+        }
+     </style>
+</head>
+<body>
+<h2>Java Script Looping</h2>
+<!-- 10 Ways to Iterate Through an Object in JavaScript -->
+<details>
+    <summary>10 Ways to Iterate Through an Object in JavaScript</summary>
+    <h5>10 Ways to Iterate Through an Object in JavaScript</h5>
+    
+    <p>Discover 10 ways to efficiently loop through JavaScript objects, with examples and tips for when to use each method.</p>
+    
+    <p>In JavaScript, objects are necessary for key-value pair storage.</p> 
+    
+    <p>Iterating through objects is typically necessary, regardless of whether you're developing a basic application or working with intricate data from an API. </p>
+    
+    <p>In JavaScript, there are several approaches to accomplish this, and each has pros and cons of its own.</p>
+    
+    <p>We will look at ten distinct JavaScript methods for iterating over an object in this article.</p> 
+    
+    <p>For every technique, we'll offer special instances and go over when to use them.</p>
+    
+    <p>Put your object mastery to work. Join Index.dev for long-term JavaScript remote opportunities.</p>
+     
+    
+    <h4>1. The for...in Loop</h4>
+    <p>One of the easiest methods for iterating over an object's attributes is to use a for...in loop.</p> 
+    
+    <p>It runs over every property that may be listed for the object, including those that are passed down from its prototype chain.</p>
+    
+    <h5>Example:</h5>
+    
+    <pre>
+      <code>
+        const person = { name: 'Alice', age: 28, city: 'Berlin' };
+        for (let key in person) {
+          console.log(`${key}: ${person[key]}`);
+        }
+      </code>
+    </pre>
+    
+    <h5>Pros:</h5>
+    <ul>
+      <li>Simple and easy to understand.</li>
+      <li>Works in all browsers.</li>
+    </ul>
+    <h5>Cons:</h5>
+    <p>Iterates over inherited properties.</p> 
+    <p>If you want to ignore those, you have to add a check using hasOwnProperty.</p>
+    
+    <h5>Example with hasOwnProperty:</h5>
+    <pre>
+    <code>
+      for (let key in person) {
+        if (person.hasOwnProperty(key)) {
+          console.log(`${key}: ${person[key]}`);
+        }
+      }
+    </code>
+    </pre>
+    
+    <h4>2. Object.keys() with forEach()</h4>
+    <p>An array with the names of an object's own properties is returned by Object.keys().</p> 
+    <p>This array may be looped through using forEach().</p>
+    
+    <h5>Example:</h5>
+    <pre>
+    <code>
+      const car = { make: 'Toyota', model: 'Camry', year: 2021 };
+      Object.keys(car).forEach(key =&gt; {
+        console.log(`${key}: ${car[key]}`);
+      });
+    </code>
+    </pre>
+    <h5>Pros:</h5>
+    <ul>
+      <li>It only iterates over the object’s own properties, ignoring the prototype properties.</li>
+      <li>Cleaner and more modern than for...in.</li>
+    </ul>
+    <h5>Cons:</h5>
+    <ul>
+      <li>Slightly less intuitive for beginners because it involves array methods.</li>
+    </ul>
+     
+    
+    <h4>3. Object.values()</h4>
+    <p>Use Object.values() if the values are all that matter to you and the keys are not. </p>
+    <p>An array containing the values of the object's properties is returned by this function.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+    <code>
+      const user = { username: 'john_doe', email: 'john@example.com', age: 35 };
+      Object.values(user).forEach(value =&gt; {
+        console.log(value);
+      });
+    </code>
+    </pre>
+    <h5>Pros:</h5>
+    <ul>
+      <li>Simple when you only need the values.</li>
+      <li>Cleaner than combining for...in with hasOwnProperty.</li>
+    </ul>
+    <h5>Cons:</h5>
+    
+    <ul>
+      <li>No access to the keys.</li>
+    </ul>
+    
+    <h4>4. Object.entries()</h4>
+    <p>An array of the key-value pairs for the object is returned by Object.entries().</p> 
+    
+    <p>The key and the associated value are the two elements that make up each element in this array.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+    <code>
+      const book = { title: '1984', author: 'George Orwell', year: 1949 };
+      
+      Object.entries(book).forEach(([key, value]) =&gt; {
+        console.log(`${key}: ${value}`);
+      });
+    </code>
+    </pre>
+    <h5>Pros:</h5>
+    <ul>
+      <li>You get both keys and values in a very clean way.</li>
+      <li>Great for destructuring the key-value pair in a single line.</li>
+    </ul>
+    <h5>Cons:</h5>
+    <ul>
+      <li>Slightly more complex compared to other methods.</li>
+    </ul>
+    
+    <h4>5. forEach() on Arrays of Objects</h4>
+    <p>ForEach() is one of the simplest methods to loop through an array of items.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+      <code>
+        const users = [
+          { name: 'Alice', age: 28 },
+          { name: 'Bob', age: 34 }
+        ];
+        users.forEach(user =&gt; {
+          console.log(`${user.name}: ${user.age}`);
+        });
+      </code>
+    </pre>
+    <h5>Pros:</h5>
+    <ul>
+      <li>Simple syntax and widely understood by most developers.</li>
+      <li>Useful for arrays of objects.</li>
+    </ul>
+    <h5>Cons:</h5>
+    <ul>
+      <li>Limited to arrays. If you're working with a single object, you can't use this directly.</li>
+      <li>Explore More: Optimising Performance with Advanced JavaScript Array Methods & Patterns</li>
+    </ul>
+    
+    <h4>6. for...of Loop</h4>
+    <p>Arrays, strings, and maps are examples of iterable objects that can be iterated over using the for...of loop.</p> 
+    
+    <p>You must first transform the item into an iterable structure, such as an array, in order to utilize it with it.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+      <code>
+        const movie = { title: 'Inception', director: 'Christopher Nolan', year: 2010 };
+        for (const [key, value] of Object.entries(movie)) {
+          console.log(`${key}: ${value}`);
+        }
+      </code>
+    </pre>
+    <h5>Pros:</h5>
+    <ul>
+      <li>Cleaner than for...in when combined with Object.entries().</li>
+      <li>Allows easy destructuring within the loop.</li>
+    </ul>
+    <h5>Cons:</h5>
+    <ul>
+      <li>Only works with iterable objects. You have to use Object.entries() to convert the object first.</li>
+    </ul>
+     
+    
+    <h4>7. map() Method</h4>
+    <p>Usually, arrays are iterated over using the map() function, which returns a new array with the data altered.</p> 
+    <p>When you need to convert or return a new array from an array of objects, you may use it.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+      <code>
+        const users = [
+          { name: 'Alice', age: 28 },
+          { name: 'Bob', age: 34 }
+        ];
+        const usernames = users.map(user =&gt; user.name);
+        console.log(usernames); // ['Alice', 'Bob']
+      </code>
+    </pre>
+    <h5>Pros:</h5>
+    <ul>
+      <li>Great for transforming arrays.</li>
+      <li>Returns a new array, which can be useful for chaining other array methods.</li>
+    </ul>
+    <h5>Cons:</h5>
+    <ul>
+      <li>Limited to arrays.</li>
+    </ul>
+    
+     
+    
+    <h4>8. reduce() Method</h4>
+    <p>Every element of the array is subjected to a reducer function using the reduce() method, which produces a single output value. </p>
+    
+    <p>It's a little more intricate, but it has great data aggregation capabilities.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+    <code>
+      const expenses = { rent: 1000, groceries: 200, utilities: 150 };
+      const total = Object.values(expenses).reduce((sum, expense) =&gt; sum + expense, 0);
+      console.log(`Total expenses: $${total}`);
+    </code>
+    </pre>
+    <h5>Pros:</h5>
+    <li>Powerful for summing or accumulating object values.</li>
+    <li>Useful for aggregating data into a single result.</li>
+    <h5>Cons:</h5>
+    <ul>
+      <li>Can be less intuitive than other methods.</li>
+    </ul>
+     
+    
+    <h4>9. Object.getOwnPropertyNames()</h4>
+    <p>An array containing every property of an object, including non-enumerable properties, is returned by this function.</p> 
+    <p>If you need to access secret properties, it could be helpful.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+      <code>
+        const car = { make: 'Toyota', model: 'Corolla' };
+        Object.defineProperty(car, 'year', { value: 2021, enumerable: false });
+        const props = Object.getOwnPropertyNames(car);
+        props.forEach(prop =&gt; {
+          console.log(`${prop}: ${car[prop]}`);
+        });
+      </code>
+    </pre>
+    <h5>Pros:</h5>
+    <ul>
+      <li>Retrieves non-enumerable properties.</li>
+      <li>Useful when dealing with hidden object properties.</li>
+    </ul>
+    <h5>Cons:</h5>
+    
+    <ul>
+      <li>Doesn’t ignore prototype properties unless filtered manually.</li>
+    </ul>
+    
+    <h4>10. Reflect.ownKeys()</h4>
+    R<p>eflect.ownKeys() yields an object's whole set of properties, including symbol-based and non-enumerable ones.</p> 
+    
+    <p>When working with symbols or hidden attributes, it is helpful.</p>
+    
+    <h5>Example:</h5>
+    <pre>
+      <code>
+        const person = { name: 'Alice' };
+        const symbolKey = Symbol('age');
+        person[symbolKey] = 28;
+        const keys = Reflect.ownKeys(person);
+        keys.forEach(key =&gt; {
+          console.log(`${String(key)}: ${person[key]}`);
+        });
+      </code>
+    </pre>
+    
+    <h5>Pros:</h5>
+    <ul>
+      <li>Can access both string and symbol keys.</li>
+      <li>Covers all properties, including hidden ones.</li>
+    </ul>
+    <h5>Cons:</h5>
+    <ul>
+      <li>Rarely needed unless working with symbols.</li>
+    </ul>
+     
+    
+    <h4>Conclusion</h4>
+    <p>There are several methods for iterating through objects in JavaScript, each with unique benefits and use cases. </p>
+    
+    <p>There is a way for any situation, whether it is basic key-value pairs, arrays of objects, or even objects with hidden characteristics.</p> 
+    
+    <p>For more complex situations, techniques like Reflect.ownKeys() or Object.entries() provide more flexibility, but for simpler jobs, for...in or Object.keys() can be sufficient.</p>
+    
+    <p>Try using these techniques on your own projects to see which ones suit your needs the best!</p>
+</details>
+<br>
+<!-- for...of -->
+<details>
+<summary>for...of</summary>
+<h5>for...of</h5>
+<p>The for...of statement executes a loop that operates on a sequence of values sourced from an iterable object. Iterable objects include instances of built-ins such as Array, String, TypedArray, Map, Set, NodeList (and other DOM collections), as well as the arguments object, generators produced by generator functions, and user-defined iterables.</p>
+
+<h4>Syntax</h4>
+<pre>
+<code>
+JS
+
+for (variable of iterable)
+statement
+variable
+</code>
+</pre>
+
+<p>Receives a value from the sequence on each iteration. May be either a declaration with const, let, or var, or an assignment target (e.g. a previously declared variable, an object property, or a destructuring assignment pattern). Variables declared with var are not local to the loop, i.e. they are in the same scope the for...of loop is in.</p>
+
+<dl>
+<dt>iterable</dt>
+<dd>An iterable object. The source of the sequence of values on which the loop operates.</dd>
+
+<dt>statement</dt>
+<dd>A statement to be executed on every iteration. May reference variable. You can use a block statement to execute multiple statements.</dd>
+</dl>
+
+<h4>Description</h4>
+<p>A for...of loop operates on the values sourced from an iterable one by one in sequential order. Each operation of the loop on a value is called an iteration, and the loop is said to iterate over the iterable. Each iteration executes statements that may refer to the current sequence value.</p>
+
+<p>When a for...of loop iterates over an iterable, it first calls the iterable's [@@iterator]() method, which returns an iterator, and then repeatedly calls the resulting iterator's next() method to produce the sequence of values to be assigned to variable.</p>
+
+<p>A for...of loop exits when the iterator has completed (the iterator's next() method returns an object containing done: true). You may also use control flow statements to change the normal control flow. break exits the loop and goes to the first statement after the loop body, while continue skips the rest of the statements of the current iteration and proceeds to the next iteration.</p>
+
+<p>If the for...of loop exited early (e.g. a break statement is encountered or an error is thrown), the return() method of the iterator is called to perform any cleanup.</p>
+
+<p>The variable part of for...of accepts anything that can come before the = operator. You can use const to declare the variable as long as it's not reassigned within the loop body (it can change between iterations, because those are two separate variables). Otherwise, you can use let.</p>
+
+<pre>
+<code>
+JS
+
+const iterable = [10, 20, 30];
+
+for (let value of iterable) {
+value += 1;
+console.log(value);
+}
+// 11
+// 21
+// 31
+</code>
+</pre>
+
+<p>Note: Each iteration creates a new variable. Reassigning the variable inside the loop body does not affect the original value in the iterable (an array, in this case).</p>
+
+<p>You can use destructuring to assign multiple local variables, or use a property accessor like for (x.y of iterable) to assign the value to an object property.</p>
+
+<p>However, a special rule forbids using async as the variable name. This is invalid syntax:</p>
+
+<pre>
+<code>
+JS
+
+let async;
+for (async of [1, 2, 3]); // SyntaxError: The left-hand side of a for-of loop may not be 'async'.
+</code>
+</pre>
+
+<p>This is to avoid syntax ambiguity with the valid code for (async of =&gt; {};;), which is a for loop.</p>
+
+<h4>Examples</h4>
+<h5>Iterating over an Array</h5>
+<pre>
+<code>
+JS
+
+const iterable = [10, 20, 30];
+
+for (const value of iterable) {
+console.log(value);
+}
+// 10
+// 20
+// 30
+</code>
+</pre>
+
+<h5>Iterating over a string</h5>
+<p>Strings are iterated by Unicode code points.</p>
+
+<pre>
+<code>
+JS
+
+const iterable = "boo";
+
+for (const value of iterable) {
+console.log(value);
+}
+// "b"
+// "o"
+// "o"
+</code>
+</pre>
+
+<h5>Iterating over a TypedArray</h5>
+<pre>
+<code>
+JS
+
+const iterable = new Uint8Array([0x00, 0xff]);
+
+for (const value of iterable) {
+console.log(value);
+}
+// 0
+// 255
+</code>
+</pre>
+
+<h5>  Iterating over a Map</h5>
+<pre>
+<code>
+JS
+
+const iterable = new Map([
+["a", 1],
+["b", 2],
+["c", 3],
+]);
+
+for (const entry of iterable) {
+console.log(entry);
+}
+// ['a', 1]
+// ['b', 2]
+// ['c', 3]
+
+for (const [key, value] of iterable) {
+console.log(value);
+}
+// 1
+// 2
+// 3
+</code>
+</pre>
+<h5> Iterating over a Set</h5>
+<progress>
+<code>
+JS
+
+const iterable = new Set([1, 1, 2, 2, 3, 3]);
+
+for (const value of iterable) {
+console.log(value);
+}
+// 1
+// 2
+// 3
+</code>
+</progress>
+<h5>Iterating over the arguments object</h5>
+<p> You can iterate over the arguments object to examine all parameters passed into a function.</p>
+
+<pre>
+<code>
+JS
+
+function foo() {
+for (const value of arguments) {
+console.log(value);
+}
+}
+
+foo(1, 2, 3);
+// 1
+// 2
+// 3
+</code>
+</pre>
+
+<h5>Iterating over a NodeList</h5>
+<p>The following example adds a read class to paragraphs that are direct descendants of the &lt;article&gt; element by iterating over a NodeList DOM collection.</p>
+
+<pre>
+<code>
+JS
+
+const articleParagraphs = document.querySelectorAll("article &gt; p");
+for (const paragraph of articleParagraphs) {
+paragraph.classList.add("read");
+}
+Iterating over a user-defined iterable
+Iterating over an object with an @@iterator method that returns a custom iterator:
+</code>
+</pre>
+
+<pre>
+<code>
+JS
+
+const iterable = {
+[Symbol.iterator]() {
+let i = 1;
+return {
+next() {
+if (i &lt;= 3) {
+return { value: i++, done: false };
+}
+return { value: undefined, done: true };
+},
+};
+},
+};
+
+for (const value of iterable) {
+console.log(value);
+}
+// 1
+// 2
+// 3
+</code>
+</pre>
+
+<h5>Iterating over an object with an @@iterator generator method:</h5>
+
+<pre>
+<code>
+JS
+
+const iterable = {
+*[Symbol.iterator]() {
+yield 1;
+yield 2;
+yield 3;
+},
+};
+
+for (const value of iterable) {
+console.log(value);
+}
+// 1
+// 2
+// 3
+</code>
+</pre>
+
+<p><b>Iterable iterators</b> (iterators with a [<b>@@iterator]() </b>method that returns this) are a fairly common technique to make iterators usable in syntaxes expecting iterables, such as <b>for...of</b>.</p>
+
+<pre>
+<code>
+JS
+
+let i = 1;
+
+const iterator = {
+next() {
+if (i &lt;= 3) {
+return { value: i++, done: false };
+}
+return { value: undefined, done: true };
+},
+[Symbol.iterator]() {
+return this;
+},
+};
+
+for (const value of iterator) {
+console.log(value);
+}
+// 1
+// 2
+// 3
+</code>
+</pre>
+
+<h5>Iterating over a generator</h5>
+<pre>
+<code>
+JS
+
+function* source() {
+yield 1;
+yield 2;
+yield 3;
+}
+
+const generator = source();
+
+for (const value of generator) {
+console.log(value);
+}
+// 1
+// 2
+// 3
+</code>
+</pre>
+<h4>Early exiting</h4>
+<p>Execution of the break statement in the first loop causes it to exit early. The iterator is not finished yet, so the second loop will continue from where the first one stopped at.</p>
+
+<pre>
+<code>
+JS
+
+const source = [1, 2, 3];
+
+const iterator = source[Symbol.iterator]();
+
+for (const value of iterator) {
+console.log(value);
+if (value === 1) {
+break;
+}
+console.log("This string will not be logged.");
+}
+// 1
+
+// Another loop using the same iterator
+// picks up where the last loop left off.
+for (const value of iterator) {
+console.log(value);
+}
+// 2
+// 3
+
+// The iterator is used up.
+// This loop will execute no iterations.
+for (const value of iterator) {
+console.log(value);
+}
+// [No output]
+</code>
+</pre>
+
+<p>Generators implement the return() method, which causes the generator function to early return when the loop exits. This makes generators not reusable between loops.</p>
+
+<pre>
+<code>
+JS
+
+function* source() {
+yield 1;
+yield 2;
+yield 3;
+}
+
+const generator = source();
+
+for (const value of generator) {
+console.log(value);
+if (value === 1) {
+break;
+}
+console.log("This string will not be logged.");
+}
+// 1
+
+// The generator is used up.
+// This loop will execute no iterations.
+for (const value of generator) {
+console.log(value);
+}
+// [No output]
+</code>
+</pre>
+
+<h4>Difference between for...of and for...in</h4>
+<p>Both for...in and for...of statements iterate over something. The main difference between them is in what they iterate over.</p>
+
+<p>The for...in statement iterates over the enumerable string properties of an object, while the for...of statement iterates over values that the iterable object defines to be iterated over.</p>
+
+<p>The following example shows the difference between a for...of loop and a for...in loop when used with an Array.</p>
+
+<pre>
+<code>
+JS
+
+Object.prototype.objCustom = function () {};
+Array.prototype.arrCustom = function () {};
+
+const iterable = [3, 5, 7];
+iterable.foo = "hello";
+
+for (const i in iterable) {
+console.log(i);
+}
+// "0", "1", "2", "foo", "arrCustom", "objCustom"
+
+for (const i in iterable) {
+if (Object.hasOwn(iterable, i)) {
+console.log(i);
+}
+}
+// "0" "1" "2" "foo"
+
+for (const i of iterable) {
+console.log(i);
+}
+// 3 5 7
+</code>
+</pre>
+
+<p>The object iterable inherits the properties objCustom and arrCustom because it contains both Object.prototype and Array.prototype in its prototype chain.</p>
+
+<p>The for...in loop logs only enumerable properties of the iterable object. It doesn't log array elements 3, 5, 7 or "hello" because those are not properties — they are values. It logs array indexes as well as arrCustom and objCustom, which are actual properties. If you're not sure why these properties are iterated over, there's a more thorough explanation of how array iteration and for...in work.</p>
+
+<p>The second loop is similar to the first one, but it uses Object.hasOwn() to check if the found enumerable property is the object's own, i.e. not inherited. If it is, the property is logged. Properties 0, 1, 2 and foo are logged because they are own properties. Properties arrCustom and objCustom are not logged because they are inherited.</p>
+
+<p>The for...of loop iterates and logs values that iterable, as an array (which is iterable), defines to be iterated over. The object's elements 3, 5, 7 are shown, but none of the object's properties are.</p>
+
+</details>
+<br>
+<!-- Iteration protocols -->
+<details>
+<summary>Iteration protocols</summary>
+<h5>Iteration protocols</h5>
+
+<p>Iteration protocols aren't new built-ins or syntax, but protocols. These protocols can be implemented by any object by following some conventions.</p>
+
+<p>There are two protocols: The iterable protocol and the iterator protocol.</p>
+<h4>The iterable protocol</h4>
+
+<p>The iterable protocol allows JavaScript objects to define or customize their iteration behavior, such as what values are looped over in a for...of construct. Some built-in types are built-in iterables with a default iteration behavior, such as Array or Map, while other types (such as Object) are not.</p>
+
+<p>In order to be iterable, an object must implement the @@iterator method, meaning that the object (or one of the objects up its prototype chain) must have a property with a @@iterator key which is available via constant Symbol.iterator:</p>
+
+<dl>
+<dt>[Symbol.iterator]</dt>
+
+<dd>A zero-argument function that returns an object, conforming to the iterator protocol.</dd>
+</dl>
+
+<p>Whenever an object needs to be iterated (such as at the beginning of a for...of loop), its @@iterator method is called with no arguments, and the returned iterator is used to obtain the values to be iterated.</p>
+
+<p>Note that when this zero-argument function is called, it is invoked as a method on the iterable object. Therefore inside of the function, the this keyword can be used to access the properties of the iterable object, to decide what to provide during the iteration.</p>
+
+<p>This function can be an ordinary function, or it can be a generator function, so that when invoked, an iterator object is returned. Inside of this generator function, each entry can be provided by using yield.</p>
+<h4>The iterator protocol</h4>
+
+<p>The iterator protocol defines a standard way to produce a sequence of values (either finite or infinite), and potentially a return value when all values have been generated.</p>
+
+<p>An object is an iterator when it implements a next() method with the following semantics:</p>
+
+<dl>
+<dt>next()</dt>
+
+<dd> A function that accepts zero or one argument and returns an object conforming to the IteratorResult interface (see below). If a non-object value gets returned (such as false or undefined) when a built-in language feature (such as for...of) is using the iterator, a TypeError ("iterator.next() returned a non-object value") will be thrown.</dd>
+</dl>
+
+<p>All iterator protocol methods (next(), return(), and throw()) are expected to return an object implementing the IteratorResult interface. It must have the following properties:</p>
+
+<dl>
+<dt>done Optional</dt>
+
+<dd>
+<p>A boolean that's false if the iterator was able to produce the next value in the sequence. (This is equivalent to not specifying the done property altogether.)</p>
+
+<p>Has the value true if the iterator has completed its sequence. In this case, value optionally specifies the return value of the iterator.</p>
+</dd>
+<dt>value Optional</dt>
+
+<dd>Any JavaScript value returned by the iterator. Can be omitted when done is true.</dd>
+</dl>
+
+<p>In practice, neither property is strictly required; if an object without either property is returned, it's effectively equivalent to { done: false, value: undefined }.</p>
+
+<p>If an iterator returns a result with done: true, any subsequent calls to next() are expected to return done: true as well, although this is not enforced on the language level.</p>
+
+<p>The next method can receive a value which will be made available to the method body. No built-in language feature will pass any value. The value passed to the next method of generators will become the value of the corresponding yield expression.</p>
+
+<p>Optionally, the iterator can also implement the return(value) and throw(exception) methods, which, when called, tells the iterator that the caller is done with iterating it and can perform any necessary cleanup (such as closing database connection).</p>
+
+<dl>
+<dt>return(value) Optional</dt>
+
+<dd>A function that accepts zero or one argument and returns an object conforming to the IteratorResult interface, typically with value equal to the value passed in and done equal to true. Calling this method tells the iterator that the caller does not intend to make any more next() calls and can perform any cleanup actions.</dd>
+<dt>throw(exception) Optional</dt>
+
+<dd>A function that accepts zero or one argument and returns an object conforming to the IteratorResult interface, typically with done equal to true. Calling this method tells the iterator that the caller detects an error condition, and exception is typically an Error instance.</dd>
+</dl>
+
+<p>Note: It is not possible to know reflectively (i.e. without actually calling next() and validating the returned result) whether a particular object implements the iterator protocol.</p>
+
+<p>It is very easy to make an iterator also iterable: just implement an [@@iterator]() method that returns this.</p>
+
+<pre>
+<code>
+js
+
+// Satisfies both the Iterator Protocol and Iterable
+const myIterator = {
+next() {
+// ...
+},
+[Symbol.iterator]() {
+return this;
+},
+};
+</code>
+</pre>
+
+<p>Such object is called an iterable iterator. Doing so allows an iterator to be consumed by the various syntaxes expecting iterables — therefore, it is seldom useful to implement the Iterator Protocol without also implementing Iterable. (In fact, almost all syntaxes and APIs expect iterables, not iterators.) The generator object is an example:</p>
+
+<pre>
+<code>
+js
+
+const aGeneratorObject = (function* () {
+yield 1;
+yield 2;
+yield 3;
+})();
+
+console.log(typeof aGeneratorObject.next);
+// "function" — it has a next method (which returns the right result), so it's an iterator
+
+console.log(typeof aGeneratorObject[Symbol.iterator]);
+// "function" — it has an @@iterator method (which returns the right iterator), so it's an iterable
+
+console.log(aGeneratorObject[Symbol.iterator]() === aGeneratorObject);
+// true — its @@iterator method returns itself (an iterator), so it's an iterable iterator
+</code>
+</pre>
+
+<p>All built-in iterators inherit from Iterator.prototype, which implements the [@@iterator]() method as returning this, so that built-in iterators are also iterable.</p>
+
+<p>However, when possible, it's better for iterable[Symbol.iterator] to return different iterators that always start from the beginning, like Set.prototype[@@iterator]() does.</p>
+<h4>The async iterator and async iterable protocols</h4>
+
+<p>There are another pair of protocols used for async iteration, named async iterator and async iterable protocols. They have very similar interfaces compared to the iterable and iterator protocols, except that each return value from the calls to the iterator methods is wrapped in a promise.</p>
+
+<p>An object implements the async iterable protocol when it implements the following methods:</p>
+
+<dl>
+<dt>[Symbol.asyncIterator]</dt>
+
+<dd>A zero-argument function that returns an object, conforming to the async iterator protocol.</dd>
+</dl>
+
+<p>An object implements the async iterator protocol when it implements the following methods:</p>
+
+<dl>
+<dt>next()</dt>
+
+<dd>A function that accepts zero or one argument and returns a promise. The promise fulfills to an object conforming to the IteratorResult interface, and the properties have the same semantics as those of the sync iterator's.</dd>
+<dt>return(value) Optional</dt>
+
+<dd>A function that accepts zero or one argument and returns a promise. The promise fulfills to an object conforming to the IteratorResult interface, and the properties have the same semantics as those of the sync iterator's.</dd>
+<dt>throw(exception) Optional</dt>
+
+<dd>A function that accepts zero or one argument and returns a promise. The promise fulfills to an object conforming to the IteratorResult interface, and the properties have the same semantics as those of the sync iterator's.</dd>
+</dl>
+
+<h4>Interactions between the language and iteration protocols</h4>
+
+<p>The language specifies APIs that either produce or consume iterables and iterators.</p>
+<h4>Built-in iterables</h4>
+
+<p>String, Array, TypedArray, Map, Set, and Segments (returned by Intl.Segmenter.prototype.segment()) are all built-in iterables, because each of their prototype objects implements an @@iterator method. In addition, the arguments object and some DOM collection types such as NodeList are also iterables. There is no object in the core JavaScript language that is async iterable. Some web APIs, such as ReadableStream, have the Symbol.asyncIterator method set by default.</p>
+
+<p>Generator functions return generator objects, which are iterable iterators. Async generator functions return async generator objects, which are async iterable iterators.</p>
+
+<p>The iterators returned from built-in iterables actually all inherit from a common class Iterator, which implements the aforementioned [Symbol.iterator]() { return this; } method, making them all iterable iterators. The Iterator class also provides additional helper methods in addition to the next() method required by the iterator protocol. You can inspect an iterator's prototype chain by logging it in a graphical console.</p>
+
+<pre>
+<code>
+console.log([][Symbol.iterator]());
+
+Array Iterator {}
+[[Prototype]]: Array Iterator     ==&gt; This is the prototype shared by all array iterators
+next: ƒ next()
+Symbol(Symbol.toStringTag): "Array Iterator"
+[[Prototype]]: Object           ==&gt; This is the prototype shared by all built-in iterators
+Symbol(Symbol.iterator): ƒ [Symbol.iterator]()
+[[Prototype]]: Object         ==&gt; This is Object.prototype
+</code>
+</pre>
+
+<h4>Built-in APIs accepting iterables</h4>
+
+<p>There are many APIs that accept iterables. Some examples include:</p>
+
+<pre>
+<code>
+Map()
+WeakMap()
+Set()
+WeakSet()
+Promise.all()
+Promise.allSettled()
+Promise.race()
+Promise.any()
+Array.from()
+Object.groupBy()
+Map.groupBy()
+</code>
+</pre>
+
+<pre>
+<code>
+js
+
+const myObj = {};
+
+new WeakSet(
+(function* () {
+yield {};
+yield myObj;
+yield {};
+})(),
+).has(myObj); // true
+</code>
+</pre>
+
+<h4>Syntaxes expecting iterables</h4>
+
+<p>Some statements and expressions expect iterables, for example the for...of loops, array and parameter spreading, yield*, and array destructuring:</p>
+
+<pre>
+<code>
+js
+
+for (const value of ["a", "b", "c"]) {
+console.log(value);
+}
+// "a"
+// "b"
+// "c"
+
+console.log([..."abc"]); // ["a", "b", "c"]
+
+function* gen() {
+yield* ["a", "b", "c"];
+}
+
+console.log(gen().next()); // { value: "a", done: false }
+
+[a, b, c] = new Set(["a", "b", "c"]);
+console.log(a); // "a"
+</code>
+</pre>
+
+<p>When built-in syntaxes are iterating an iterator, and the last result's done is false (i.e. the iterator is able to produce more values) but no more values are needed, the return method will get called if present. This can happen, for example, if a break or return is encountered in a for...of loop, or if all identifiers are already bound in an array destructuring.</p>
+
+<pre>
+<code>
+js
+
+const obj = {
+[Symbol.iterator]() {
+let i = 0;
+return {
+next() {
+i++;
+console.log("Returning", i);
+if (i === 3) return { done: true, value: i };
+return { done: false, value: i };
+},
+return() {
+console.log("Closing");
+return { done: true };
+},
+};
+},
+};
+
+const [a] = obj;
+// Returning 1
+// Closing
+
+const [b, c, d] = obj;
+// Returning 1
+// Returning 2
+// Returning 3
+// Already reached the end (the last call returned `done: true`),
+// so `return` is not called
+
+for (const b of obj) {
+break;
+}
+// Returning 1
+// Closing
+</code>
+</pre>
+
+<p>The for await...of loop and yield* in async generator functions (but not sync generator functions) are the only ways to interact with async iterables. Using for...of, array spreading, etc. on an async iterable that's not also a sync iterable (i.e. it has [@@asyncIterator]() but no [@@iterator]()) will throw a TypeError: x is not iterable.</p>
+<h4>Non-well-formed iterables</h4>
+
+<p>If an iterable's @@iterator method doesn't return an iterator object, then it's considered a non-well-formed iterable.</p>
+
+<p>Using one is likely to result in runtime errors or buggy behavior:</p>
+
+<pre>
+<code>
+js
+
+const nonWellFormedIterable = {};
+nonWellFormedIterable[Symbol.iterator] = () =&gt; 1;
+[...nonWellFormedIterable]; // TypeError: [Symbol.iterator]() returned a non-object value
+</code>
+</pre>
+
+<h4>Examples</h4>
+<p>User-defined iterables</p>
+
+<p>You can make your own iterables like this:</p>
+<pre>
+<code>
+js
+
+const myIterable = {
+*[Symbol.iterator]() {
+yield 1;
+yield 2;
+yield 3;
+},
+};
+
+console.log([...myIterable]); // [1, 2, 3]
+</code>
+</pre>
+
+<h4>Simple iterator</h4>
+
+<p>Iterators are stateful by nature. If you don't define it as a generator function (as the example above shows), you would likely want to encapsulate the state in a closure.</p>
+
+<pre>
+<code>
+js
+
+function makeIterator(array) {
+let nextIndex = 0;
+return {
+next() {
+return nextIndex &lt; array.length
+? {
+value: array[nextIndex++],
+done: false,
+}
+: {
+done: true,
+};
+},
+};
+}
+
+const it = makeIterator(["yo", "ya"]);
+
+console.log(it.next().value); // 'yo'
+console.log(it.next().value); // 'ya'
+console.log(it.next().done); // true
+</code>
+</pre>
+
+<h4>Infinite iterator</h4>
+<pre>
+<code>
+js
+
+function idMaker() {
+let index = 0;
+return {
+next() {
+return {
+value: index++,
+done: false,
+};
+},
+};
+}
+
+const it = idMaker();
+
+console.log(it.next().value); // 0
+console.log(it.next().value); // 1
+console.log(it.next().value); // 2
+// ...
+</code>
+</pre>
+
+<h4>Defining an iterable with a generator</h4>
+<pre>
+<code>
+js
+
+function* makeSimpleGenerator(array) {
+let nextIndex = 0;
+while (nextIndex &lt; array.length) {
+yield array[nextIndex++];
+}
+}
+
+const gen = makeSimpleGenerator(["yo", "ya"]);
+
+console.log(gen.next().value); // 'yo'
+console.log(gen.next().value); // 'ya'
+console.log(gen.next().done); // true
+
+function* idMaker() {
+let index = 0;
+while (true) {
+yield index++;
+}
+}
+
+const it = idMaker();
+
+console.log(it.next().value); // 0
+console.log(it.next().value); // 1
+console.log(it.next().value); // 2
+// ...
+</code>
+</pre>
+
+<h4>Defining an iterable with a class</h4>
+
+<p>State encapsulation can be done with private properties as well.</p>
+<pre>
+<code>
+js
+
+class SimpleClass {
+#data;
+
+constructor(data) {
+this.#data = data;
+}
+
+[Symbol.iterator]() {
+// Use a new index for each iterator. This makes multiple
+// iterations over the iterable safe for non-trivial cases,
+// such as use of break or nested looping over the same iterable.
+let index = 0;
+
+return {
+// Note: using an arrow function allows `this` to point to the
+// one of `[@@iterator]()` instead of `next()`
+next: () =&gt; {
+if (index &lt; this.#data.length) {
+return { value: this.#data[index++], done: false };
+} else {
+return { done: true };
+}
+},
+};
+}
+}
+
+const simple = new SimpleClass([1, 2, 3, 4, 5]);
+
+for (const val of simple) {
+console.log(val); // 1 2 3 4 5
+}
+</code>
+</pre>
+
+<h4>Overriding built-in iterables</h4>
+
+<p>For example, a String is a built-in iterable object:</p>
+<pre>
+<code>
+js
+
+const someString = "hi";
+console.log(typeof someString[Symbol.iterator]); // "function"
+</code>
+</pre>
+
+<p>String's default iterator returns the string's code points one by one:</p>
+<pre>
+<code>
+js
+
+const iterator = someString[Symbol.iterator]();
+console.log(`${iterator}`); // "[object String Iterator]"
+
+console.log(iterator.next()); // { value: "h", done: false }
+console.log(iterator.next()); // { value: "i", done: false }
+console.log(iterator.next()); // { value: undefined, done: true }
+</code>
+</pre>
+
+<p>You can redefine the iteration behavior by supplying our own @@iterator:</p>
+<pre>
+<code>
+js
+
+// need to construct a String object explicitly to avoid auto-boxing
+const someString = new String("hi");
+
+someString[Symbol.iterator] = function () {
+return {
+// this is the iterator object, returning a single element (the string "bye")
+next() {
+return this._first
+? { value: "bye", done: (this._first = false) }
+: { done: true };
+},
+_first: true,
+};
+};
+
+</code>
+</pre>
+<p>Notice how redefining @@iterator affects the behavior of built-in constructs that use the iteration protocol:</p>
+<pre>
+<code>
+js
+
+console.log([...someString]); // ["bye"]
+console.log(`${someString}`); // "hi"
+</code>
+</pre>
+
+</details>
+<br>
+<!-- for...in -->
+<details>
+<summary>for...in</summary>
+<h5>for...in</h5>
+<p>The for...in statement iterates over all enumerable string properties of an object (ignoring properties keyed by symbols), including inherited enumerable properties.</p>
+
+<h4>Syntax</h4>
+<pre>
+<code>
+JS
+
+for (variable in object)
+statement
+</code>
+</pre>
+<h4>Parameters</h4>
+<dl>
+<dt>variable</dt>
+<dd>Receives a string property name on each iteration. May be either a declaration with const, let, or var, or an assignment target (e.g. a previously declared variable, an object property, or a destructuring assignment pattern). Variables declared with var are not local to the loop, i.e. they are in the same scope the for...in loop is in.</dd>
+
+<dt>object</dt>
+<dd>Object whose non-symbol enumerable properties are iterated over.</dd>
+
+<dt>statement</dt>
+<dd>A statement to be executed on every iteration. May reference variable. You can use a block statement to execute multiple statements.</dd>
+</dl>
+
+<h4>Description</h4>
+<p>The loop will iterate over all enumerable properties of the object itself and those the object inherits from its prototype chain (properties of nearer prototypes take precedence over those of prototypes further away from the object in its prototype chain).</p>
+
+<p>A for...in loop only iterates over enumerable, non-symbol properties. Objects created from built–in constructors like Array and Object have inherited non–enumerable properties from Array.prototype and Object.prototype, such as Array's indexOf() method or Object's toString() method, which will not be visited in the for...in loop.</p>
+
+<p>The traversal order, as of modern ECMAScript specification, is well-defined and consistent across implementations. Within each component of the prototype chain, all non-negative integer keys (those that can be array indices) will be traversed first in ascending order by value, then other string keys in ascending chronological order of property creation.</p>
+
+<p>The variable part of for...in accepts anything that can come before the = operator. You can use const to declare the variable as long as it's not reassigned within the loop body (it can change between iterations, because those are two separate variables). Otherwise, you can use let. You can use destructuring to assign multiple local variables, or use a property accessor like for (x.y in iterable) to assign the value to an object property.</p>
+
+<p>A legacy syntax allows var declarations of the loop variable to have an initializer. This throws a syntax error in strict mode and is ignored in non–strict mode.</p>
+
+<h4>Deleted, added, or modified properties</h4>
+<p>for...in visits property keys in the following fashion:</p>
+
+<ul>
+<li>It first gets all own string keys of the current object, in a fashion very similar to Object.getOwnPropertyNames().</li>
+<li>For each key, if no string with the same value has ever been visited, the property descriptor is retrieved and the property is only visited if it is enumerable. However, this property string will be marked as visited even if it's not enumerable.</li>
+<li>Then, the current object is replaced with its prototype, and the process is repeated.</li>
+</ul>
+<p>This means:</p>
+
+<p>Any property added to the currently visited object during iteration will not be visited, because all own properties of the current object have already been saved beforehand.</p>
+<p> If multiple objects in the prototype chain have a property with the same name, only the first one will be considered, and it is only visited if it's enumerable. If it is non-enumerable, no other properties with the same name further up the prototype chain will be visited, even if they are enumerable.</p>
+<p>In general, it is best not to add, modify, or remove properties from the object during iteration, other than the property currently being visited. The spec explicitly allows the implementation to not follow the algorithm above in one of the following cases:</p>
+
+<ul>
+<li>The object's prototype chain is modified during iteration.</li>
+<li>A property is deleted from the object or its prototype chain during iteration.</li>
+<li>A property is added to the object's prototype chain during iteration.</li>
+<li>A property's enumerability is changed during iteration.</li>
+</ul>
+<p>In these cases, implementations may behave differently from what you may expect, or even from each other.</p>
+
+<h4>Array iteration and for...in</h4>
+<p>Array indexes are just enumerable properties with integer names and are otherwise identical to general object properties. The for...in loop will traverse all integer keys before traversing other keys, and in strictly increasing order, making the behavior of for...in close to normal array iteration. However, the for...in loop will return all enumerable properties, including those with non–integer names and those that are inherited. Unlike for...of, for...in uses property enumeration instead of the array's iterator. In sparse arrays, for...of will visit the empty slots, but for...in will not.</p>
+
+<p>It is better to use a for loop with a numeric index, Array.prototype.forEach(), or the for...of loop, because they will return the index as a number instead of a string, and also avoid non-index properties.</p>
+
+<h4>Iterating over own properties only</h4>
+<p>If you only want to consider properties attached to the object itself, and not its prototypes, you can use one of the following techniques:</p>
+
+<ul>
+<li>Object.keys()</li>
+<li>Object.getOwnPropertyNames()</li>
+<li>Object.keys will return a list of enumerable own string properties, while Object.getOwnPropertyNames will also contain non-enumerable ones.</li>
+</ul>
+
+<p>Many JavaScript style guides and linters recommend against the use of for...in, because it iterates over the entire prototype chain which is rarely what one wants, and may be a confusion with the more widely-used for...of loop. for...in is most practically used for debugging purposes, being an easy way to check the properties of an object (by outputting to the console or otherwise). In situations where objects are used as ad hoc key-value pairs, for...in allows you check if any of those keys hold a particular value.</p>
+
+<h4>Examples</h4>
+<h5>Using for...in</h5>
+<p>The for...in loop below iterates over all of the object's enumerable, non-symbol properties and logs a string of the property names and their values.</p>
+
+<pre>
+<code>
+JS
+
+const obj = { a: 1, b: 2, c: 3 };
+
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+}
+
+// Logs:
+// "obj.a = 1"
+// "obj.b = 2"
+// "obj.c = 3"
+</code>
+</pre>
+
+
+<h5>Iterating own properties</h5>
+<p>The following function illustrates the use of Object.hasOwn(): the inherited properties are not displayed.</p>
+
+<pre>
+<code>
+JS
+
+const triangle = { a: 1, b: 2, c: 3 };
+
+function ColoredTriangle() {
+this.color = "red";
+}
+
+ColoredTriangle.prototype = triangle;
+
+const obj = new ColoredTriangle();
+
+for (const prop in obj) {
+if (Object.hasOwn(obj, prop)) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+}
+}
+
+// Logs:
+// "obj.color = red"
+</code>
+</pre>
+
+<h5>Concurrent modification</h5>
+<p>Warning: You should not write code like this yourself. It is only included here to illustrate the behavior of for...in in some corner cases.</p>
+
+<p>Properties added to the current object during iteration are never visited:</p>
+
+<pre>
+<code>
+JS
+
+const obj = { a: 1, b: 2 };
+
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+obj.c = 3;
+}
+
+// Logs:
+// obj.a = 1
+// obj.b = 2
+</code>
+</pre>
+
+<p> Shadowed properties are only visited once:</p>
+
+<pre>
+<code>
+JS
+
+const proto = { a: 1 };
+const obj = { __proto__: proto, a: 2 };
+
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+}
+
+// Logs:
+// obj.a = 2
+
+Object.defineProperty(obj, "a", { enumerable: false });
+
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+}
+// Logs nothing, because the first "a" property visited is non-enumerable.
+</code>
+</pre>
+
+<p>In addition, consider the following cases, where the behavior is unspecified, and implementations tend to diverge from the specified algorithm:</p>
+
+<h5>Changing the prototype during iteration:</h5>
+
+<pre>
+<code>
+JS
+
+const obj = { a: 1, b: 2 };
+
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+Object.setPrototypeOf(obj, { c: 3 });
+}
+</code>
+</pre>
+
+<h5>Deleting a property during iteration:</h5>
+
+<pre>
+<code>
+JS
+
+const obj = { a: 1, b: 2, c: 3 };
+
+// Deleting a property before it is visited
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+delete obj.c;
+}
+
+const obj2 = { a: 1, b: 2, c: 3 };
+
+// Deleting a property after it is visited
+for (const prop in obj2) {
+console.log(`obj2.${prop} = ${obj2[prop]}`);
+delete obj2.a;
+}
+</code>
+</pre>
+
+<h5>Enumerable properties added to the prototype during iteration:</h5>
+
+<pre>
+<code>
+JS
+
+const proto = {};
+const obj = { __proto__: proto, a: 1, b: 2 };
+
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+proto.c = 3;
+}
+</code>
+</pre>
+
+<h5>Changing the enumerability of a property during iteration:</h5>
+
+<pre>
+<code>
+JS
+
+const obj = { a: 1, b: 2, c: 3 };
+
+for (const prop in obj) {
+console.log(`obj.${prop} = ${obj[prop]}`);
+Object.defineProperty(obj, "c", { enumerable: false });
+}
+</code>
+</pre>
+
+</details>
+<br>
+<!-- The for...in Loop and Enumerable Properties -->
+<details>
+<summary>The for...in Loop and Enumerable Properties</summary>
+<h5>The for...in Loop and Enumerable Properties</h5>
+<blockquote>
+#javascript
+Published: Monday, July 18, 2022
+Updated: Tuesday, July 19, 2022
+</blockquote>
+
+
+<p>Greetings, friends! Enumerable properties and for...in loops in JavaScript can seem confusing for beginners. In this tutorial, I'll discuss what for...in loops do and how the JavaScript engine determines what properties to iterate over.</p>
+<h4>What are for...in Loops?</h4>
+
+<p>The for...in statement let us iterate over all enumerable properties of an object. Let's look at an example of using a for...in loop with a simple object.</p>
+
+<pre>
+<code>
+js
+
+const object = {a: 1, b: 2, c: 3};
+
+for (const key in object) {
+console.log(key);
+}
+
+/* OUTPUT:
+a
+b
+c
+*/
+</code>
+</pre>
+
+<p>The code above will iterate through every property key in object and log them to the console. We can also get the value of each property in the object as shown in the code below.</p>
+
+<pre>
+<code>
+js
+
+const object = {a: 1, b: 2, c: 3};
+
+for (const key in object) {
+console.log(object[key]);
+}
+
+/* OUTPUT:
+1
+2
+3
+*/
+</code>
+</pre>
+
+<h4>The for...in Loop with Symbols</h4>
+
+<p>If we decided to add new properties to an object with keys that are Symbols instead of strings, let's see what happens.</p>
+
+<pre>
+<code>
+js
+
+const object = {
+a: 1,
+b: 2,
+c: 3,
+[Symbol('d')]: 4,
+[Symbol('e')]: 5,
+};
+
+for (const key in object) {
+console.log(key);
+}
+
+/* OUTPUT:
+a
+b
+c
+*/
+
+for (const key in object) {
+console.log(object[key]);
+}
+
+/* OUTPUT:
+1
+2
+3
+*/
+</code>
+</pre>
+
+<p>After running the code above, we can see that Symbols are completely ignored by for...in loops!</p>
+<h4>What are Enumerable Properties?</h4>
+
+<p>We have seen that the for...in loop can magically iterate over properties in an object, but how does the JavaScript engine decide what properties are considered enumerable? It turns out that every property on an object has special attributes called property descriptors. One of these property descriptors is called enumerable.</p>
+
+<p>Enumerable properties are properties of an object whose internal enumerable flag (property descriptor) is set to true, which is the default for properties created via simple assignment or via a property initializer. When we create an object by assigning it to a variable similar to what we've been doing throughout this tutorial, each property will have the enumerable descriptor set to true.</p>
+
+<p>We can actually set the enumerable descriptor to false to hide properties during a for...in loop by using Object.defineProperty or Object.defineProperties.</p>
+
+<pre>
+<code>
+js
+
+const object = {
+a: 1,
+b: 2,
+c: 3,
+hideMePlz: 4,
+};
+
+Object.defineProperty(object, 'hideMePlz', {
+enumerable: false
+});
+
+for (const key in object) {
+console.log(key);
+}
+
+/* OUTPUT:
+a
+b
+c
+*/
+</code>
+</pre>
+
+<p>When we run the code, the hideMePlz property will be hidden from the for...in loop! If we log the object to the console, we can see that the property still exists on the object. It's only hidden when using a for...in loop.</p>
+
+<pre>
+<code>
+js
+
+console.log(object);
+
+/* OUTPUT
+{
+a: 1,
+b: 2,
+c: 3,
+hideMePlz: 4
+}
+*/
+</code>
+</pre>
+
+<p>If you logged object to the console in Google Chrome, then you may notice that the hideMePlz property is in a faded color compared to the other properties. I'm using dark mode, so it appears as a dark shade of blue. This indicates that the property isn't enumerable anymore.</p>
+
+<p><b>Fun fact:</b> did you know that arrays have a length property that has an enumerable property descriptor set to false? As indicated by the faded color in Google Chrome, this appears to be the case.</p>
+
+<h4>Which Properties are Enumerable?</h4>
+
+<p>If you need help determining whether a property on an object is considered enumerable, you can use the Object.propertyIsEnumerable method.</p>
+
+<pre>
+<code>
+js
+
+const object = {
+a: 1,
+b: 2,
+c: 3,
+hideMePlz: 4,
+};
+
+
+console.log(object.propertyIsEnumerable('hideMePlz')); // true
+
+Object.defineProperty(object, 'hideMePlz', {
+enumerable: false
+});
+
+console.log(object.propertyIsEnumerable('hideMePlz')); // false
+</code>
+</pre>
+
+<p>If we want to look at the enumerable property for all properties on an object instead of just one, then we can use the Object.getOwnPropertyDescriptors method.</p>
+<pre>
+<code>
+js
+
+
+const object = {
+a: 1,
+b: 2,
+c: 3,
+hideMePlz: 4,
+};
+
+Object.defineProperty(object, 'hideMePlz', {
+enumerable: false
+});
+
+const descriptors = Object.getOwnPropertyDescriptors(object);
+
+for (const key in descriptors) {
+console.log(key + ': ' + descriptors[key].enumerable);
+}
+
+/* OUTPUT:
+a: true
+b: true
+c: true
+hideMePlz: false
+*/
+</code>
+</pre>
+
+<p>The Object.getOwnPropertyDescriptors method will return a new object that contains information about the property descriptors for each property on our original object. We're using a for...in loop on descriptors to find out what properties are considered enumerable.</p>
+
+<p>In case you're wondering how we're able to use a for...in loop to detect enumerable properties that are false, keep in mind that we're creating a new object called descriptors. As mentioned earlier in this tutorial, assigning a new object to a variable will set the enumerable descriptor to true by default.</p>
+<h4>Enumerable vs Iterable</h4>
+
+<p>Although they sound similar, enumerability and iterability are not the same. Objects are considered enumerable when they contain properties with the enumerable property descriptor set to true.</p>
+
+<p>Objects are considered iterable when they implement the iterable protocol. For an object to implement the iterable protocol, it must contain a method named Symbol.iterator that returns an iterator. You can learn more about iterables and iterators in my tutorial series that discusses them.</p>
+<h4>Conclusion</h4>
+
+<p>In this tutorial, we have learned how to use for...in loops and what enumerable properties are. In the next tutorial, I will discuss the differences between for...in and for...of loops and when to use each one!</p>
+</details>
+<!-- keyof typeof errors Expression of type string can't be used to index type X -->
+<br>
+<details>
+<summary>Expression of type string can't be used to index type X</summary>
+<h5>Expression of type string can't be used to index type X</h5>
+
+<note>Element implicitly has an 'any' type because expression of type 'X' can't be used to index type 'Y'.</note>
+
+<p>This error is likely occurring because you're trying to use a type that's too loose to access an object's properties.</p>
+
+<pre>
+<code>
+const myObj = {
+a: 1,
+b: 2,
+};
+
+const access = (str: string) =&GT; {
+return myObj[str];
+
+<i>
+Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ a: number; b: number; }'.</i>
+<br>
+<i>No index signature with a parameter of type 'string' was found on type '{ a: number; b: number; }.};</i>
+
+</code>
+</pre>
+
+
+<h5>Solution 1: Tighten the index</h5>
+
+<p>One solution is to try to make the type doing the indexing tighter. In this case, by changing str to keyof typeof myObj:</p>
+
+<pre>
+<code>
+const access = (str: keyof typeof myObj) =&GT; {
+return myObj[str];
+};
+</code>
+</pre>
+
+<p>This is very safe because it ensures that the string you're using to index into the object is one of the keys of the object. But it's not always possible.</p>
+
+<h5>Solution 2: Loosen the object type</h5>
+
+<p>When you declare an object, TypeScript will try to infer the most specific type possible. In this case, it's inferring that myObj is an object with two properties, a and b, whose values are numbers.</p>
+
+<p>If you want to loosen the type of the object, you can do so by adding a type annotation:</p>
+
+<pre>
+<code>
+const myObj: Record&LT;string, number&GT; = {
+a: 1,
+b: 2,
+};
+</code>
+</pre>
+
+<p>Now, we can access the object with any string - and also add any string to the object:</p>
+
+<pre>
+<code>
+// We can add new keys to the object!
+myObj["c"] = 3;
+
+const access = (str: string) =&GT; {
+// Accessing with string is perfectly OK!
+return myObj[str];
+};
+</code>
+</pre>
+
+<p>Note that if you choose this approach, you should add noUncheckedIndexedAccess to your tsconfig, which will give you extra safety when accessing the object.</p>
+
+<h5>Solution 3: Cast the index</h5>
+
+<p>Finally, you can do a cast inside the access itself:</p>
+
+<pre>
+<code>
+const access = (str: string) =&GT; {
+return myObj[str as keyof typeof myObj];
+};
+</code>
+</pre>
+<p>This is slightly less safe and might result in an unexpected result because we're fooling TypeScript into thinking that myObj[str] will always return a number. But if we call access with c, we won't get a number back at runtime:</p>
+
+<pre>
+<code>
+/**
+* TS things it's a number, but it's actually undefined!
+*/
+const cResult = access("c");
+
+const cResult: number
+</code>
+</pre>
+
+<p>If possible, you should be using solution 1 or 2 instead - but having this cast in your pocket can be useful.</p>
+</details>
+<br>
+<!-- Loop Through an Object in JavaScript – How to Iterate Over an Object in JS -->
+<details>
+
+<summary>Loop Through an Object in JavaScript – How to Iterate Over an Object in JS</summary>
+<h5>Loop Through an Object in JavaScript – How to Iterate Over an Object in JS</h5>
+<blockquote>Joel Olawanle</blockquote>
+
+<p>In JavaScript, when you hear the term "loop", you probably think of using the various loop methods like for loops, forEach(), map() and others.</p>
+
+<p>But in the case of objects, unfortunately, these methods don't work because objects are not iterable.</p>
+
+<p>This doesn't mean we can't loop through an object – but this means that we can't loop through an object directly the same way we do for an array:</p>
+
+<pre>
+<code>
+let arr = [24, 33, 77];
+arr.forEach((val) =&gt; console.log(val)); // ✅✅✅
+
+for (val of arr) {
+console.log(val); // ✅✅✅
+}
+
+let obj = { age: 12, name: "John Doe" };
+obj.forEach((val) =&gt; console.log(val)); // ❌❌❌
+
+for (val of obj) {
+console.log(val); // ❌❌❌
+}
+
+</code>
+</pre>
+<p>In this article, You'll learn how you can loop through an object in JavaScript. There are two methods you can use - and one of them pre-dates the introduction of ES6.</p>
+<h4>How to loop through an object in JavaScript with a for…in loop</h4>
+
+<p>Before ES6, we relied on the for...in method whenever we wanted to loop through an object.</p>
+
+<p>The for...in loop iterates through properties in the prototype chain. This means that we need to check if the property belongs to the object using hasOwnProperty whenever we loop through an object with the for…in loop:</p>
+
+<pre>
+<code>
+const population = {
+male: 4,
+female: 93,
+others: 10
+};
+
+// Iterate through the object
+for (const key in population) {
+if (population.hasOwnProperty(key)) {
+console.log(`${key}: ${population[key]}`);
+}
+}
+</code>
+</pre>
+
+<p>To avoid the stress and difficulty of looping and to use the hasOwnProperty method, ES6 and ES8 introduced object static methods. These convert object properties to arrays, allowing us to use array methods directly.</p>
+<h4>How to loop through an object in JavaScript with object static methods</h4>
+
+<p>An object is made up of properties that have key-value pairs, that is each property always has a corresponding value.</p>
+
+<p>Object static methods let us extract either keys(), values(), or both keys and values as entries() in an array, allowing us to have as much flexibility over them as we do with actual arrays.</p>
+
+<p>We have three object static methods, which are:</p>
+
+<pre>
+<code>
+Object.keys()
+Object.values()
+Object.entries()
+</code>
+</pre>
+
+<h4>How to loop through an object in JavaScript with the Object.keys() method</h4>
+
+T<p>he Object.keys() method was introduced in ES6. It takes the object we want to loop over as an argument and returns an array containing all property names (also known as keys).</p>
+
+<pre>
+<code>
+const population = {
+male: 4,
+female: 93,
+others: 10
+};
+
+let genders = Object.keys(population);
+
+console.log(genders); // ["male","female","others"]
+</code>
+</pre>
+
+<p>This now gives us the advantage of applying any array looping method to iterate through the array and retrieve the value of each property:</p>
+
+<pre>
+<code>
+let genders = Object.keys(population);
+
+genders.forEach((gender) =&gt; console.log(gender));
+</code>
+</pre>
+
+<p>This will return:</p>
+
+<pre>
+<code>
+"male"
+"female"
+"others"
+</code>
+</pre>
+
+<p>We can also use the key to get the value using bracket notation such as population[gender] as seen below:</p>
+
+<pre>
+<code>
+genders.forEach((gender) =&gt; {
+console.log(`There are ${population[gender]} ${gender}`);
+})
+</code>
+</pre>
+
+<p>This will return:</p>
+
+<pre>
+<code>
+"There are 4 male"
+"There are 93 female"
+"There are 10 others"
+</code>
+</pre>
+
+<p>Before we move on, let's use this method to sum all the population by looping through so we know the total population:</p>
+
+<pre>
+<code>
+const population = {
+male: 4,
+female: 93,
+others: 10
+};
+
+let totalPopulation = 0;
+let genders = Object.keys(population);
+
+genders.forEach((gender) =&gt; {
+totalPopulation += population[gender];
+});
+
+console.log(totalPopulation); // 107
+</code>
+</pre>
+
+<p>How to loop through an object in JavaScript with the Object.values() method</p>
+
+<p>The Object.values() method is very similar to the Object.keys() method and was introduced in ES8. This method takes the Object we want to loop over as an argument and returns an array containing all key values.</p>
+
+<pre>
+<code>
+const population = {
+male: 4,
+female: 93,
+others: 10
+};
+
+let numbers = Object.values(population);
+
+console.log(numbers); // [4,93,10]
+</code>
+</pre>
+
+<p>This now gives us the advantage of applying any array looping method to iterate through the array and retrieve the value of each property:</p>
+
+<pre>
+<code>
+let numbers = Object.values(population);
+
+numbers.forEach((number) =&gt; console.log(number));
+</code>
+</pre>
+
+<p>This will return:</p>
+
+<pre>
+<code>
+4
+93
+10
+</code>
+</pre>
+
+<p>We can efficiently perform the total calculation since we can loop through directly:</p>
+
+<pre>
+<code>
+let totalPopulation = 0;
+let numbers = Object.values(population);
+
+numbers.forEach((number) =&gt; {
+totalPopulation += number;
+});
+
+console.log(totalPopulation); // 107
+</code>
+</pre>
+
+<h4> How to loop through an object in JavaScript with the Object.entries() method</h4>
+
+<p>The Object.entries() method was also introduced with ES8. In the basic sense, what it does is that it outputs an array of arrays, whereby each inner array has two elements which are the property and the value.</p>
+
+<pre>
+<code>
+const population = {
+male: 4,
+female: 93,
+others: 10
+};
+
+let populationArr = Object.entries(population);
+
+console.log(populationArr);
+</code>
+</pre>
+
+<p>This outputs:</p>
+
+<pre>
+<code>
+[
+['male', 4]
+['female', 93]
+['others', 10]
+]
+
+</code>
+</pre>
+<p>This returns an array of arrays, with each inner array having the [key, value]. You can use any array method to loop through:</p>
+
+<pre>
+<code>
+for (array of populationArr){
+console.log(array);
+}
+
+// Output:
+// ['male', 4]
+// ['female', 93]
+// ['others', 10]
+</code>
+</pre>
+
+<p>We could decide to destructure the array, so we get the key and value:</p>
+
+<pre>
+<code>
+for ([key, value] of populationArr){
+console.log(key);
+} 
+</code>
+</pre>
+
+<p>You can learn more about how to loop through arrays in this article.</p>
+<h4>Wrapping up</h4>
+
+<p>In this tutorial, you learned that the best way to loop through an object is to use any object static method based on your needs to first convert to an array before looping.</p>
+</details>
+<br>
+<!-- Object.entries() -->
+<details>
+<summary>Object.entries()</summary>    
+<h5>Object.entries()</h5>
+
+<p>The Object.entries() static method returns an array of a given object's own enumerable string-keyed property key-value pairs.</p>
+
+<h4>Syntax</h4>
+<pre>
+<code>
+js
+
+Object.entries(obj)
+</code>
+</pre>
+
+<h4>Parameters</h4>
+
+<dl>
+<dt>obj</dt>
+
+<dd>An object.</dd>
+</dl>
+
+<h4>Return value</h4>
+
+<p>An array of the given object's own enumerable string-keyed property key-value pairs. Each key-value pair is an array with two elements: the first element is the property key (which is always a string), and the second element is the property value.</p>
+<h4>Description</h4>
+
+<p>Object.entries() returns an array whose elements are arrays corresponding to the enumerable string-keyed property key-value pairs found directly upon object. This is the same as iterating with a for...in loop, except that a for...in loop enumerates properties in the prototype chain as well. The order of the array returned by Object.entries() is the same as that provided by a for...in loop.</p>
+
+<p>If you only need the property keys, use Object.keys() instead. If you only need the property values, use Object.values() instead.</p>
+<h4>Examples</h4>
+<h5>Using Object.entries()</h5>
+
+<pre>
+<code>
+js
+
+const obj = { foo: "bar", baz: 42 };
+console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
+
+const arrayLike = { 0: "a", 1: "b", 2: "c" };
+console.log(Object.entries(arrayLike)); // [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]
+
+const randomKeyOrder = { 100: "a", 2: "b", 7: "c" };
+console.log(Object.entries(randomKeyOrder)); // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
+
+// getFoo is a non-enumerable property
+const myObj = Object.create(
+{},
+{
+getFoo: {
+    value() {
+    return this.foo;
+    },
+},
+},
+);
+myObj.foo = "bar";
+console.log(Object.entries(myObj)); // [ ['foo', 'bar'] ]
+</code>
+</pre>
+
+<h5>Using Object.entries() on primitives</h5>
+
+<p>Non-object arguments are coerced to objects. undefined and null cannot be coerced to objects and throw a TypeError upfront. Only strings may have own enumerable properties, while all other primitives return an empty array.</p>
+
+<pre>
+<code>
+js
+
+// Strings have indices as enumerable own properties
+console.log(Object.entries("foo")); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
+
+// Other primitives except undefined and null have no own properties
+console.log(Object.entries(100)); // []
+</code>
+</pre>
+
+<h5>Converting an Object to a Map</h5>
+
+<p>The Map() constructor accepts an iterable of entries. With Object.entries, you can easily convert from Object to Map:</p>
+
+<pre>
+<code>
+js
+
+const obj = { foo: "bar", baz: 42 };
+const map = new Map(Object.entries(obj));
+console.log(map); // Map(2) {"foo" =&gt; "bar", "baz" =&gt; 42}
+</code>
+</pre>
+
+<h5>Iterating through an Object</h5>
+
+<p>Using array destructuring, you can iterate through objects easily.</p>
+<pre>
+<code>
+js
+
+// Using for...of loop
+const obj = { a: 5, b: 7, c: 9 };
+for (const [key, value] of Object.entries(obj)) {
+console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+}
+
+// Using array methods
+Object.entries(obj).forEach(([key, value]) =&gt; {
+console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+});
+</code>
+</pre>
+</details>
+<br>
+<!-- Symbol -->
+<details>
+<summary>Symbol</summary>
+<h5>Symbol</h5>
+<p>Symbol is a built-in object whose constructor returns a symbol primitive — also called a Symbol value or just a Symbol — that's guaranteed to be unique. Symbols are often used to add unique property keys to an object that won't collide with keys any other code might add to the object, and which are hidden from any mechanisms other code will typically use to access the object. That enables a form of weak encapsulation, or a weak form of information hiding.</p>
+
+<p>Every Symbol() call is guaranteed to return a unique Symbol. Every Symbol.for("key") call will always return the same Symbol for a given value of "key". When Symbol.for("key") is called, if a Symbol with the given key can be found in the global Symbol registry, that Symbol is returned. Otherwise, a new Symbol is created, added to the global Symbol registry under the given key, and returned</p>.
+<h4>Description</h4>
+
+<p>To create a new primitive Symbol, you write Symbol() with an optional string as its description:</p>
+<pre>
+<code>
+js
+
+const sym1 = Symbol();
+const sym2 = Symbol("foo");
+const sym3 = Symbol("foo");
+</code>
+</pre>
+
+<p>The above code creates three new Symbols. Note that Symbol("foo") does not coerce the string "foo" into a Symbol. It creates a new Symbol each time:</p>
+<pre>
+<code>
+js
+
+Symbol("foo") === Symbol("foo"); // false
+</code>
+</pre>
+
+<p>The following syntax with the new operator will throw a TypeError:</p>
+<pre>
+<code>
+js
+
+const sym = new Symbol(); // TypeError
+</code>
+</pre>
+
+<p>This prevents authors from creating an explicit Symbol wrapper object instead of a new Symbol value and might be surprising as creating explicit wrapper objects around primitive data types is generally possible (for example, new Boolean, new String and new Number).</p>
+
+<p>If you really want to create a Symbol wrapper object, you can use the Object() function:</p>
+<pre>
+<code>
+js
+
+const sym = Symbol("foo");
+typeof sym; // "symbol"
+const symObj = Object(sym);
+typeof symObj; // "object"
+</code>
+</pre>
+
+<p>Because symbols are the only primitive data type that has reference identity (that is, you cannot create the same symbol twice), they behave like objects in some way. For example, they are garbage collectable and can therefore be stored in WeakMap, WeakSet, WeakRef, and FinalizationRegistry objects.</p>
+<h4>Shared Symbols in the global Symbol registry</h4>
+
+<p>The above syntax using the Symbol() function will create a Symbol whose value remains unique throughout the lifetime of the program. To create Symbols available across files and even across realms (each of which has its own global scope), use the methods Symbol.for() and Symbol.keyFor() to set and retrieve Symbols from the global Symbol registry.</p>
+
+<p>Note that the "global Symbol registry" is only a fictitious concept and may not correspond to any internal data structure in the JavaScript engine — and even if such a registry exists, its content is not available to the JavaScript code, except through the for() and keyFor() methods.</p>
+
+<p>The method Symbol.for(tokenString) takes a string key and returns a symbol value from the registry, while Symbol.keyFor(symbolValue) takes a symbol value and returns the string key corresponding to it. Each is the other's inverse, so the following is true:</p>
+
+<pre>
+<code>
+js
+
+Symbol.keyFor(Symbol.for("tokenString")) === "tokenString"; // true
+</code>
+</pre>
+
+<p>Because registered symbols can be arbitrarily created anywhere, they behave almost exactly like the strings they wrap. Therefore, they are not guaranteed to be unique and are not garbage collectable. Therefore, registered symbols are disallowed in WeakMap, WeakSet, WeakRef, and FinalizationRegistry objects.</p>
+<h4>Well-known Symbols</h4>
+
+<p>All static properties of the Symbol constructor are Symbols themselves, whose values are constant across realms. They are known as well-known Symbols, and their purpose is to serve as "protocols" for certain built-in JavaScript operations, allowing users to customize the language's behavior. For example, if a constructor function has a method with Symbol.hasInstance as its name, this method will encode its behavior with the instanceof operator.</p>
+
+<p>Prior to well-known Symbols, JavaScript used normal properties to implement certain built-in operations. For example, the JSON.stringify function will attempt to call each object's toJSON() method, and the String function will call the object's toString() and valueOf() methods. However, as more operations are added to the language, designating each operation a "magic property" can break backward compatibility and make the language's behavior harder to reason with. Well-known Symbols allow the customizations to be "invisible" from normal code, which typically only read string properties.</p>
+
+<p>In MDN and other sources, well-known symbol values are stylized by prefixing @@. For example, Symbol.hasInstance is written as @@hasInstance. This is because symbols don't have actual literal formats, but using Symbol.hasInstance does not reflect the ability of using other aliases to refer to the same symbol. This is like the difference between Function.name and "Function".</p>
+
+<p>Well-known symbols do not have the concept of garbage collectability, because they come in a fixed set and are unique throughout the lifetime of the program, similar to intrinsic objects such as Array.prototype, so they are also allowed in WeakMap, WeakSet, WeakRef, and FinalizationRegistry objects.</p>
+<h4>Finding Symbol properties on objects</h4>
+
+<p>The method Object.getOwnPropertySymbols() returns an array of Symbols and lets you find Symbol properties on a given object. Note that every object is initialized with no own Symbol properties, so that this array will be empty unless you've set Symbol properties on the object.</p>
+<h4>Constructor</h4>
+
+<dl>
+<dt>Symbol()</dt>
+
+<dd>Creates a new Symbol object. It is not a constructor in the traditional sense, because it can only be called as a function, instead of being constructed with new Symbol().</dd>
+</dl>
+
+<h4>Static properties</h4>
+
+<p>The static properties are all well-known Symbols. In these Symbols' descriptions, we will use language like "Symbol.hasInstance is a method determining…", but bear in mind that this is referring to the semantic of an object's method having this Symbol as the method name (because well-known Symbols act as "protocols"), not describing the value of the Symbol itself.</p>
+
+<dl>
+<dt>Symbol.asyncIterator</dt>
+
+<dd> A method that returns the default AsyncIterator for an object. Used by for await...of.</dd>
+<dt>Symbol.hasInstance</dt>
+
+<dd> A method determining if a constructor object recognizes an object as its instance. Used by instanceof.</dd>
+<dt>Symbol.isConcatSpreadable</dt>
+
+<dd>A Boolean value indicating if an object should be flattened to its array elements. Used by Array.prototype.concat().</dd>
+<dt>Symbol.iterator</dt>
+
+A method returning the default iterator for an object. Used by for...of.
+<dt>Symbol.match</dt>
+
+<dd>A method that matches against a string, also used to determine if an object may be used as a regular expression. Used by String.prototype.match().</dd>
+<dt>Symbol.matchAll</dt>
+
+<dd>A method that returns an iterator, that yields matches of the regular expression against a string. Used by String.prototype.matchAll().</dd>
+<dt>Symbol.replace</dt>
+
+<dd> A method that replaces matched substrings of a string. Used by String.prototype.replace().</dd>
+<dt>Symbol.search</dt>
+
+<dd>A method that returns the index within a string that matches the regular expression. Used by String.prototype.search().</dd>
+<dt>Symbol.species</dt>
+
+<dd> A constructor function that is used to create derived objects.</dd>
+<dt>Symbol.split</dt>
+
+<dd> A method that splits a string at the indices that match a regular expression. Used by String.prototype.split().</dd>
+<dt>Symbol.toPrimitive</dt>
+
+<dd> A method converting an object to a primitive value.</dd>
+<dt>Symbol.toStringTag</dt>
+
+<dd> A string value used for the default description of an object. Used by Object.prototype.toString().</dd>
+<dt>Symbol.unscopables</dt>
+
+<dd>An object value of whose own and inherited property names are excluded from the with environment bindings of the associated object.</dd>
+</dl>
+
+<h4>Static methods</h4>
+
+<dl>
+<dt>Symbol.for()</dt>
+
+<dd>Searches for existing Symbols with the given key and returns it if found. Otherwise a new Symbol gets created in the global Symbol registry with key.</dd>
+<dt>Symbol.keyFor()</dt>
+
+<dd>Retrieves a shared Symbol key from the global Symbol registry for the given Symbol.</dd>
+</dl>
+
+<h4>Instance properties</h4>
+
+<p>These properties are defined on Symbol.prototype and shared by all Symbol instances.</p>
+
+<dl>
+<dt>Symbol.prototype.constructor</dt>
+
+The constructor function that created the instance object. For Symbol instances, the initial value is the Symbol constructor.
+<dt>Symbol.prototype.description</dt>
+
+A read-only string containing the description of the Symbol.
+<dt>Symbol.prototype[@@toStringTag]</dt>
+
+<dd>The initial value of the @@toStringTag property is the string "Symbol". This property is used in Object.prototype.toString(). However, because Symbol also has its own toString() method, this property is not used unless you call Object.prototype.toString.call() with a symbol as thisArg.</dd>
+</dl>
+
+<h4>Instance methods</h4>
+
+<dialog>
+<dt>Symbol.prototype.toString()</dt>
+
+<dd>Returns a string containing the description of the Symbol. Overrides the Object.prototype.toString() method.</dd>    <dt>Symbol.prototype.valueOf()</dt>
+
+<dd>Returns the Symbol. Overrides the Object.prototype.valueOf() method.</dd>
+<dt>Symbol.prototype[@@toPrimitive]()</dt>
+
+<dd>Returns the Symbol.</dd>
+</dialog>
+
+<h4>Examples</h4>
+<p>Using the typeof operator with Symbols</p>
+
+<p>The typeof operator can help you to identify Symbols.</p>
+
+<pre>
+<code>
+js
+
+typeof Symbol() === "symbol";
+typeof Symbol("foo") === "symbol";
+typeof Symbol.iterator === "symbol";
+</code>
+</pre>
+
+<h4> Symbol type conversions</h4>
+
+<p>Some things to note when working with type conversion of Symbols.</p>
+
+<ul>
+<li>When trying to convert a Symbol to a number, a TypeError will be thrown (e.g. +sym or sym | 0).</li>
+<li>When using loose equality, Object(sym) == sym returns true.</li>
+<li>Symbol("foo") + "bar" throws a TypeError (can't convert Symbol to string). This prevents you from silently creating a new string property name from a Symbol, for example.</li>
+<li>The "safer" String(sym) conversion works like a call to Symbol.prototype.toString() with Symbols, but note that new String(sym) will throw.</li>
+</ul>
+
+<h4>Symbols and for...in iteration</h4>
+
+<p>Symbols are not enumerable in for...in iterations. In addition, Object.getOwnPropertyNames() will not return Symbol object properties, however, you can use Object.getOwnPropertySymbols() to get these.</p>
+<pre>
+<code>
+js
+
+const obj = {};
+
+obj[Symbol("a")] = "a";
+obj[Symbol.for("b")] = "b";
+obj["c"] = "c";
+obj.d = "d";
+
+for (const i in obj) {
+console.log(i);
+}
+// "c" "d"
+</code>
+</pre>
+
+<h4>Symbols and JSON.stringify()</h4>
+
+<p>Symbol-keyed properties will be completely ignored when using JSON.stringify():</p>
+<pre>
+<code>
+js
+
+JSON.stringify({ [Symbol("foo")]: "foo" });
+// '{}'
+</code>
+</pre>
+
+<p>For more details, see JSON.stringify().</p>
+<h4>Symbol wrapper objects as property keys</h4>
+
+<p> When a Symbol wrapper object is used as a property key, this object will be coerced to its wrapped Symbol:</p>
+<pre>
+<code>
+js
+
+const sym = Symbol("foo");
+const obj = { [sym]: 1 };
+obj[sym]; // 1
+obj[Object(sym)]; // still 1
+</code>
+</pre>
+
+</details>
+<br>
+<!-- Array.prototype.forEach() -->
+<details>
+<summary>Array.prototype.forEach()</summary>
+<h5>Array.prototype.forEach()</h5>
+
+<p>The forEach() method of Array instances executes a provided function once for each array element.</p>
+
+Syntax
+JS
+
+forEach(callbackFn)
+forEach(callbackFn, thisArg)
+
+<h4>Parameters</h4>
+<dt>callbackFn</dt>
+<dd>A function to execute for each element in the array. Its return value is discarded. The function is called with the following arguments:</dd>
+
+<dl>
+<dt>element</dt>
+<dd>The current element being processed in the array.</dd>
+
+<dt>index</dt>
+<dd>The index of the current element being processed in the array.</dd>
+
+<dt>array</dt>
+<dd>The array forEach() was called upon.</dd>
+
+<dt>thisArg Optional</dt>
+<dd>A value to use as this when executing callbackFn. See iterative methods.</dd>
+</dl>
+
+<h4>Return value</h4>
+<p>None (undefined).</p>
+
+<h4>Description</h4>
+<p>The forEach() method is an iterative method. It calls a provided callbackFn function once for each element in an array in ascending-index order. Unlike map(), forEach() always returns undefined and is not chainable. The typical use case is to execute side effects at the end of a chain. Read the iterative methods section for more information about how these methods work in general.</p>
+
+<p>callbackFn is invoked only for array indexes which have assigned values. It is not invoked for empty slots in sparse arrays.</p>
+
+<p>The forEach() method is generic. It only expects the this value to have a length property and integer-keyed properties.</p>
+
+<p>There is no way to stop or break a forEach() loop other than by throwing an exception. If you need such behavior, the forEach() method is the wrong tool.</p>
+
+<p>Early termination may be accomplished with looping statements like for, for...of, and for...in. Array methods like every(), some(), find(), and findIndex() also stops iteration immediately when further iteration is not necessary.</p>
+
+<p>forEach() expects a synchronous function — it does not wait for promises. Make sure you are aware of the implications while using promises (or async functions) as forEach callbacks.</p>
+
+<pre>
+<code>
+JS
+
+const ratings = [5, 4, 5];
+let sum = 0;
+
+const sumFunction = async (a, b) =&gt; a + b;
+
+ratings.forEach(async (rating) =&gt; {
+sum = await sumFunction(sum, rating);
+});
+
+console.log(sum);
+// Naively expected output: 14
+// Actual output: 0
+</code>
+</pre>
+
+<p>To run a series of asynchronous operations sequentially or concurrently, see promise composition.</p>
+
+<h4>Examples</h4>
+<p>Converting a for loop to forEach</p>
+<pre>
+<code>
+JS
+
+const items = ["item1", "item2", "item3"];
+const copyItems = [];
+
+// before
+for (let i = 0; i &lt; items.length; i++) {
+copyItems.push(items[i]);
+}
+
+// after
+items.forEach((item) =&gt; {
+copyItems.push(item);
+});
+</code>
+</pre>
+
+<h4>Printing the contents of an array</h4>
+<p>Note: In order to display the content of an array in the console, you can use console.table(), which prints a formatted version of the array.</p>
+
+<p>The following example illustrates an alternative approach, using forEach().</p>
+
+<p>The following code logs a line for each element in an array:</p>
+
+<pre>
+<code>
+JS
+
+const logArrayElements = (element, index /*, array */) =&gt; {
+console.log(`a[${index}] = ${element}`);
+};
+
+// Notice that index 2 is skipped, since there is no item at
+// that position in the array.
+[2, 5, , 9].forEach(logArrayElements);
+// Logs:
+// a[0] = 2
+// a[1] = 5
+// a[3] = 9
+</code>
+</pre>
+
+<h4>Using thisArg</h4>
+<p>The following (contrived) example updates an object's properties from each entry in the array:</p>
+
+<pre>
+<code>
+JS
+Copy to Clipboard
+class Counter {
+constructor() {
+this.sum = 0;
+this.count = 0;
+}
+add(array) {
+// Only function expressions have their own this bindings.
+array.forEach(function countEntry(entry) {
+this.sum += entry;
+++this.count;
+}, this);
+}
+}
+
+const obj = new Counter();
+obj.add([2, 5, 9]);
+console.log(obj.count); // 3
+console.log(obj.sum); // 16
+</code>
+</pre>
+
+<p>Since the thisArg parameter (this) is provided to forEach(), it is passed to callback each time it's invoked. The callback uses it as its this value.</p>
+
+<p> Note: If passing the callback function used an arrow function expression, the thisArg parameter could be omitted, since all arrow functions lexically bind the this value.</p>
+
+<h4>An object copy function</h4>
+<p>The following code creates a copy of a given object.</p>
+
+<p>There are different ways to create a copy of an object. The following is just one way and is presented to explain how Array.prototype.forEach() works by using Object.* utility functions.</p>
+
+<pre>
+<code>
+JS
+
+const copy = (obj) =&gt; {
+const copy = Object.create(Object.getPrototypeOf(obj));
+const propNames = Object.getOwnPropertyNames(obj);
+propNames.forEach((name) =&gt; {
+const desc = Object.getOwnPropertyDescriptor(obj, name);
+Object.defineProperty(copy, name, desc);
+});
+return copy;
+};
+
+const obj1 = { a: 1, b: 2 };
+const obj2 = copy(obj1); // obj2 looks like obj1 now
+</code>
+</pre>
+
+<h4>Flatten an array</h4>
+
+<p>The following example is only here for learning purpose. If you want to flatten an array using built-in methods, you can use Array.prototype.flat().</p>
+
+<pre>
+<code>
+JS
+Copy to Clipboard
+const flatten = (arr) =&gt; {
+const result = [];
+arr.forEach((item) =&gt; {
+if (Array.isArray(item)) {
+result.push(...flatten(item));
+} else {
+result.push(item);
+}
+});
+return result;
+};
+
+// Usage
+const nested = [1, 2, 3, [4, 5, [6, 7], 8, 9]];
+console.log(flatten(nested)); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code>
+</pre>
+
+<h4>Using the third argument of callbackFn</h4>
+<p>The array argument is useful if you want to access another element in the array, especially when you don't have an existing variable that refers to the array. The following example first uses filter() to extract the positive values and then uses forEach() to log its neighbors</p>.
+
+<pre>
+<code>
+JS
+
+const numbers = [3, -1, 1, 4, 1, 5];
+numbers
+.filter((num) =&gt; num &gt; 0)
+.forEach((num, idx, arr) =&gt; {
+// Without the arr argument, there's no way to easily access the
+// intermediate array without saving it to a variable.
+console.log(arr[idx - 1], num, arr[idx + 1]);
+});
+// undefined 3 1
+// 3 1 4
+// 1 4 1
+// 4 1 5
+// 1 5 undefined
+</code>
+</pre>
+
+<h4>Using forEach() on sparse arrays</h4>
+<pre>
+<code>
+JS
+Copy to Clipboard
+const arraySparse = [1, 3, /* empty */, 7];
+let numCallbackRuns = 0;
+
+arraySparse.forEach((element) =&gt; {
+console.log({ element });
+numCallbackRuns++;
+});
+
+console.log({ numCallbackRuns });
+
+// { element: 1 }
+// { element: 3 }
+// { element: 7 }
+// { numCallbackRuns: 3 }
+</code>
+</pre>
+
+<p>The callback function is not invoked for the missing value at index 2.</p>
+
+<h4>Calling forEach() on non-array objects</h4>
+<p>The forEach() method reads the length property of this and then accesses each property whose key is a nonnegative integer less than length.</p>
+
+<pre>
+<code>
+JS
+
+const arrayLike = {
+length: 3,
+0: 2,
+1: 3,
+2: 4,
+3: 5, // ignored by forEach() since length is 3
+};
+Array.prototype.forEach.call(arrayLike, (x) =&gt; console.log(x));
+// 2
+// 3
+// 4
+</code>
+</pre>
+</details>
+<br>
+<!-- Mastering TypeScript: Looping with Types -->
+<details>
+<summary>Mastering TypeScript: Looping with Types</summary>
+<h5>Mastering TypeScript: Looping with Types</h5>
+
+<h4>Introduction</h4>
+<p>Loops play a pivotal role in programming, enabling code execution without redundancy. JavaScript developers might be familiar with foreach or do...while loops, but TypeScript offers its own unique looping capabilities at the type level. This blog post delves into three advanced TypeScript looping techniques, demonstrating their importance and utility.</p>
+
+<h5>Mapped Types</h5>
+<p>Mapped Types in TypeScript allow transformation of object properties. Consider an object requiring immutable properties:</p>
+<pre>
+<code>
+type User = { 
+id: string, 
+email: string, 
+age: number 
+};
+</code>
+</pre>
+<p>To create an immutable version of this type, we traditionally hardcode it. However, to maintain adaptability with the original type, Mapped Types come into play. They use generics to map each property, offering flexibility to modify property characteristics. For instance:</p>
+<pre>
+<code>
+type ReadonlyUser&lt;T&gt; = {
+readonly [P in keyof T]: T[P];
+};
+</code>
+</pre>
+<p>This technique is extensible. For example, adding nullability:</p>
+<pre>
+<code>
+type Nullable&lt;T&gt; = {
+[P in keyof T]: T[P] | null;
+};
+</code>
+</pre>
+<p>Or filtering out certain types:</p>
+<pre>
+<code>
+type ExcludeStrings&lt;T&gt; = {
+[P in keyof T as T[P] extends string ? never : P]: T[P];
+};
+</code>
+</pre>
+<p>Understanding the core concept of Mapped Types opens doors to creating diverse, reusable types.</p>
+
+<h5>Recursion</h5>
+<p>Recursion is a cornerstone in TypeScript's type-level programming, especially since state mutation is not an option. Consider applying immutability to all nested properties:</p>
+<pre>
+<code>
+type DeepReadonly&lt;T&gt; = {
+readonly [P in keyof T]: T[P] extends object ? DeepReadonly&lt;T[P]&gt; : T[P];
+};
+</code>
+</pre>
+<p>Here, TypeScript's compiler recursively ensures every property is immutable, demonstrating the language's depth in handling complex types.</p>
+
+<h5>Union Types</h5>
+<p>Union Types represent a set of distinct types, such as:</p>
+<pre><code>type Status = 'Failure' | 'Success';</code></pre>
+<p>Creating structured types from unions involves looping over each union member. For instance, constructing a type where each status is an object:</p>
+<pre><code>type StatusObject = Status extends infer S ? { status: S } : never;</code></pre>
+<h4>Conclusion</h4>
+<p>TypeScript's advanced type system transcends static type checking, providing sophisticated tools for type transformation and manipulation. Mapped Types, Recursion, and Union Types are not mere features but powerful instruments that enhance code maintainability, type safety, and expressiveness. These techniques underscore TypeScript's capability to elegantly handle complex programming scenarios, affirming its status as more than a JavaScript superset but a language that enriches our development experience.</p>
+</details>
+</body>
+</html>

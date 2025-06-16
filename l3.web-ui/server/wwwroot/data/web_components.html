@@ -1,0 +1,732 @@
+<!--shadow dom templates -->
+<div id="templates">
+    <template id="ui_contact_template">
+        <link rel="stylesheet" href="./css/flexx.css">
+        <style>
+            ::slotted(img){
+                width: 17rem;
+                height: 17rem;
+            }
+            table{
+                /*margin: 0 auto;*/
+                background-color: green;
+                color: white;
+                border-left: 1px dashed yellow;
+                border-top: 1px dashed yellow;
+            }
+            table td{
+                border-bottom: 1px dashed yellow;
+                border-right: 1px dashed yellow;
+            }
+            .base_style{
+                color: teal;
+                margin: 0;
+                text-align: left;
+                display: initial;
+            }
+            img{
+                width:3rem;
+                height: 3rem;
+            }
+        </style>
+        <article class="base_style">
+            <div>
+                <table class=contact-details>
+                    <tr><td>Name</td><td>Gary Whyte</td></tr>
+                    <tr><td>Email</td><td>gmail@gmcil.com</td></tr>
+                    <tr><td>Phone</td><td>000-000-0000</td></tr>
+                    <tr><td>Title</td><td>Chief Executive Officer</td></tr>
+                </table>
+            </div>
+
+            <h4>User Image</h4>
+            <slot name="me">
+                <p>no user image provided.</p>
+            </slot>
+
+            <h4>User Image3</h4>
+            <slot name="me3">
+                <p>no user image3 provided.</p>
+            </slot>
+
+            <h3>Copyright</h3>
+            <slot name="copyright">
+                <b><b>no copyright was provided in light dom<</b></b>
+            </slot>
+
+            <div>
+                <h3>ORC Image</h3>
+                <slot name="qrc">
+                    <p>no QRC image was provided</p>
+                </slot>
+            </div>
+
+            <div>
+                <h3>Unnamed Slots</h3>
+                <slot>_
+                    <p>no unamed slots fond in light dom</p>
+                </slot>
+            </div>
+
+            <div>
+                <h3>Details Slot</h3>
+                <slot name="details">
+                    <p>no contact details provided in light dom</p>
+                </slot>
+            </div>
+
+        </article>
+    </template>
+
+    <template id="ui_tabs_template">
+        <link rel="stylesheet" href="./css/flexx.css">
+        <style>
+          
+            *,
+            *::after, 
+            *::before  {
+                box-sizing: border-box;
+                margin: 0;
+                padding:0;
+            }
+
+            img{
+                display: block;
+                max-width: 100%;
+                height: auto;
+                /* margin: 0px auto; */
+            }
+
+:host{
+    background-color: palegreen;
+    border:3px rgb(131, 6, 79) solid;
+    width:20rem;
+}
+
+::slotted(*){
+color:yellow;
+}
+            .flex_row{
+                display:flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 1rem;
+            }
+            .flex_col{
+                display:flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .flex_col > *{
+                /*width:100%;*/
+                background-color: #605d8a;
+            }
+         
+            .text_wrap{
+                hyphens: auto;
+                overflow-wrap: break-word;
+                /* text-wrap: balance; */
+                width: 100%;
+                /* max-width: 67ch;   */
+            }
+            
+            .tabs_menu{
+                display:flex;
+                flex-direction: column;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: center;
+            }
+
+            .tabs_output{
+                background-color: burlywood;           
+             }
+
+            @media (min-width: 650px){
+                .tabs_menu{
+                    flex-direction: row;
+                }
+                .tabs_menu li{
+                    color:black;
+                    background-color: rgb(95, 110, 110);
+                }
+            }
+
+            .tabs_menu > li{
+                /* 1=allow breaking of elementontent, 0=no breaking of element content */
+                flex-shrink: 0;
+                /* 1=allow elements to grow , 0=no growing of elements  */
+                flex-grow: 1;
+            }
+            .tabs_menu > *{
+                /* 1=allow breaking of elementontent, 0=no breaking of element content */
+                flex-shrink: 0;
+                /* 1=allow elements to grow , 0=no growing of elements  */
+                flex-grow: 1;
+            }
+            .tab_item{
+                color: black;
+                margin: .3rem;
+            }
+
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article >
+            <form id="tabs_menu_form" action="*" >
+
+                <input type="text" name="search" value="hello world" >
+                <button name="action" value="search">search</button>
+
+                <ul id="tabs_menu_ul" class="menu_x scroll_x" width100>
+                    <li><button  name="action" value="tab1" class="tabs_item">Tab 1</button></li>
+                    <li><button  name="action" value="tab2" class="tabs_item">Tab 2</button></li>
+                    <li><button  name="action" value="tab3" class="tabs_item">Tab 3</button></li>
+                </ul>
+                
+            </form>
+
+            <div id="tabs_output"  class="tabs_output">
+
+                <div class="text_wrap1" >
+                    <slot name="active">
+                        <p> default tab output </p>
+                    </slot>
+                </div>
+        
+            </div>
+
+        </article>
+    </template>
+
+    <template id="tab1_template">
+        <style>
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .tab_item{
+                background-color: green;
+                border: none;
+                opacity: .30;
+                overflow: hidden;
+                transform: translateY(-105%);
+                z-index: 0;
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article id="tab1" class="tab_item" data-parent="tab1">
+            <h3>A Dialog 1</h3>
+            <p>This is a dialog simulation</p>
+            <form id="dialog1_Form" name="dialog1_Form" action="#" class="flex_column">
+                <label for="first_name1">first_name</label>
+                <input id="first_name1" name="first_name" type="text">
+
+                <label for="age1">age</label>
+                <input id="age1" name="age" type="number">
+
+                <button name="action" type="submit" value="process_form">submit</button>
+            </form>
+        </article>
+    </template>
+
+    <template id="tab2_template">
+        <style>
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .tab_item{
+                background-color: green;
+                border: none;
+                opacity: .30;
+                overflow: hidden;
+                transform: translateY(-105%);
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article id="tab2" class="tab_item" data-parent="tab2">
+            <h3>A Dialog 2</h3>
+            <p>This is a dialog simulation</p>
+            <form id="dialog2_Form" name="dialog2_Form"  action="#" class="flex_column">
+                <label for="first_name">first_name</label>
+                <input id="first_name" name="first_name" type="text">
+
+                <label for="age">age</label>
+                <input id="age" name="age" type="number">
+
+                <button name="action" type="submit" value="process_form">submit</button>
+            </form>
+        </article>
+    </template>
+
+    <template id="tab3_template">
+        <style>
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .tab_item{
+                background-color: green;
+                border: none;
+                opacity: .30;
+                overflow: hidden;
+                transform: translateY(-105%);
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in 1000ms;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article id="tab3" class="tab_item" data-parent="tab3">
+            <nav class="toc">
+                <span class="toc_icon">
+
+                <label for="topic">Topics</label>
+                <select id="topic" class="toc_list">
+                    <option>A Dialog 3</option>
+                    <option>A Dialog 2</option>
+                    <option>A Dialog 4</option>
+                </select>
+
+                <label for="search">Search</label>
+                <input id="search" type="text">
+                </span>
+            </nav>
+            <section class="article_section">
+                <h3 class="header">A Dialog 3</h3>
+                <p>This is a dialog simulation</p>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
+                    delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
+                    modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
+                </p>
+            </section>
+            <section class="article_section">
+                <h3 class="header">A Dialog 2</h3>
+                <p>This is a dialog simulation</p>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
+                    delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
+                    modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
+                </p>
+            </section>
+            <section class="article_section">
+                <h3 class="header">A Dialog 4</h3>
+                <p>This is a dialog simulation</p>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
+                    delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
+                    modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
+                </p>
+            </section>
+        </article>
+    </template>
+
+    <template id="ui_table_template">
+        <link rel="stylesheet" href="./css/flexx.css">
+        <style>
+            *,
+*::after, 
+*::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+}
+
+img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* margin: 0px auto; */
+}
+
+            section {
+                margin: 0 auto;
+            }
+            table{
+                margin: 0 auto;
+                background-color: green;
+                color: white;
+                border-left: 1px dashed black;
+                border-top: 1px dashed black;
+            }
+            table td{
+                border-bottom: 1px solid black;
+                border-right: 1px solid black;
+            }
+            .legend{
+                text-align: center;
+            }
+            .legend details{
+                display: inline-block;
+                margin-right: 2rem;
+            }
+        </style>
+        <section>
+            <table>
+                <thead>
+                <tr>
+                    <td>header col 1</td>
+                    <td>Header col 2</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>soap</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>tooth paste</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div id="legends" class="legend">
+                <details>
+                    <summary>Legend one</summary>
+                </details>
+                <details>
+                    <summary>Legend two</summary>
+                </details>
+            </div>
+        </section>
+    </template>
+
+    <template id="ui_gallery_template">
+        <link rel="stylesheet" href="./css/flexx.css">
+        <style>
+*,
+*::after, 
+*::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+}
+
+img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* margin: 0px auto; */
+}
+
+            .flex_row{
+                display:flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 1rem;
+            }
+            .flex_col{
+                display:flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .flex_col > *{
+                /*width:100%;*/
+                background-color: #605d8a;
+            }
+
+            .padding2{padding:2rem;}
+            img{
+                display: block;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+            .img_current{
+                text-align: center;
+                width: auto;
+                height: 100%;
+                margin: 0 auto;
+            }
+            .img_thumbnail{
+                width: 3rem;
+                height: 3rem;
+                margin: .31rem;
+            }
+
+            .menu_x{
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+                overflow-x: scroll;
+            }
+            .menu_x > *{
+                flex-shrink: 0;
+            }
+            .menu_y{
+                display: flex;
+                flex-direction:column;
+                gap: .51rem;
+                text-align: center;
+                list-style: none;
+                width: fit-content;;
+                border: none;
+            }
+            .menu_y > *{
+                margin:0;
+                padding:0;
+            }
+
+            .grow_on{
+                flex-grow: 1;
+            }
+            .grow_off{
+                flex-grow: 0;
+            }
+
+            .shrink_on{
+                flex-shrink: 1;
+            }
+            .shrink_off{
+                flex-shrink: 0;
+            }
+
+            figure{
+                background-color: mediumpurple;
+                width: 90%;
+                height:90%;
+                margin: 0 auto;
+                /*overflow: clip;*/
+            }
+            figcaption{
+                text-align: center;
+                margin: .0rem;
+            }
+            ul figcaption{
+                display: none;
+            }
+
+            .fullscreen{
+                position: relative;
+                top: 2rem;
+                height: 80vh;
+                /*width: 100%;*/
+                background-color: darkcyan;
+            }
+
+            .width100{width:100%;}
+            .width75{width:75%;}
+            .width50{width:50%;}
+            .width50{width:25%;}
+
+            .fullwidth{
+                width: 100%;
+            }
+
+            .bg_blue{
+                background-color: cornflowerblue;
+            }
+
+            .bg_green{
+                background-color: darkolivegreen;
+            }
+
+            .bg_grey{
+                background-color: darkgray;
+            }
+
+            .gallery_btns_container{
+                text-align: center;
+            }
+            .gallery_btns_container button{
+                margin: 1rem;
+            }
+
+            .gallery_container{
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+            }
+            .gallery_container_item{
+                height: 15rem;
+                /*min-height: 15rem;*/
+                display: block;
+            }
+
+            .gallery_item{
+                height: 4rem;
+                width:  4rem;
+            }
+        </style>
+        <section>
+            <!-- Thumbnails and Current Image -->
+            <div class="gallery_container">
+            <!--  Thumbnails -->
+                <div class="gallery_container_item border grow_off shrink_off scroll_y">
+                        <ul id="gallery_images_list" class="menu_y">
+                            <li>
+                                <figure class="border">
+                                    <img class="img_thumbnail" src="images/ArchitecuralDiagrams.jpg" alt="Alt">
+                                    <figcaption>ArchitecuralDiagrams.jpg</figcaption>
+                                </figure>
+                            </li>
+                        </ul>
+                    </div>
+                <!--  Current Image -->
+                <div class="gallery_container_item border grow_on1 shrink_on1 bg_blue width75">
+                        <figure>
+                            <img id="current_image" class="img_current" src="" alt="">
+                            <figcaption>current figure</figcaption>
+                        </figure>
+                    </div>
+            </div>
+            <br>
+            <!--   Gallery Form Controls and Buttons -->
+            <div  class="gallery_btns_container">
+                <form id="gallery_btn_form"  action="">
+                    <button name="action" value="prev">prev</button>
+                    <button name="action" value="next">next</button>
+
+                    <label for="slide_show">AutoScroll</label>
+                    <input id="slide_show"  name="auto_scroll" type="checkbox">
+
+                    <label for="slider">Hide Slider</label>
+                    <input id="slider" name="slider" type="checkbox">
+                </form>
+            </div>
+        </section>
+    </template>
+
+    <template id="ui_nav_template">
+        <link rel="stylesheet" href="./css/flexx.css">
+        <style>
+            .menu_x{
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+                overflow-x: scroll;
+            }
+            .menu_x > *{
+                flex-shrink: 0;
+            }
+            .menu_y{
+                display: flex;
+                flex-direction:column;
+                gap: .51rem;
+                text-align: center;
+                list-style: none;
+                width: fit-content;;
+                border: 2px red solid;
+            }
+            .menu_y > *{
+                margin:0;
+                padding:0;
+            }
+            .grow_on{
+                flex-grow: 1;
+            }
+            .grow_off{
+                flex-grow: 0;
+            }
+            .padding2{padding:2rem;}
+        </style>
+        <style>
+
+        </style>
+        <nav id="ui_nav" class="nav_container">
+            <form action="">
+                <ul id="nav_items" class="menu_x">
+                    <li><label for="selected_template">Choose Template</label>
+                        <select name="selected_template" id="selected_template">
+                            <option value="blank_template">Blank</option>
+                            <option value="logo_template">Logo</option>
+                            <option value="gallery_template">Gallery</option>
+                            <option value="table_template">Table</option>
+                            <option value="contact_template">Contact</option>
+                            <option value="tabs_template">Tabs</option>
+                            <option value="composite_template">Composite</option>
+                        </select>
+                        <button name="action" value="view">view</button>
+                    </li>
+
+                    <li><input name="lookup" type="text"> <button name="action" value="search">search</button></li>
+
+                    <li><a href="http://localhost:3000/cls.html">CLS Project</a></li>
+                    <li><a href="http://localhost:3000/cls.html">Users Project</a></li>
+                    <li><a href="http://localhost:3000/cls.html">Flexx Project</a></li>
+                    <li><a href="tel:347-675-0900">Phone</a></li>
+                    <li><a href="mailto:jirehmedia@gmail.com">Email</a></li>
+                    <li><button name="action" value="help">Help</button></li>
+                    <li><button name="action" value="news">News</button></li>
+                </ul>
+            </form>
+        </nav>
+
+    </template>
+</div>
+

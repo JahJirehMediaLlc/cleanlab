@@ -1,0 +1,220 @@
+/* General Stuff */
+body{
+    color:white;
+    background-color: black;
+}
+
+.fullscreen{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width:100%;
+    z-index: 2;
+    background-color: black;
+    color: yellow;
+    /* height: 94vh; */
+}
+
+.scroll{
+    overflow: scroll;
+}
+
+.hide{
+    display:none;
+}
+
+.flex_center{
+    display:flex;
+    align-items: center ;
+    justify-content: center;
+}
+
+.columns{
+    display:flex;
+    flex-direction: column;
+    gap: .3rem; 
+    padding: .3rem;
+}
+
+@media (min-width: 750px){
+    .columns{
+        flex-direction: row;
+    }
+    .columns article{
+        background-color: rgb(9, 83, 80);
+    }
+}
+/* set column items to equal dimensions */
+.columns > *{
+    /* 1=allow breaking of flex item ontent, 0=no breaking of flex item content */
+    flex-shrink: 1;     
+    /* 1=allow flex items to grow , 0=no growing of flex items  */
+    flex-grow: 1;
+     /* auto/1=variable width for flex items , 0=equal width for flex items  */
+    flex-basis: 0;
+}
+
+.column_item_equal{
+    flex-basis: 0;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+.rows{
+    display:flex;
+    flex-direction: column;
+    gap: .3rem;
+    padding: .3rem;
+}
+
+/* flex container */
+.wrap{
+    flex-wrap: wrap;
+}
+
+.nowrap{
+    flex-wrap: nowrap;
+}
+
+.gap{
+    gap:.3rem;
+}
+
+.nogap{
+    gap:0rem;
+}
+
+.justify_space_between{
+    justify-content: space-between;
+}
+
+.justify_space_around{
+    justify-content: space-around;
+}
+
+.justify_space_even{
+    justify-content: space-even;
+}
+
+.basis_equal{
+    flex-basis: 1;
+}
+
+.basis_fourth{
+    flex-basis: 25%;
+}
+
+.basis_third{
+    flex-basis: 33%;
+}
+
+.basis_half{
+    flex-basis: 50%;
+}
+
+/* flex items */
+.shrink{
+    flex-shrink: 1;
+}
+.grow{
+    flex-grow: 1;
+}
+.flex_item{
+    min-width:25%;
+    border:1px white solid;
+    text-align: center;
+}
+
+.pos_top{
+    position : fixed;
+    top:0;
+    left: 0;
+}
+
+.pos_bottom{
+    position : fixed;
+    bottom:0;
+    left: 0;
+}
+/* Menu stuff */
+
+.menu{
+    display:flex;
+    flex-direction: column; 
+    list-style: none;
+    padding: 0rem;
+    margin: 0rem;
+    text-align: center;
+}
+
+@media (min-width: 650px){
+    .menu{
+        flex-direction: row;
+    }
+    .menu li{
+        color:black;
+        background-color: rgb(5, 231, 224);
+    }
+}
+  
+.menu > li{
+    /* 1=allow breaking of elementontent, 0=no breaking of element content */
+    flex-shrink: 0;     
+    /* 1=allow elements to grow , 0=no growing of elements  */
+    flex-grow: 1;
+}
+
+.menu > *{
+    /* 1=allow breaking of elementontent, 0=no breaking of element content */
+    flex-shrink: 0;     
+    /* 1=allow elements to grow , 0=no growing of elements  */
+    flex-grow: 1;
+}
+
+/* Tabs stuff */
+
+.tabs{
+    background-color: rgb(236, 236, 96);
+    padding-bottom: .3rem;
+}
+
+.tabs_menu{
+    display:flex;
+    flex-direction: column; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+@media (min-width: 650px){
+    .tabs_menu{
+        flex-direction: row;
+    }
+    .tabs_menu li{
+        color:black;
+        background-color: rgb(95, 110, 110);
+    }
+}
+  
+.tabs_menu > li{
+    /* 1=allow breaking of elementontent, 0=no breaking of element content */
+    flex-shrink: 0;     
+    /* 1=allow elements to grow , 0=no growing of elements  */
+    flex-grow: 1;
+}
+
+.tabs_menu > *{
+    /* 1=allow breaking of elementontent, 0=no breaking of element content */
+    flex-shrink: 0;     
+    /* 1=allow elements to grow , 0=no growing of elements  */
+    flex-grow: 1;
+}
+
+.tab_item{
+    color: black;
+    border: 1px solid green;
+    margin: .3rem;
+}

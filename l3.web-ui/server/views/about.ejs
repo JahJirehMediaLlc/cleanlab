@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About</title>
+<link rel="icon" type="image/x-icon" href="/images/icons/favicon.ico">
+<link rel="stylesheet" href="/css/reset.css">  
+<!-- <link rel="stylesheet" href="/css/atomic.css">  
+<link rel="stylesheet" href="/css/styles.css">  
+<style>
+
+input{
+font-size: larger;
+background-color: cornflowerblue;
+}
+
+label , select{
+font-size: larger;
+}
+
+body{
+margin: 2rem;
+}
+
+.console{
+height: 8rem;
+overflow: scroll;
+}
+
+.menu{
+display: flex;
+flex-wrap: nowrap;
+list-style: none;
+padding: 0rem;
+margin: 0rem;
+gap: 1rem;
+}
+
+.border{
+    border: 1px red dashed;
+}
+
+.bg_blue{
+    background-color: rgb(3, 3, 85);
+}
+
+.bg_grey{
+    background-color: grey;
+}
+
+.bg_cyan{
+    background-color: rgb(7, 182, 182);
+}
+
+.bg_teal{
+    background-color: teal
+}
+
+.padding{
+    padding: 1rem;
+}
+
+.margin{
+    margin: 1rem;
+}
+
+.passport_size{
+    width:100%;
+}
+</style> -->
+</head>
+<body>
+<header>
+<ul class="menu">
+    <li class="column_item"><a href="/user/index">UMP </a></li>
+    <li class="column_item"><a href="/about">About and Bio </a></li>
+    <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+    <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+</ul>
+</header>
+
+<h1>About</h1>
+
+<main class="flex_row flex_nowrap">
+
+<div class="border flex_center">
+    <figure class="width75 flex_col border">
+        <img src="images/me.jpg" class="passport_size" title="User Name" />
+    
+        <figcaption class="center">Person Image</figcaption>
+    </figure>
+</div>
+
+<form id="about_profile_form" method="get" class="width50 bg_green padding border" action="http://localhost/3000:/about">
+
+<fieldset class="flex_col bg_cyan">
+<legend>About Profile</legend>
+
+    <label for="uid" hidden>ID</label>
+    <input id="uid" name="id" type="text" value="0" hidden>
+
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" value="Gary">
+
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" value="CEO">
+</fieldset>
+
+<fieldset class="flex_col bg_cyan">
+    <legend>Employment Profile</legend>
+ 
+        <label for="departments">Employment History</label>
+        <select id="departments" name="deprtment">
+            <option value="0">Select Resume</option>
+        </select>
+    
+        <label for="note">Resume Details</label>
+        <textarea id="note" name="note">Resume Details</textarea>
+    </fieldset>
+
+<button class="button call-to-action" name="btn-submit" value="view_resume">View Resume</button>
+
+</form> 
+
+</main>
+
+<div id="console" class="console border" >
+console log area
+</div>
+
+<footer>
+<ul class="menu">
+    <li class="column_item"><a href="/user/index">UMP </a></li>
+    <li class="column_item"><a href="/about">About and Bio </a></li>
+    <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+    <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+</ul>
+</footer>
+
+<script src="/bundle/about.js"></script>
+</body>
+</html>

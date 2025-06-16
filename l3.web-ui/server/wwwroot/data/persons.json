@@ -1,0 +1,38 @@
+[
+    {
+    "id":1,
+    "first_name": "gary",
+    "last_name": "whyte",
+    "age": 61,
+    "email": "gary@gmail.om",
+    "phone": "000-000-0000",
+    "kids" : []
+    },
+    {
+    "id":2,
+    "first_name": "doxy",
+    "last_name": "whyte",
+    "age": 32,
+    "email": "doxy@hotmail.com",
+    "phone": "111-123-0987",
+    "kids" : []
+    },
+    {
+        "id":3,
+        "first_name": "diane",
+        "last_name": "lim",
+        "age": 61,
+        "email": "lim@gmail.om",
+        "phone": "000-000-0000",
+        "kids" : []
+    },
+    {
+        "id":4,
+        "first_name": "joelle",
+        "last_name": "whyte",
+        "age": 30,
+        "email": "jdog@hotmail.com",
+        "phone": "444-123-0987",
+        "kids" : []
+    }
+]

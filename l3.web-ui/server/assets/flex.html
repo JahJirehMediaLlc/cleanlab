@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Project</title>
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.ico">
+    <link rel="stylesheet" href="/css/reset.css">  
+    <link rel="stylesheet" href="/css/flex.css">  
+    <style></style>
+</head>
+<body>
+
+<header class="pos_top">
+
+</header>
+
+<main class="container">
+    <h1>Web Component</h1>
+
+</main>
+
+<footer class="pos_bottom">
+
+</footer>
+
+<!-- Templates -->
+<div>
+    <template id="blank_template">
+        <div>
+            <h1>blank template</h1>
+        </div>
+    </template>
+
+    <template id="ui_contact_template">
+        <style>
+            ol{
+                background-color: red;
+                margin-left: 3rem;
+                width: fit-content;
+                border: 1px yellow dashed;
+            }
+        </style>
+        <article>
+            <div>
+                <h3>Contact</h3>
+
+                <table class=contact-details>
+                    <tr><td>Name</td><td>Gary Whyte</td></tr>
+                    <tr><td>Email</td><td>gmail@gmcil.com</td></tr>
+                    <tr><td>Phone</td><td>000-000-0000</td></tr>
+                    <tr><td>Title</td><td>Chief Executive Officer</td></tr>
+                </table>
+
+                <h4>User Image</h4>
+                <img src="/images/me2.png" alt="User">
+            </div>
+            <div>
+                <h4>ORC Image</h4>
+                <img src="/images/me2.png" alt="QRC">
+            </div>
+        </article>
+    </template>
+
+    <template id="ui_tabs_template">
+        <style>
+            .tabs_menu{
+                display:flex;
+                flex-direction: column;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: center;
+            }
+
+            @media (min-width: 650px){
+                .tabs_menu{
+                    flex-direction: row;
+                }
+                .tabs_menu li{
+                    color:black;
+                    background-color: rgb(95, 110, 110);
+                }
+            }
+
+            .tabs_menu > li{
+                /* 1=allow breaking of elementontent, 0=no breaking of element content */
+                flex-shrink: 0;
+                /* 1=allow elements to grow , 0=no growing of elements  */
+                flex-grow: 1;
+            }
+            .tabs_menu > *{
+                /* 1=allow breaking of elementontent, 0=no breaking of element content */
+                flex-shrink: 0;
+                /* 1=allow elements to grow , 0=no growing of elements  */
+                flex-grow: 1;
+            }
+            .tab_item{
+                color: black;
+                border: 1px solid green;
+                margin: .3rem;
+            }
+
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article >
+            <form id="tabs_menu_form" action="">
+                <ul id="tabs_menu_ul" class="tabs_menu">
+                    <li><button name="action" value="tab1" class="tabs_item">Tab 1</button></li>
+                    <li><button name="action" value="tab2" class="tabs_item">Tab 2</button></li>
+                    <li><button name="action" value="tab3" class="tabs_item">Tab 3</button></li>
+                </ul>
+            </form>
+
+            <div id="tabs_output" class="tabs_output">
+
+                 <slot name="tabs_out">
+                <p> default tab output </p>
+            </slot>
+
+            </div>
+            </article>
+    </template>
+
+    <template id="tab1_template">
+        <style>
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .tab_item{
+                background-color: green;
+                border: none;
+                opacity: .30;
+                overflow: hidden;
+                transform: translateY(-105%);
+                z-index: 0;
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article id="tab1" class="tab_item" data-parent="tab1">
+            <h3>A Dialog 1</h3>
+            <p>This is a dialog simulation</p>
+            <form id="dialog1_Form" name="dialog1_Form" action="#" class="flex_column">
+                <label for="first_name1">first_name</label>
+                <input id="first_name1" name="first_name" type="text">
+
+                <label for="age1">age</label>
+                <input id="age1" name="age" type="number">
+
+                <button name="action" type="submit" value="process_form">submit</button>
+            </form>
+        </article>
+    </template>
+
+    <template id="tab2_template">
+        <style>
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .tab_item{
+                background-color: green;
+                border: none;
+                opacity: .30;
+                overflow: hidden;
+                transform: translateY(-105%);
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article id="tab2" class="tab_item" data-parent="tab2">
+            <h3>A Dialog 2</h3>
+            <p>This is a dialog simulation</p>
+            <form id="dialog2_Form" name="dialog2_Form"  action="#" class="flex_column">
+                <label for="first_name">first_name</label>
+                <input id="first_name" name="first_name" type="text">
+
+                <label for="age">age</label>
+                <input id="age" name="age" type="number">
+
+                <button name="action" type="submit" value="process_form">submit</button>
+            </form>
+        </article>
+    </template>
+    
+    <template id="tab3_template">
+        <style>
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .tab_item{
+                background-color: green;
+                border: none;
+                opacity: .30;
+                overflow: hidden;
+                transform: translateY(-105%);
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in 1000ms;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <article id="tab3" class="tab_item" data-parent="tab3">
+            <nav class="toc">
+                <span class="toc_icon">
+
+                <label for="topic">Topics</label>
+                <select id="topic" class="toc_list">
+                    <option>A Dialog 3</option>
+                    <option>A Dialog 2</option>
+                    <option>A Dialog 4</option>
+                </select>
+
+                <label for="search">Search</label>
+                <input id="search" type="text">
+                </span>
+            </nav>
+            <section class="article_section">
+                <h3 class="header">A Dialog 3</h3>
+                <p>This is a dialog simulation</p>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
+                    delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
+                    modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
+                </p>
+            </section>
+            <section class="article_section">
+                <h3 class="header">A Dialog 2</h3>
+                <p>This is a dialog simulation</p>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
+                    delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
+                    modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
+                </p>
+            </section>
+            <section class="article_section">
+                <h3 class="header">A Dialog 4</h3>
+                <p>This is a dialog simulation</p>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
+                    delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
+                    modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
+                </p>
+            </section>
+        </article>
+    </template>
+
+    <template id="ui_table_template">
+        <style>
+            section{
+                background-color: slategrey;
+            }
+            table *{
+                border: 1px solid green;
+            }
+            .flex_column{
+                display: flex;
+                flex-direction: column;
+            }
+            .flex_row{
+                display: flex;
+                flex-direction: row;
+            }
+            .tab_item{
+                background-color: green;
+                border: none;
+                opacity: .30;
+                overflow: hidden;
+                transform: translateY(-105%);
+            }
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in 1000ms;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+        </style>
+        <section>
+            <table>
+                <thead>
+                <tr>
+                    <td>header col 1</td>
+                    <td>Header col 2</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>soap</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>tooth paste</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="flex_row">
+                <details>
+                    <summary>Legend one</summary>
+                </details>
+                <details>
+                    <summary>Legend two</summary>
+                </details>
+            </div>
+        </section>
+
+    </template>
+</div>
+<!-- Scripts -->
+<script src="/bundles/flex/markup.js"></script>
+
+</body>
+</html>

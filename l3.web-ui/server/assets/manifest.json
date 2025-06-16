@@ -1,0 +1,65 @@
+{
+    "id": "/",
+    "name": "App Shell",
+    "lang": "en-us",
+    "short_name": "App Shell Short",
+    "start_url": ".",
+    "scope": ".",
+    "display": "standalone",
+    "theme_color": "#ffff00",
+    "background_color": "#ff00ff",
+    "orientation": "any",
+    "description": "App Shell PWA demo. Version 1",
+    "screenshots": [
+        {
+    "src": "images/me3.png",
+    "sizes": "975x717",
+    "form_factor": "wide",
+    "label": "Application form factor wide"
+    },
+    {
+    "src": "images/browser-dom-tree.gif",
+    "sizes": "754x689",
+    "form_factor": "narrow",
+    "label": "Application form factor none"
+    }
+    ],
+    "icons": [
+    {
+    "src": "images/icons/icon48.png",
+    "sizes": "48x48",
+    "type": "image/png"
+    },
+    {
+    "src": "images/icons/icon72.png",
+    "sizes": "72x72",
+    "type": "image/png"
+    },
+    {
+    "src": "images/icons/icon96.png",
+    "sizes": "96x96",
+    "type": "image/png"
+    },
+    {
+        "src": "images/icons/icon144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+        },
+    {
+    "src": "images/icons/icon168.png",
+    "sizes": "168x168",
+    "type": "image/png"
+    },
+    {
+    "src": "images/icons/icon192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+    },
+    {
+    "src": "images/icons/icon512.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "maskable"
+    }
+    ]
+    }

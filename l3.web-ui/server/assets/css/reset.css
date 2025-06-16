@@ -1,0 +1,22 @@
+*,
+*::after, 
+*::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+}
+
+img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* margin: 0px auto; */
+}
+
+html{
+    scrollbar-gutter: stable;
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    font-family: 'Cambria, Cochin, Georgia', 'Times New Roman', serif;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+}

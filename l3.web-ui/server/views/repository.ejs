@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Repository Manager</title>
+
+<link rel="icon" type="image/x-icon" href="/images/icons/favicon.ico">
+<link rel="stylesheet" href="/css/styles.css">  
+<style>
+
+input{
+font-size: larger;
+background-color: cornflowerblue;
+}
+
+label , select{
+font-size: larger;
+}
+
+body{
+margin: 2rem;
+}
+
+.console{
+height: 8rem;
+overflow: scroll;
+}
+
+.menu{
+display: flex;
+flex-wrap: nowrap;
+list-style: none;
+padding: 0rem;
+margin: 0rem;
+gap: 1rem;
+}
+
+.border{
+    border: 1px red dashed;
+}
+
+.bg_blue{
+    background-color: rgb(3, 3, 85);
+}
+
+.bg_grey{
+    background-color: grey;
+}
+
+.bg_cyan{
+    background-color: rgb(7, 182, 182);
+}
+
+.bg_teal{
+    background-color: teal
+}
+
+.padding{
+    padding: 1rem;
+}
+
+.margin{
+    margin: 1rem;
+}
+</style>
+</head>
+<body>
+<header>
+<ul class="menu">
+    <li class="column_item"><a href="/user/index">UMP </a></li>
+    <li class="column_item"><a href="/about">About and Bio </a></li>
+    <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+    <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+</ul>
+</header>
+
+<h1>Repository Manager Methods</h1>
+
+<main>
+<blockquote>Proof of concept by Jireh Media Company. Nov 4,2024</blockquote>
+
+<h5>Class: Repository</h5>
+<p>Loads information and provide api for Types and Models of the UMS. The current
+models that are loaded are: User, Customer, Person.</p>
+<h5>Methods:</h5>
+<ul>
+    <li>status():reproStatus</li>
+    <li>private async loadUsers()</li>
+    <li>private async loadCostomers()</li>
+    <li>private async loadPersons()</li>
+    <li>static getUsers():user[]</li>
+    <li>static getUser(_id:string):user | undefined</li>
+    <li>static addUser(usr:user):void</li>
+    <li>static getPersons():person[]</li>
+    <li>static getPerson(id:string):person</li>
+    <li>static addPerson(per:person):void</li>
+    <li>static getCustomers():customer[]</li>
+    <li>static getCustomer(_id:string):customer</li>
+    <li>static addCustomer(cust:customer):void</li>
+</ul>
+
+export const repository = new Repository();
+
+</main>
+
+<footer>
+<ul class="menu">
+    <li class="column_item"><a href="/user/index">UMP </a></li>
+    <li class="column_item"><a href="/about">About and Bio </a></li>
+    <li class="column_item"><a href="/contact/index">Contact Profile </a></li>
+    <li class="column_item"><a href="/pizza">Pizza Toppings </a></li>
+</ul>
+</footer>
+
+</body>
+</html>
