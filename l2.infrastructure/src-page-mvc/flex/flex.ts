@@ -1,0 +1,1 @@
+export * from '../../src-web-comps/web_components.ts';
