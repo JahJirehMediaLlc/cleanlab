@@ -1,6 +1,6 @@
 import {Router, Request, Response} from 'npm:express';
 import {Authenticate as _Authenticate} from '../services/middleware.ts';
-import {person,user} from '../../../lab-domain/domain_types.ts';
+import {person,user} from '../../../l0.domain/domain_types.ts';
 import {repository as repo} from '../services/repository.ts';
 
 // Initialize router

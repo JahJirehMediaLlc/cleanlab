@@ -1,3 +1,5 @@
+/// <reference lib="deno.ns" />
+
 // prompt
 export async function prompt(prompt?:string){
 

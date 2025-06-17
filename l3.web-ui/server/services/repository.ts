@@ -1,4 +1,4 @@
-import {person, user, customer} from '../../../lab-domain/domain_types.ts';
+import {person, user, customer} from '../../../l0.domain/domain_types.ts';
 
 export type reproStatus = {
   Users: number,
