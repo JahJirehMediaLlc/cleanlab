@@ -21,13 +21,13 @@ const rawCss = _css`
 `;
 const rawHtml  = _html`
 <slot>
-<p>null component</p>
+<p>ui-view component</p>
 </slot>
 `;
 
-class HTMLUiNullView{
+class HTMLUiViewView{
     _shadowRoot: ShadowRoot;
-    controller:HTMLUiNullController;
+    controller:HTMLUiViewController;
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
@@ -52,29 +52,29 @@ class HTMLUiNullView{
     processSubmitForm(evt:SubmitEvent){}
 }
 
-class HTMLUiNullController{
-    view:HTMLUiNullView;
-    parent:HTMLUiNull;
-    controller:HTMLUiNullController;
+class HTMLUiViewController{
+    view:HTMLUiViewView;
+    parent:HTMLUiView;
+    controller:HTMLUiViewController;
 
-    constructor(parent:HTMLUiNull) {
+    constructor(parent:HTMLUiView) {
         this.parent = parent;
-        this.view = new HTMLUiNullView(this.parent._shadowRoot);
+        this.view = new HTMLUiViewView(this.parent._shadowRoot);
     }
 }
 
-export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
+export class HTMLUiView extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
-    view: HTMLUiNullView;
-    controller:HTMLUiNullController;
+    view: HTMLUiViewView;
+    controller:HTMLUiViewController;
 
     constructor(){
         super();
 
         this._shadowRoot = this.attachShadow({mode: 'open'});
-        this.controller = new HTMLUiNullController(this);
+        this.controller = new HTMLUiViewController(this);
 
-        console.log("ui-null registered....");
+        console.log("ui-view registered....");
     }
 
     connectedCallback(): void {
@@ -87,10 +87,8 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
         console.log('attributeChangedCallback Method not implemented.');
     }
     get observedAttributes(): string[] {
-        console.log('observedAttributes Method not implemented.');
-
-        return ["name","value"];
+          return ["width","height","url"];
     }
 }
 
-window.customElements.define("ui-null", HTMLUiNull);
+window.customElements.define("ui-view", HTMLUiView);

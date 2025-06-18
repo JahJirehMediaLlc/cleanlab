@@ -8,11 +8,13 @@ export type trans = {  property:string,  duration:string,  timing:string}
 
 export class Html{
   static insertElements(element:HTMLElement, htmlText:string) :HTMLElement{
-      console.log(`insertElements ${element.id} and easing children`);
+      console.log(`insertElements ${element.id} and erasing children`);
 
       element.replaceChildren();
 
-      return Html.insertElements(element,htmlText);
+      element.insertAdjacentHTML("afterbegin",htmlText);
+
+      return element;
   }
   static wrapElement(tagName:string, attrs:object, element: HTMLElement) :HTMLElement {
     return wrapElement(tagName, attrs, element);

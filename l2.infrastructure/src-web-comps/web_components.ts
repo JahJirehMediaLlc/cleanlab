@@ -22,4 +22,6 @@ export * from './ui-option.ts';
 export *  from './ui-panel.ts';
 export *  from './ui-search.ts';
 
+export *  from './ui-view.ts';
+
 export *  from './ui-folder.ts';
