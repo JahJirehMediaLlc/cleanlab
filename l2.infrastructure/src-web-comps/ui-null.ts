@@ -67,6 +67,10 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
     view: HTMLUiNullView;
     controller:HTMLUiNullController;
+    // satisfies webcomponentlifecycle interface
+   observedAttributes: string[]; 
+   // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["width", "height", "url"];
 
     constructor(){
         super();
@@ -76,6 +80,7 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
 
         console.log("ui-null registered....");
     }
+ 
 
     connectedCallback(): void {
       //  console.log('connectedCallback Method not implemented.');
@@ -86,11 +91,7 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
         console.log('attributeChangedCallback Method not implemented.');
     }
-    get observedAttributes(): string[] {
-        console.log('observedAttributes Method not implemented.');
-
-        return ["name","value"];
-    }
+    
 }
 
 window.customElements.define("ui-null", HTMLUiNull);

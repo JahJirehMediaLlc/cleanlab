@@ -54,7 +54,7 @@ class HTMLUiGalleryView{
 
             this.galleryImagesList.replaceChildren();
 
-            images_li.forEach( li => this.galleryImagesList.appendChild(li) );
+            images_li.forEach( li => this.galleryImagesList!.appendChild(li) );
 
             // register event listners
             if(this.galleryImagesList && this.galleryBtnForm){
@@ -72,7 +72,7 @@ class HTMLUiGalleryView{
                 .then(resp=> resp.json())
                 .then(data=>{
                     // process image list for shadow dom display
-                    console.log("gallry data fetched...",data);
+                   // console.log("gallry data fetched...",data);
                 })
 
             this.SelectedImageIndex = 2;
@@ -101,7 +101,7 @@ class HTMLUiGalleryView{
 
         if (this.selectedElement.tagName.toUpperCase() !== "IMG")return;
 
-        let images = this.galleryImagesList.getElementsByTagName("img");
+        let images = this.galleryImagesList!.getElementsByTagName("img");
 
         this.SelectedImageIndex = Array.from(images).indexOf(this.selectedElement as HTMLImageElement);
 
@@ -130,12 +130,12 @@ class HTMLUiGalleryView{
     //
  
     setFocus(index:number){
-        let newSelectedImage = this.galleryImagesList.getElementsByTagName("img")[index];
-        let oldSelectedImage = this.galleryImagesList.getElementsByClassName("border")[0] as HTMLElement;
+        let newSelectedImage = this.galleryImagesList!.getElementsByTagName("img")[index];
+        let oldSelectedImage = this.galleryImagesList!.getElementsByClassName("border")[0] as HTMLElement;
 
-        let image = this.galleryImagesList.getElementsByTagName("img")[index];
+        let image = this.galleryImagesList!.getElementsByTagName("img")[index];
      
-        this.currentImage.setAttribute("src", image.getAttribute("src"));
+        this.currentImage!.setAttribute("src", image.getAttribute("src")!);
 
         if( oldSelectedImage)Css.border(oldSelectedImage,false);
 

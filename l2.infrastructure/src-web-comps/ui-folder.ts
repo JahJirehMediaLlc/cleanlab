@@ -162,6 +162,10 @@ class HTMLUiFolderView{
         this.setupTemplate();
         this.showDetails(this.currentTab);
     }
+    private initEventHandlers(){
+    this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+    this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+    }
     setupTemplate(){
     const tplus = new TemplatePlus("");
 
@@ -178,8 +182,8 @@ class HTMLUiFolderView{
 
     slot_attrs.forEach( sa => sa.setAttribute("slot","1"));
 
-   }
-   parseRawHtml(rawhtml:string):string{
+    }
+    parseRawHtml(rawhtml:string):string{
     const dom = new DOMParser().parseFromString(rawhtml,"text/html");
     const style = dom.querySelector("style");
     const body = dom.querySelector("body");
@@ -187,7 +191,7 @@ class HTMLUiFolderView{
     console.log(dom);
 
     return `<style>${style!.innerHTML}</style> ${body!.innerHTML}`;
-   }
+    }
     fetchArticleUrl(article:HTMLElement){
         const article_url =  article!.getAttribute("url");
 
@@ -202,18 +206,12 @@ class HTMLUiFolderView{
             .then( rawHtml => article!.innerHTML = this.parseRawHtml(rawHtml) )
             .catch( e => console.log(e) )
     }
-private initEventHandlers(){
-    this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-    this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
-}
-
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
         else
             this._shadowRoot.appendChild(node);
-    }
-            
+    }     
     processClickEvent(event: Event){
         const clickedElement = event.target as HTMLElement;
 
@@ -222,7 +220,6 @@ private initEventHandlers(){
     }
 
     }
-
     processSubmitForm(event:SubmitEvent){
 
     event.preventDefault();
@@ -233,7 +230,6 @@ private initEventHandlers(){
     const form_input = fdata.get("some form input element") as string;
   //  fdata.forEach( (key,value) => console.log(`name: ${value}  value: ${key} `)) ;
     }
-
     showDetails(tabId:string){
    
         try{
@@ -257,7 +253,6 @@ private initEventHandlers(){
         }
 
     }
-
     setFocus(tabId:string, on:boolean){
         const el = document.querySelector(`[for=${tabId}]`);
 
@@ -283,6 +278,11 @@ export class HTMLUiFolder extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
     view: HTMLUiFolderView;
     controller:HTMLUiFolderController;
+    // satisfies webcomponentlifecycle interface
+   observedAttributes: string[];  
+
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["width", "height", "url"];
 
     constructor(){
         super();
@@ -290,7 +290,7 @@ export class HTMLUiFolder extends HTMLElement implements WebComponentLifeCycle{
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this.controller = new HTMLUiFolderController(this);
 
-        console.log("<ui-folder> element registered....");
+        console.log("<ui-folder> registered....");
     }
 
     connectedCallback(): void {
@@ -301,11 +301,6 @@ export class HTMLUiFolder extends HTMLElement implements WebComponentLifeCycle{
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
         console.log('attributeChangedCallback Method not implemented.');
-    }
-    get observedAttributes(): string[] {
-        console.log('observedAttributes Method not implemented.');
-
-        return ["name","value"];
     }
 }
 

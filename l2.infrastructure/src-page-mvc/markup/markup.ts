@@ -22,7 +22,7 @@ return templateList;
 function initHandler(){
 addEventListener("submit", eventHandler);
 
-console.log("Handler initialized...");
+console.log("Markup EventHandler initialized...");
 }
 function eventHandler(event:SubmitEvent){
     event.preventDefault();

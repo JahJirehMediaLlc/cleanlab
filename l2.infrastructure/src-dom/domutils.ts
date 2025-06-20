@@ -8,7 +8,7 @@ export type trans = {  property:string,  duration:string,  timing:string}
 
 export class Html{
   static insertElements(element:HTMLElement, htmlText:string) :HTMLElement{
-      console.log(`insertElements ${element.id} and erasing children`);
+    //  console.log(`insertElements ${element.id} and erasing children`);
 
       element.replaceChildren();
 

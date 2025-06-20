@@ -143,34 +143,34 @@ const rawHtml  = _html`
 <slot name="first_name">
 <p>no first_name provided</p>
 <label for="first_name">first_name</label>
-<input id="first_name" name="first_name" type="text">
+<input id="first_name" name="first_name" type="text" autocomplete="true">
 </slot>
 
 
 <slot name="last_name">
 <p>no last_name provided</p>
 <label for="last_name">last_name</label>
-<input id="last_name" name="last_name" type="text">
+<input id="last_name" name="last_name" type="text" autocomplete="true">
 </slot>
 
 
 <slot name="age">
 <p>no age provided</p>
 <label for="age">age</label>
-<input id="age" name="age" type="text">
+<input id="age" name="age" type="number" autocomplete="true">
 </slot>
 
 
 <slot name="email">
 <p>no email provided</p>
 <label for="email">"email</label>
-<input id="email" name="email" type="text">
+<input id="email" name="email" type="text" autocomplete="true">
 </slot>
 
 <slot name="phone">
 <p>no phone provided</p>
 <label for="phone">"phone</label>
-<input id="phone" name="phone" type="text">
+<input id="phone" name="phone" type="phone" autocomplete="true">
 </slot>
 
 <button type="submit">Done</button> 
@@ -234,7 +234,7 @@ export class HTMLUiContact extends HTMLElement implements WebComponentLifeCycle{
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this.controller = new HTMLUiContactController(this);
 
-        console.log("<ui-contact> element registered....");
+        console.log("<ui-contact> registered....");
     }
 
     connectedCallback(): void {
