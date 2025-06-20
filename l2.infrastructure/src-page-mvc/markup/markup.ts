@@ -51,5 +51,3 @@ console.log("showing template:", id);
 initSelectList();
 
 initHandler();
-
-console.log("markup ready..");
