@@ -268,7 +268,7 @@
 <body>
 
 
-<header class="bg_green position_top width100">
+<header class="bg_green position_top width100 hide">
     <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem" >
         <ul slot="menu" class="menu_x scroll_x">
             <li>
@@ -287,7 +287,9 @@
         </ul>
     </ui-panel>
 </header>
+
 <!-- 
+
 <ui-folder>
 <label for="tab1" slot="tab">js-for-loops</label>
 <article id="tab1" slot="details">
@@ -394,14 +396,20 @@
     <ui-table></ui-table>
 </article>
 
-</ui-folder>   -->
+</ui-folder>  
 
-<!-- <main id="main" class="container">
+-->
+
+<!-- 
+
+<main id="main" class="container">
     <div id="output" class="output">
     </div>
-</main> -->
+</main> 
 
-<main  class="bg_grey" style="position:relative">
+-->
+
+<main  class="bg_grey hide" style="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
    
         <aside class="hide1 container_item" style="border:1px blue dashed">
@@ -448,7 +456,7 @@
     </div>
 </main>
 
-<footer class="bg_green position_bottom">
+<footer class="bg_green position_bottom hide">
     <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" >
         <ul slot="menu" class="menu_x scroll_x">
             <li>bottom</li>
