@@ -10,6 +10,16 @@ const rawCss  = _css`
     padding:0;
 }
 
+:host{
+display:block;
+contain:paint;
+
+border: 2px red dashed;
+color: white;
+background-color:purple;
+}
+
+
 img{
     display: block;
     max-width: 100%;
@@ -166,6 +176,11 @@ export class HTMLUiPanel extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
     view: HTMLUiPanelView;
     controller: HTMLUiPanelController;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes: string[];  
+
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["position", "height" , "scrollable", "id", "top","left","bottom","right"];
 
     constructor(){
         super();
@@ -175,12 +190,6 @@ export class HTMLUiPanel extends HTMLElement implements WebComponentLifeCycle{
 
         console.log("ui-panel registered....");
     }
-
-    // satisfies webcomponentlifecycle interface
-    observedAttributes: string[];  
-
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["position", "height" , "scrollable", "id", "top","left","bottom","right"];
 
     connectedCallback(): void {
         this.controller.view.setupTemplate();

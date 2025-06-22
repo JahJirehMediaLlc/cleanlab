@@ -267,7 +267,6 @@
 </head>
 <body>
 
-
 <header class="bg_green position_top width100 hide">
     <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem" >
         <ul slot="menu" class="menu_x scroll_x">
@@ -287,6 +286,15 @@
         </ul>
     </ui-panel>
 </header>
+
+<ui-nav>
+    <p slot="title">toc title provided by user</p>
+    <p> non slot item provided by user</p>
+    <h5> non slot item provided by user</h5>
+
+    <ui-navaction slot="items" action="1" template="" href="">Action 1</ui-navaction>
+    <ui-navaction slot="items" action="2" template="" href="">Action 2</ui-navaction>
+</ui-nav>
 
 <!-- 
 
@@ -397,15 +405,6 @@
 </article>
 
 </ui-folder>  
-
--->
-
-<!-- 
-
-<main id="main" class="container">
-    <div id="output" class="output">
-    </div>
-</main> 
 
 -->
 

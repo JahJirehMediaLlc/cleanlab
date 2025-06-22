@@ -10,6 +10,16 @@ margin: 0;
 padding:0;
 }
 
+:host{
+display:block;
+contain:paint;
+
+border: 2px red dashed;
+color: white;
+background-color:purple;
+}
+
+
 img{
 display: block;
 max-width: 100%;

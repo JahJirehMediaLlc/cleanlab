@@ -1,4 +1,4 @@
-import {TemplatePlus} from "../src-dom/domutils.ts";
+import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
 class HTMLUiNavActionView{
     tplus:TemplatePlus;
@@ -11,15 +11,9 @@ class HTMLUiNavActionView{
         this.setupTemplate();
     }
     setupTemplate(){
-    this.tplus.content().then( frag => {
-
-            // customize the doc fragment
-
-            this.render(this.tplus.element);
-
-        });
+ 
     }
-     render(node: HTMLTemplateElement|DocumentFragment){
+    render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
         else
@@ -34,11 +28,16 @@ class HTMLUiNavActionController {
 
 }
 export class HTMLUiNavAction extends HTMLElement{
+        // satisfies webcomponentlifecycle interface
+   observedAttributes: string[]; 
+   // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["slot", "template", "href", "action"];
+
     constructor(){
         super();
 
-        console.log("ui-nav-action registered..");
+        console.log("ui-navaction registered..");
     }
 }
 
-window.customElements.define("ui-nav-action", HTMLUiNavAction);
+window.customElements.define("ui-navaction", HTMLUiNavAction);

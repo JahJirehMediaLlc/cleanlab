@@ -41,9 +41,9 @@ class HTMLUiTabsView{
 
         this.tplus.content().then( frag => {
 
-        this.tabs_menu_form = frag.getElementById("tabs_menu_form");
-        this.tabs_menu_ul = frag.getElementById("tabs_menu_ul");
-        this.tabs_output = frag.getElementById("tabs_output");
+        this.tabs_menu_form = frag.getElementById("tabs_menu_form")!;
+        this.tabs_menu_ul = frag.getElementById("tabs_menu_ul")!;
+        this.tabs_output = frag.getElementById("tabs_output")!;
 
         // add event listner's for click and form submit
         if (this.tabs_output && this.tabs_menu_form) {
@@ -78,7 +78,7 @@ class HTMLUiTabsView{
             let _topic = item.getAttribute("topic");
             let _name = item.getAttribute("name");
             let _value = item.getAttribute("value");
-            let _btn    = createElement("button",{name:_name,value:_value,class:"tabs_item"},_topic);
+            let _btn    = createElement("button",{name:_name,value:_value,class:"tabs_item"},_topic!)!;
             let _li = wrapElement("li",{},_btn);
 
             _frag.appendChild(_li);
@@ -134,7 +134,7 @@ class HTMLUiTabsController{
     _parent:HTMLUiTabs;
     tabs:tab_attr[] = [];
     version = "1.0.0";
-    fi:FormInput = new FormInput(null);
+    fi:FormInput = new FormInput(null as unknown as HTMLFormElement);
     get currentTab():string{return this._view.currentTab};
     set currentTab(value){this._view.showTab(value)};
     //
@@ -148,11 +148,11 @@ class HTMLUiTabsController{
     for(let h of this._parent.children){
 
             let ta:tab_attr = {
-                name: h.getAttribute("name"),
-                value: h.getAttribute("value"),
-                slot: h.getAttribute("slot"),
-                topic: h.getAttribute("topic"),
-                article_id: h.getAttribute("article_id"),
+                name: h.getAttribute("name")!,
+                value: h.getAttribute("value")!,
+                slot: h.getAttribute("slot")!,
+                topic: h.getAttribute("topic")!,
+                article_id: h.getAttribute("article_id")!,
                 };
 
             this.tabs.push(ta);
@@ -169,10 +169,10 @@ class HTMLUiTabsController{
 
         if(!tab_output_Form  && !tplate_Form)return;
 
-        const tab_output_fdata = new FormData(tab_output_Form);
+        const tab_output_fdata = new FormData(tab_output_Form!);
 
         // attach to template tab_item form
-        this.fi.attachForm(tplate_Form);
+        this.fi.attachForm(tplate_Form!);
 
         // transfer values from tabs_output tab_item from to template tab_item form
         for(let [key,value] of tab_output_fdata){
@@ -185,6 +185,11 @@ class HTMLUiTabsController{
 export class HTMLUiTabs extends HTMLElement {
     _controller:HTMLUiTabsController;
     _shadowRoot: ShadowRoot = this.attachShadow({mode: 'open'});
+        // satisfies webcomponentlifecycle interface
+    observedAttributes: string[];  
+
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["position", "height" , "scrollable", "id", "top","left","bottom","right"];
 
     constructor(){
         super();

@@ -77,6 +77,11 @@ class HTMLUiTableController{
 export class HTMLUiTable extends HTMLElement{
     _controller:HTMLUiTableController;
     _shadowRoot: ShadowRoot;
+        // satisfies webcomponentlifecycle interface
+    observedAttributes: string[];  
+
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["position", "height" , "scrollable", "id", "top","left","bottom","right"];
 
     constructor(){
         super();

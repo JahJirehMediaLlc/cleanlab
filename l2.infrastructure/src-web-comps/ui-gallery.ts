@@ -157,6 +157,11 @@ class HTMLUiGalleryController{
 export class HTMLUiGallery extends HTMLElement{
     _controller:HTMLUiGalleryController;
     _shadowRoot: ShadowRoot;
+        // satisfies webcomponentlifecycle interface
+   observedAttributes: string[]; 
+   // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["width", "height", "url"];
+
 
     constructor(){
         super();
