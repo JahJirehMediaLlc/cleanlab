@@ -202,41 +202,32 @@ const rawCss = _css`
 `;
 
 const rawHtml  = _html`
-<h3>title</h3>
-<slot name="title">
-no title
-</slot>
-
-<h3>ui-nav actions</h3>
-
-<slot name="items">
-no items
-</slot>
-
   <nav class="bg_blue flex_row">
+    <form action="*">
+            <select> 
+                <option>Action 1</option>
+                <option>Action 2</option>
+            </select>
+            
+            <input id="1" type="radio" name="menu" value="1">
+            <label for="1">Menu 1</label>
 
-        <select class=""> 
-            <option>Action 1</option>
-            <option>Action 2</option>
-        </select>
-        
-        <ul class="menu_x">
-            <li>Action 1</li>
-            <li>Action 2</li>
-        </ul>
-     
-     </nav>
+            <input id="2" type="radio" name="menu" value="2">
+            <label for="2">Menu 2</label>
+
+            <input type="text" value="search">
+
+            <ul class="menu_x">
+                <li>Action 1</li>
+                <li>Action 2</li>
+            </ul>
+    </form>
+  </nav>
 `;
  
 class HTMLUiNavView{
     template:TemplatePlus;
-    _shadowRoot: ShadowRoot;
-    // satisfies webcomponentlifecycle interface
-   observedAttributes: string[]; 
-   // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["width", "height", "url"];
-
-    
+    _shadowRoot: ShadowRoot;    
     constructor(shadowRoot: ShadowRoot) {
 
         this._shadowRoot = shadowRoot;
@@ -245,13 +236,34 @@ class HTMLUiNavView{
     }
     setupTemplate(){
         const tplus = new TemplatePlus("");
-    
-        tplus.initTemplate(rawCss,rawHtml);
+        const slots = document.querySelectorAll(`[slot="nav-action"]`);
+        const template = tplus.initTemplate(rawCss,rawHtml);
+        const ul = template.content.querySelector(`ul`);
+        const select = template.content.querySelector(`select`);
+        let li = "";
+        let option = "";
 
-        console.log("slot=", tplus.element.slot || "..");
-    
+        ul!.replaceChildren();
+        select!.replaceChildren();
+   
+        slots.forEach(el =>{
+
+            li += `<li>${el.textContent}</li>`;
+            option += `<option>${el.textContent}</option>`;
+        });
+        
+        ul!.insertAdjacentHTML("afterbegin",li);
+        select!.insertAdjacentHTML("afterbegin",option);
+
         this.render(tplus.element);
 
+        this.initEventHandlers();
+    }
+    private initEventHandlers(){
+    this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+    this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+
+     console.log("initEventHandlers...");
     }
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
@@ -259,23 +271,23 @@ class HTMLUiNavView{
         else
             this._shadowRoot.appendChild(node);
      }
-    processClickEvent(event: Event){
-        const selectedElement = event.target as HTMLElement;
+    
+     processClickEvent(event: Event){
+        const clickedElement = event.target as HTMLElement
+
+         console.log(clickedElement.tagName);
+
     }
-    processSubmitForm(evt:SubmitEvent){
-        evt.preventDefault();
 
-        const fdata = new FormData(evt.target as HTMLFormElement, evt.submitter);
-        let req   = {
-            action: <string>fdata.get("action"),
-            lookup: <string>fdata.get("lookup"),
-            template:<string>fdata.get("selected_template")
-        } ;
-        const custEvt = new CustomEvent("nav_event", { detail: req }  );
+    processSubmitForm(event:SubmitEvent){
 
-        globalThis.dispatchEvent( custEvt );
+    event.preventDefault();
+
+    const form = document.getElementById("some_form")  as HTMLFormElement;
+
     }
 }
+
 class HTMLUiNavController {
     _view:HTMLUiNavView;
     _parent:HTMLUiNav;
@@ -288,6 +300,11 @@ class HTMLUiNavController {
 export class HTMLUiNav extends HTMLElement{
     _controller:HTMLUiNavController;
     _shadowRoot: ShadowRoot;
+        // satisfies webcomponentlifecycle interface
+    observedAttributes: string[]; 
+   // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["width", "height"];
+
     constructor(){
         super();
 
@@ -297,4 +314,5 @@ export class HTMLUiNav extends HTMLElement{
         console.log("ui-nav registered..");
     }
 }
+
 window.customElements.define("ui-nav", HTMLUiNav);
