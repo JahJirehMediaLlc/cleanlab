@@ -1,4 +1,4 @@
-import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
+import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus, Form} from  '../src-dom/domutils.ts';
 
 const rawCss = _css`
     <style>
@@ -203,7 +203,7 @@ const rawCss = _css`
 
 const rawHtml  = _html`
   <nav class="bg_blue flex_row">
-    <form action="*">
+    <form id="nav_form"  action="">
             <select> 
                 <option>Action 1</option>
                 <option>Action 2</option>
@@ -272,10 +272,14 @@ class HTMLUiNavView{
             this._shadowRoot.appendChild(node);
      }
     
-     processClickEvent(event: Event){
-        const clickedElement = event.target as HTMLElement
+    processClickEvent(event: Event){
+        const clickedElement = event.target as HTMLElement;
+        const form = this._shadowRoot.querySelector("form") as HTMLFormElement;
+        const formjson = new Form(form);
 
-         console.log(clickedElement.tagName);
+        console.log(clickedElement.tagName);
+
+       console.log(formjson.getJsonData());
 
     }
 
@@ -284,6 +288,8 @@ class HTMLUiNavView{
     event.preventDefault();
 
     const form = document.getElementById("some_form")  as HTMLFormElement;
+
+    console.log("processSubmitForm",form);
 
     }
 }

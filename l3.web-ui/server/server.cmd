@@ -1,0 +1,1 @@
+deno -A server.ts
