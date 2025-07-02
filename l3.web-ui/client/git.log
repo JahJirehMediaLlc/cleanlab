@@ -1,0 +1,69 @@
+PS E:\projects\CleanLab> git log   
+commit db8e0c37df6777ceb00bedba67c83ddf116983be (HEAD -> dev)
+Author: Fly Pan Walle <flypanwall@gmail.com>
+Date:   Tue Jul 1 18:45:43 2025 -0400
+
+    exclude server.cmd in gitignore
+
+commit 743ca048330ffdabc31d9a531074dd977ed492cd
+Author: Fly Pan Walle <flypanwall@gmail.com>
+Date:   Sun Jun 29 07:16:55 2025 -0400
+
+    fix form submit
+
+PS E:\projects\CleanLab> git log --oneline
+db8e0c3 (HEAD -> dev) exclude server.cmd in gitignore
+743ca04 fix form submit
+6bf2b6a ui-nav upgrade
+7a807f8 fix style ul margins for ui-nav
+a93fc40 (origin/dev) playing around
+284a907 modified readme
+e449392 (origin0/main, origin0/HEAD, origin/main, origin/HEAD) ready for github deploy
+82974da cleanup code
+4268363 fix css margin porpertty
+db8e0c3 (HEAD -> dev) exclude server.cmd in gitignore
+743ca04 fix form submit
+6bf2b6a ui-nav upgrade
+7a807f8 fix style ul margins for ui-nav
+a93fc40 (origin/dev) playing around
+284a907 modified readme
+e449392 (origin0/main, origin0/HEAD, origin/main, origin/HEAD) ready for github deploy
+82974da cleanup code
+4268363 fix css margin porpertty
+5f06405 fix bundling configuration
+f028efb fix null checks
+d05b117 fix import statement to domain-types
+9a6aafb Initial commit
+:...skipping...
+db8e0c3 (HEAD -> dev) exclude server.cmd in gitignore
+743ca04 fix form submit
+6bf2b6a ui-nav upgrade
+7a807f8 fix style ul margins for ui-nav
+a93fc40 (origin/dev) playing around
+284a907 modified readme
+e449392 (origin0/main, origin0/HEAD, origin/main, origin/HEAD) ready for github deploy
+82974da cleanup code
+4268363 fix css margin porpertty
+5f06405 fix bundling configuration
+f028efb fix null checks
+d05b117 fix import statement to domain-types
+391c444 v0.0.0 initial load
+9a6aafb Initial commit
+~
+~
+:...skipping...
+db8e0c3 (HEAD -> dev) exclude server.cmd in gitignore
+743ca04 fix form submit
+6bf2b6a ui-nav upgrade
+7a807f8 fix style ul margins for ui-nav
+a93fc40 (origin/dev) playing around
+284a907 modified readme
+e449392 (origin0/main, origin0/HEAD, origin/main, origin/HEAD) ready for github deploy
+82974da cleanup code
+4268363 fix css margin porpertty
+5f06405 fix bundling configuration
+f028efb fix null checks
+d05b117 fix import statement to domain-types
+391c444 v0.0.0 initial load
+9a6aafb Initial commit
+~

@@ -9,8 +9,10 @@ import { Logger, Authenticate } from './services/middleware.ts';
 
 import { prompt } from './services/tools.ts';
 
-const assetsDir  = path.join(Deno.cwd(), 'assets');
-const wwwrootDir = path.join(Deno.cwd(), 'wwwroot');
+const serverDir:string = Deno.cwd();
+const clientDirectory:string = Deno.cwd();
+const assetsDir  = path.join(clientDirectory.replace("server","client"), 'assets');
+const wwwrootDir = path.join(clientDirectory.replace("server","client"), 'wwwroot');
 
 export class UserServer{
 port = Deno.env.get("APP_PORT") || 3000;

@@ -16,14 +16,26 @@ assetsDir:string,
 viewsDir:string,
 wwwrootDir:string
 }
+const serverDir:string = Deno.cwd();
+const clienrDirectory:string = Deno.cwd();
 //
 const _aConfig = {
 version :'v9.90',
 server_varsion: ver,
 viewsDir : path.join(Deno.cwd(), 'views'),
-assetsDir : path.join(Deno.cwd(), 'assets'),
-wwwrootDir : path.join(Deno.cwd(), 'wwwroot'),
+assetsDir : path.join(clienrDirectory.replace("server","client"), 'assets'),
+wwwrootDir : path.join(clienrDirectory.replace("server","client"), 'wwwroot'),
 }
+/*   
+  viewsDir:   "E:\\projects\\CleanLab\\l3.web-ui\\server\\views",
+  assetsDir:  "E:\\projects\\CleanLab\\l3.web-ui\\server\\assets",
+  wwwrootDir: "E:\\projects\\CleanLab\\l3.web-ui\\server\\wwwroot" 
+
+  viewsDir:   "E:\\projects\\CleanLab\\l3.web-ui\\server\\views",
+  assetsDir:  "E:\\projects\\CleanLab\\l3.web-ui\\client\\assets",
+  wwwrootDir: "E:\\projects\\CleanLab\\l3.web-ui\\client\\wwwroot"
+  */
+console.log("_aConfig",_aConfig);
 //
 async function setupServer(){
 

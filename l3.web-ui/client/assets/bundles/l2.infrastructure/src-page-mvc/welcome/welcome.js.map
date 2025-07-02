@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../l2.infrastructure/src-page-mvc/welcome/welcome.ts"],
+  "sourcesContent": ["import {Dimensions, Animator, dim} from '../../src-dom/domutils.ts';\r\nimport {TemplatePlus} from \"../../src-dom/domutils.ts\";\r\n\r\nclass WelcomeView{}\r\nclass WelcomeController{}\r\nexport class Welcome{}\r\n\r\nconsole.log(\"welcome.ts module loaded...\");"],
+  "mappings": ";;AAKO,MAAM,UAAN,MAAa;AAAA,EAAC;AAErB,UAAQ,IAAI,6BAA6B;",
+  "names": []
+}

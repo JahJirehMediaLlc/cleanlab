@@ -47,33 +47,53 @@ public status():reproStatus{
 }
 //
 private async loadUsers(path:URL,jsonFile:string="users.json"):Promise<user[]>{
+  let userss:user[] = [];  
+  try{
   const url = new URL(`${path.href}${jsonFile}`);
 
   const resp = await fetch(url);
 
-  const usrs =  await resp.json();
-
-  return users = usrs;
+  const users =  await resp.json();
+  }
+  catch(e:any){
+  console.log("&&&&&&&&&&",e);
+  }
+  
+  return users;
 }
 //
 private async loadCustomers(path:URL,jsonFile:string="customers.json"):Promise<customer[]>{
-  const url = new URL(`${path.href}${jsonFile}`);
-
-  const resp = await fetch(url);
+  let customers:customer[] = [];  
   
-  const custs =  await resp.json();
+  try{
+    const url = new URL(`${path.href}${jsonFile}`);
 
-  return customers = custs;
+    const resp = await fetch(url);
+    
+    customers = await resp.json()
+  }
+  catch(e:any){
+  console.log("&&&&&&&&&&",e);
+  }
+  
+return customers;
 }
 //
 private async loadPersons(path:URL,jsonFile:string="persons.json"):Promise<person[]>{
-  const url = new URL(`${path.href}${jsonFile}`);
-
-  const resp = await fetch(url);
+  let persons:person[] = [];
   
-  const pers =  await resp.json();
+  try{
+    const url = new URL(`${path.href}${jsonFile}`);
 
-  return persons = pers;
+    const resp = await fetch(url);
+    
+    const pers =  await resp.json();
+  }
+  catch(e:any){
+  console.log("&&&&&&&&&&",e);
+  }
+  
+  return persons;
 }
 /**
 * returns a list of users 
