@@ -1,1 +1,1 @@
-deno -A server.ts
+deno -A init_server.ts

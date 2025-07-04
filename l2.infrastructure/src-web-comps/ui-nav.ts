@@ -217,11 +217,13 @@ const rawHtml  = _html`
 
             <input type="text" value="search">
 
-            <ul class="menu_x">
-                <li>Action 1</li>
-                <li>Action 2</li>
-            </ul>
     </form>
+
+    <ul class="menu_x">
+        <li>Action 1</li>
+        <li>Action 2</li>
+    </ul>
+
   </nav>
 `;
  
@@ -261,7 +263,8 @@ class HTMLUiNavView{
     }
     private initEventHandlers(){
     this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-    this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+   
+    // this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
 
      console.log("initEventHandlers...");
     }
@@ -281,6 +284,7 @@ class HTMLUiNavView{
 
        console.log(formjson.getJsonData());
 
+        alert(clickedElement.tagName);
     }
 
     processSubmitForm(event:SubmitEvent){

@@ -1274,33 +1274,29 @@ contain:paint;
 
 border: 2px red dashed;
 color: white;
-background-color:purple;
+background-color: orange;
 }
-
-            img{
-                display: block;
-                max-width: 100%;
-                height: auto;
-                /* margin: 0px auto; */
-            }
-
-    </style>
+</style>
 `;
   var rawHtml3 = _html`
 <slot>
 <p>ui-view component</p>
 </slot>
 <div id="output">
-output
+place your content here 
+(html id is "output")
 </div>
 `;
   var HTMLUiViewView = class {
     _shadowRoot;
     controller;
+    _url = new URL("http://localhost:3000/");
     get url() {
-      return new URL("http://localhost:3000/html/es6-ts-this.html");
+      return this._url;
     }
     set url(value) {
+      this._url = value;
+      this.setupTemplate();
     }
     get width() {
       return "";
@@ -1314,12 +1310,14 @@ output
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      this.setupTemplate();
     }
     setupTemplate() {
+      const ui_view = document.querySelector("ui-view");
       const tplus = new TemplatePlus("tid");
       tplus.initTemplate(rawCss3, rawHtml3);
       this.render(tplus.element);
+      const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+      this.fetchHtml(this._url, outputEl);
     }
     parseRawHtml(rawhtml) {
       const dom = new DOMParser().parseFromString(rawhtml, "text/html");
@@ -1328,12 +1326,9 @@ output
       console.log(dom);
       return `<style>${style.innerHTML}</style> ${body.innerHTML}`;
     }
-    fetchArticleUrl(article) {
-      const article_url = article.getAttribute("url");
-      if (!article_url) return;
-      console.log(`article url: ${article_url}`);
-      const url = new URL(`http://localhost:3000/${article_url}`);
-      fetch(url).then((response) => response.text()).then((rawHtml9) => article.innerHTML = this.parseRawHtml(rawHtml9)).catch((e) => console.log(e));
+    fetchHtml(path, output) {
+      const url = new URL(`http://localhost:3000/${path}`);
+      fetch(url).then((response) => response.text()).then((rawHtml9) => output.innerHTML = this.parseRawHtml(rawHtml9)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1358,7 +1353,6 @@ output
   };
   var HTMLUiView = class extends HTMLElement {
     _shadowRoot;
-    view;
     controller;
     // satisfies webcomponentlifecycle interface
     observedAttributes;
@@ -1857,11 +1851,13 @@ flex-grow: 0;
 
             <input type="text" value="search">
 
-            <ul class="menu_x">
-                <li>Action 1</li>
-                <li>Action 2</li>
-            </ul>
     </form>
+
+    <ul class="menu_x">
+        <li>Action 1</li>
+        <li>Action 2</li>
+    </ul>
+
   </nav>
 `;
   var HTMLUiNavView = class {
@@ -1893,7 +1889,6 @@ flex-grow: 0;
     }
     initEventHandlers() {
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
-      this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
       console.log("initEventHandlers...");
     }
     render(node) {
@@ -1908,6 +1903,7 @@ flex-grow: 0;
       const formjson = new Form(form);
       console.log(clickedElement.tagName);
       console.log(formjson.getJsonData());
+      alert(clickedElement.tagName);
     }
     processSubmitForm(event) {
       event.preventDefault();

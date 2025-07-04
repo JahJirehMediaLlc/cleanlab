@@ -16,36 +16,33 @@ contain:paint;
 
 border: 2px red dashed;
 color: white;
-background-color:purple;
+background-color: orange;
 }
-
-            img{
-                display: block;
-                max-width: 100%;
-                height: auto;
-                /* margin: 0px auto; */
-            }
-
-    </style>
+</style>
 `;
+
 const rawHtml  = _html`
 <slot>
 <p>ui-view component</p>
 </slot>
 <div id="output">
-output
+place your content here 
+(html id is "output")
 </div>
 `;
 
 class HTMLUiViewView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiViewController;
+    _url = new URL("http://localhost:3000/");
 
     get url(): URL{
-        return new URL("http://localhost:3000/html/es6-ts-this.html");
+        return this._url;
     }
     set url(value:string){
-    //     console.log("set url", value);
+    this._url = value;
+
+    this.setupTemplate();
     }
     get width():string{
     return "";
@@ -61,16 +58,18 @@ class HTMLUiViewView{
     }
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.setupTemplate();
     }
     setupTemplate() {
+        const ui_view = document.querySelector("ui-view");
         const tplus = new TemplatePlus("tid");
         
         tplus.initTemplate( rawCss, rawHtml );
 
-      //  console.log(`height=${this.height}   width=${this.width}  url=${this.url} `);
-
         this.render( tplus.element );
+
+        const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+
+        this.fetchHtml(this._url, outputEl);
     }
     parseRawHtml(rawhtml:string):string{
     const dom = new DOMParser().parseFromString(rawhtml,"text/html");
@@ -81,18 +80,11 @@ class HTMLUiViewView{
 
     return `<style>${style!.innerHTML}</style> ${body!.innerHTML}`;
     }
-    fetchArticleUrl(article:HTMLElement){
-        const article_url =  article!.getAttribute("url");
-
-        if(!article_url)return;
-
-            console.log(`article url: ${article_url}`);
-
-            const url = new  URL( `http://localhost:3000/${article_url}` );
-
+    fetchHtml(path:string, output:HTMLElement){
+           const url = new  URL( `http://localhost:3000/${path}` );
             fetch(url)
             .then( response => response.text() )
-            .then( rawHtml => article!.innerHTML = this.parseRawHtml(rawHtml) )
+            .then( rawHtml => output.innerHTML = this.parseRawHtml(rawHtml) )
             .catch( e => console.log(e) )
     }
     render(node: HTMLTemplateElement|DocumentFragment){
@@ -122,7 +114,6 @@ class HTMLUiViewController{
 
 export class HTMLUiView extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
-    view: HTMLUiViewView;
     controller:HTMLUiViewController;
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[];  
@@ -138,16 +129,14 @@ export class HTMLUiView extends HTMLElement implements WebComponentLifeCycle{
         console.log("ui-view registered....");
     }
     connectedCallback(): void {
+     // this.controller.view.setupTemplate() ;
       //  console.log('connectedCallback Method not implemented.');
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-
         this.controller.view[name] = newValue;
-
-     //   console.log('attributeChangedCallback Method not implemented.');
     }
 }
 

@@ -17,7 +17,7 @@
 
     <link rel="manifest" href="manifest_markup.json">
     <link rel="shortcut icon" href="/images/icons/favicon.ico">
-    <link rel="apple-touch-icon" href="/images/icons/icon72.png">
+    <link rel="apple-touch-icon" href="/images/icons/jmc72.png">
     <link rel="stylesheet" href="./css/reset.css">
 
     <style>
@@ -290,20 +290,11 @@
 <ui-nav>
     <p> non slot item provided by user</p>
     <p slot="nav-title">toc title provided by user</p>
-    <ui-navaction slot="nav-action" action="1" template="" href="">Action 1</ui-navaction>
-    <ui-navaction slot="nav-action" action="2" template="" href="">Action 2</ui-navaction>
-    <ui-navaction slot="nav-action" action="3" template="" href="">Action 3</ui-navaction>
-    <ui-navaction slot="nav-action" action="4" template="" href="">Action 4</ui-navaction>
-   
-     <ui-navaction slot="nav-action" action="5" template="" href="">Action 5</ui-navaction>
-    <ui-navaction slot="nav-action" action="6" template="" href="">Action 6</ui-navaction>
-    <ui-navaction slot="nav-action" action="7" template="" href="">Action 7</ui-navaction>
-    <ui-navaction slot="nav-action" action="8" template="" href="">Action 8</ui-navaction>
+    <ui-navaction slot="nav-action" action="1" template="" href="/cls.html"> <a href="/cls.html">Cls</a></ui-navaction>
+    <ui-navaction slot="nav-action" action="2" template="" href="/welcome.html"><a href="/welcome.html">Welcome</a></ui-navaction>
 </ui-nav>
 
-<!-- 
-
-<ui-folder>
+<!-- <ui-folder>
 <label for="tab1" slot="tab">js-for-loops</label>
 <article id="tab1" slot="details">
     <ui-view  width="1"  height="2" url="html/js-for-loops.html">
@@ -410,10 +401,10 @@
 </article>
 
 </ui-folder>  
+ -->
 
--->
 
-<main  class="bg_grey hide" style="position:relative">
+ <main  class="bg_grey hide" style="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
    
         <aside class="hide1 container_item" style="border:1px blue dashed">
@@ -434,7 +425,7 @@
         </aside>
 
         <section id="output" class="container_item  width100" style="border:1px blue dashed;">
-            center panel
+           
             <div id="log">
 
             </div>
@@ -459,6 +450,8 @@
 
     </div>
 </main>
+
+ <img style="margin: 0 auto;" src="images/icons/jmc512.png">
 
 <footer class="bg_green position_bottom hide">
     <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" >

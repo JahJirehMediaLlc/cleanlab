@@ -686,23 +686,3 @@ export class TemplatePlus{
   }
 
 }
-
-class ServiceWorker{
-    constructor(){
-      console.log("Service Worker initiated");
-    }
-    init(){
-        if('serviceWorker' in navigator){
-
-            navigator.serviceWorker.register('sw.js').
-            then( registration => this.printStatus(registration)).
-            catch(error=>console.log("Service worker not supported...", error.message));
-
-        }
-    }
-    printStatus( registration: any){
-        console.log("SW registration completed. scope =", registration.scope);
-        console.log("SW file.  registration ==", registration.active!.state);
-    }
-
-}

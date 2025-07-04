@@ -7,69 +7,213 @@
     <link rel="icon" type="image/x-icon" href="./images/icons/favicon.ico">
     <link rel="stylesheet" href="./css/styles.css">
     <style>
-    .cyan_black{
-        background-color: darkcyan;
-        color: black;
+
+    *,
+    *::after, 
+    *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
     }
 
-    .blk_yel{
-        background-color: black;
-        color:yellow;
-    }
-
-    .blue_yel{
-        background-color: blue;
-        color:yellow;
-    }
-
-    .green_yel{
-        background-color: green;
-        color:yellow;
-    }
-
-    .cta{
-        font-size: larger;
-        text-decoration: none;
-    }
-
-    .headline{
-        font-family: Cambria,fantasy;
-        font-size: 5rem;
-    }
-
-    .logo{
-        width: 100%;
+    img{
+        display: block;
         max-width: 100%;
-        text-align: center;
+        height: auto;
+        /* margin: 0px auto; */
     }
 
-    .logo_bio{
-        display: inline;
-        width: 10rem;
-        text-align: center;
-        margin: 0;
-        padding: 0;
-    }
+        .bg_blue{
+            background-color: cornflowerblue;
+        }
+        .bg_green{
+            background-color: darkolivegreen;
+        }
+        .bg_grey{
+            background-color: darkgray;
+        }
 
-    figure{
-        margin: 0;
-        padding: 0;
-    }
+        .hide{
+            display:none;
+        }
 
-    .box{
-        display: inline-block;
-        width: max-content;
-        height: 8rem;
-        outline: 1px solid lawngreen;
-        margin: 0;
-        padding: 0;
-    }
+        .position_top{
+            position: fixed;
+            top: 0;
+            width:100%;
+            z-index: 1;
+        }
+        .position_bottom{
+            position: fixed;
+            bottom: 0;
+            width:100%;
+            z-index: 1;
+        }
+        .position_left{
+            position: fixed;
+            left: 0;
+            width:100%;
+            z-index: 1;
+        }
+        .position_right{
+            position: fixed;
+            right: 0;
+            width:100%;
+            z-index: 1;
+        }
+
+        .scroll_x{
+            overflow-x: scroll;
+        }
+        .scroll_y{
+            overflow-y: scroll;
+            width: fit-content;
+        }
+
+        .menu_x{
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            overflow-x: auto;
+        }
+        .menu_x > *{
+            flex-shrink: 0;
+        }
+        .menu_y{
+            display: flex;
+            flex-direction:column;
+            gap: .51rem;
+            text-align: center;
+            list-style: none;
+            width: fit-content;;
+            border: 2px red solid;
+        }
+        .menu_y > *{
+            margin:0;
+            padding:0;
+        }
+
+        .flex_row{
+            display:flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 1rem;
+        }
+        .flex_col{
+            display:flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .fullscreen{
+            position: relative;
+            top: 2rem;
+            height: 80vh;
+            /*width: 100%;*/
+        }
+
+        .width100{width:100%;max-width:100%;}
+        .width75{width:75%;max-width:75;}
+        .width50{width:50%;max-width:50%;}
+        .width25{width:25%;max-width:25%}
+
+      .fullwidth{width:100%;max-width:100%;}
+
+        .flex_center{
+            display:flex;
+            align-items: center ;
+            justify-content: center;
+        }
+
+        .center{
+            display:flex;
+            text-align: center;
+            align-items: center ;
+            justify-content: center;
+        }
+        .center *{
+            text-align: center;
+            margin: 0 auto;
+            display: inline-block;
+        }
+        .center_text{
+            text-align: center;
+        }
+
+        .space_between{
+            justify-content: space-between;
+        }
+        .space_around{
+            justify-content: space-around;
+        }
+
+        .wrap{
+            display:flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .hide{
+            display:none;
+        }
+
+        .border{
+            border:1px green solid;
+        }
+        .border2{
+            border: 2px green solid;
+        }
+        .grow_on{
+            flex-grow: 1;
+        }
+        .grow_off{
+            flex-grow: 0;
+        }
+
+        .shrink_on{
+            flex-shrink: 1;
+        }
+        .shrink_off{
+            flex-shrink: 0;
+        }
+
+        .margins{
+            margin: 1rem;
+        }
 
     </style>
 </head>
-<body class="blk_yel">
+<body>
 
-<section class="blue_yel">
+<ul class="menu_x">
+    <li><a class="cta" href="/cls.html">Cls Project</a></li>
+    <li><a class="cta" href="/markup.html">Markup Project</a></li>
+</ul>
+
+<main class="flex_center cyan_black">
+    <div id="lcp" class="text_center">
+        <h1 class="headline">JMC</h1>
+
+        <h3>Welcome</h3>
+
+        <figure>
+            <img class="logo" src="/images/me2.png" alt="me2.png">
+        </figure>
+
+      
+
+    </div>
+</main>
+
+<h3>Sub domains</h3>
+<ul  class="center">
+    <li>html</li>
+    <li>css</li>
+    <li>data</li>
+    <li>images</li>
+    <li>images/icons</li>
+</ul>
+
+<section class=" hide blue_yel">
 
 <div id="box1" class="box green_yel">
     <p>Box 1</p>
@@ -90,20 +234,6 @@
 </div>
 
 </section>
-
-<main class="flex_center cyan_black">
-    <div id="lcp" class="text_center">
-        <h1 class="headline">Welcome</h1>
-        <figure>
-            <img class="logo" src="/images/me2.png" alt="me2.png">
-        </figure>
-        <br>
-        <a class="cta" href="./index">UserManagement</a>
-        <br>
-        <a class="cta" href="./flex.html">Flexxbox</a>
-    </div>
-</main>
-
 <script src="/bundles/welcome/welcome.js"></script>
 
 </body>
