@@ -26,10 +26,10 @@ class ServiceWorker {
     });
     console.log(`sw version: ${version} handlers installed...`);
   }
-  addToCache(response) {
-    console.log("sw addToCache", response);
-    caches.open(cacheName);
-    (cache) => cache.put(response);
+  addToCache(request, response) {
+    console.log("sw cache update: ", response.url);
+    caches.open(cacheName + "aux");
+    (cache) => cache.put(request, response);
   }
   install(fe) {
     console.log("sw install event");
@@ -41,12 +41,11 @@ class ServiceWorker {
     const cache = await caches.open(cacheName);
     const cachedResponse = await cache.match(event.request);
     if (cachedResponse) {
-      console.log("sw cache", cachedResponse.url);
+      console.log("sw cache response:", cachedResponse.url);
       return cachedResponse;
     }
-    console.log("request not in cache, going to netwok and updating cache");
     const networkResponse = fetch(event.request);
-    event.waitUntil(cache.put(event.request, networkResponse));
+    networkResponse.then((nr) => this.addToCache(event.request, nr.clone()));
     return networkResponse;
   }
   fetch(fe) {

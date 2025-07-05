@@ -29,14 +29,13 @@ class ServiceWorker implements IServiceWorker{
         console.log(`sw version: ${version} handlers installed...`);
     }
 
-    addToCache(response:Response){
+    addToCache(request:Request, response:Response){
 
-        console.log("sw addToCache", response);
+        console.log("sw cache update: ", response.url);
 
-        caches.open(cacheName);
+        caches.open(cacheName+"aux");
 
-        cache => cache.put( response  );
-
+        cache => cache.put( request, response  );
     }
 
     install(fe:FetchEvent){
@@ -57,24 +56,26 @@ class ServiceWorker implements IServiceWorker{
 
         // if not in cache fetch from network then add to cache
         if(cachedResponse){
-            console.log("sw cache", cachedResponse.url);
+            console.log("sw cache response:", cachedResponse.url);
             return cachedResponse;
         }
             
-        console.log("request not in cache, going to netwok and updating cache");
-
         const networkResponse = fetch(event.request);
 
         // do not return until cache is updated in background
-        event.waitUntil( cache.put(event.request, networkResponse) );  
 
-         return networkResponse;
+        networkResponse.then( nr => this.addToCache(event.request, nr.clone()));     
+
+        // event.waitUntil( async () => { 
+        //     networkResponse.then( nr => this.addToCache(event.request, nr.clone()));         
+        // } );
+       
+        return networkResponse;
      }
 
     fetch(fe:FetchEvent){
-        if(fe.request.method !== "GET")return;
 
-   //     console.log("sw fetch-get event url= ", fe.request.url);
+        if(fe.request.method !== "GET")return;
 
         fe.respondWith( this.generateResponse(fe) );
     }
