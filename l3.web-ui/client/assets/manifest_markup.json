@@ -6,8 +6,8 @@
     "start_url": ".",
     "scope": ".",
     "display": "standalone",
-    "theme_color": "#ffff00",
-    "background_color": "#ff00ff",
+    "theme_color": "#0f0f0f",
+    "background_color": "#0000ff",
     "orientation": "any",
     "description": "Markup Shell PWA demo. Version 1",
     "screenshots": [
