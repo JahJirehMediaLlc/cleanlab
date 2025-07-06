@@ -1074,8 +1074,6 @@ flex-grow: 0;
 :host{
 display:block;
 contain:paint;
-
-border: 2px red dashed;
 color: white;
 background-color:purple;
 }
@@ -2884,29 +2882,6 @@ flex-grow: 0;
   };
   var controller = new ClsController();
   var host = document.getElementById("log");
-  function test1() {
-    const log_template = document.getElementById("log_template");
-    host.attachShadow({ mode: "open" });
-    host.shadowRoot.appendChild(log_template.content.cloneNode(true));
-    console.log("log_template", log_template);
-  }
-  function test2() {
-    const tplus = new TemplatePlus("tabs_template");
-    const _rawCss = `
-    h1{
-        color:teal;
-    }
-`;
-    const _rawHtml = `
-<h1>hello peoples....</h1>
-`;
-    tplus.content().then((frag) => {
-      console.log(frag);
-      tplus.render(document.getElementById("output"));
-    });
-  }
-  test1();
-  test2();
   var sw = new ServiceWorkerClient();
 })();
 //# sourceMappingURL=cls.js.map

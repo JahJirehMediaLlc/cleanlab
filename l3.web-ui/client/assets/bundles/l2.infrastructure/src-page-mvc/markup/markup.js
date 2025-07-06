@@ -1074,8 +1074,6 @@ flex-grow: 0;
 :host{
 display:block;
 contain:paint;
-
-border: 2px red dashed;
 color: white;
 background-color:purple;
 }

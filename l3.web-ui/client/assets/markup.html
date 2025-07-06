@@ -11,12 +11,13 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta charset="UTF-8">
-    <meta name="theme-color" content="#ffff00">
+    <meta name="theme-color" content="#ff00ff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="manifest" href="manifest_markup.json">
     <link rel="shortcut icon" href="/images/icons/favicon.ico">
     <link rel="apple-touch-icon" href="/images/icons/jmc72.png">
+    <link rel="manifest" href="manifest_markup.json">
+    
     <link rel="stylesheet" href="./css/reset.css">
 
     <style>
@@ -28,14 +29,31 @@
             padding: 0;
         }
 
-        img {
-            display: block;
-            max-width:1 100%;
-            height: auto;
+        a{
+            color: white;
         }
 
-        header{
-            margin: 0 auto;
+     ul a{
+            color: yellow;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            /* margin: 0px auto; */
+        }
+
+        img {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        img {
+            display: block;
+            width: 5rem;
+            height: 5rem;
+            height: auto;
         }
 
         .center_new {
@@ -88,29 +106,24 @@
         }
 
         .scroll_x {
-            overflow-x: auto;
+            overflow-x: scroll;
         }
 
         .scroll_y {
-            overflow-y: auto;
+            overflow-y: scroll;
             width: fit-content;
         }
 
         .menu_x {
             display: flex;
-            justify-content: space-around;
             list-style: none;
             gap: 2rem;
             overflow-x: auto;
-            width: 100%;
+            color: white;
         }
 
         .menu_x > * {
             flex-shrink: 0;
-        }
-
-        .menu_x li:hover{
-            color: white;
         }
 
         .menu_y {
@@ -120,18 +133,14 @@
             text-align: center;
             list-style: none;
             width: fit-content;
-            overflow-x: auto;
+            border: 2px red solid;
         }
 
         .menu_y > * {
             margin: 0;
             padding: 0;
+            color:white;
         }
-
-        .menu_y li:hover{
-            color: white;
-        }
-        
 
         .flex_row {
             display: flex;
@@ -264,148 +273,23 @@
     </style>
 
 </head>
+
 <body>
 
-<header class="bg_green position_top width100 hide">
-    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem" >
+<header class="bg_green position_top">
+    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="menu_x">
         <ul slot="menu" class="menu_x scroll_x">
-            <li>
-                <form id="template_select_form" action="">
-                        <label for="templateList"><b>Web Templates:</b></label> 
-                        <select name="selectedTemplate" id="templateList"></select>
-                        <button name="action" value="view" type="submit">view</button>
-                </form>
-            </i>
-            <li>top</li>
-            <li>panel</li>
-            <li>phone</li>
-            <li>work</li>
-            <li>church</li>
-            <li>apartments</li>
+            <li><a href="/welcome.html">Welcome</a></li>
+            <li><a href="/cls.html">Cls</a></li>
+            <li><a href="/markup.html">Maekup</a></li>
         </ul>
     </ui-panel>
 </header>
 
-<ui-nav>
-    <p> non slot item provided by user</p>
-    <p slot="nav-title">toc title provided by user</p>
-    <ui-navaction slot="nav-action" action="1" template="" href="/cls.html"> <a href="/cls.html">Cls</a></ui-navaction>
-    <ui-navaction slot="nav-action" action="2" template="" href="/welcome.html"><a href="/welcome.html">Welcome</a></ui-navaction>
-</ui-nav>
-
-<ui-folder>
-<label for="tab1" slot="tab">js-for-loops</label>
-<article id="tab1" slot="details">
-    <ui-view  width="1"  height="2" url="html/js-for-loops.html">
-        <h3>js-for-loops</h3>
-    </ui-view>
-</article>
-
-<label for="tab2" slot="tab">Gallery</label>
-<article id="tab2" slot="details">
-   <h3>Gallery Component</h3>
-    <ui-gallery>
-        <ul class="ui_gallery_ul">
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
-                    <figcaption>ArchitecuralDiagrams.jpg</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/a-devtools-savesettings-function.png" alt="">
-                    <figcaption>a-devtools-savesettings-function</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/a-depiction-breaking-long-running-tasks-up.png" alt="">
-                    <figcaption>a-depiction-breaking-long-running-tasks-up.pngn</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/a-task-event-function-call.png" alt="">
-                    <figcaption>a-task-event-function-call.png</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/AtmState.jpg" alt="">
-                    <figcaption>AtmState.jpg</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/browser-dom-tree.gif" alt="">
-                    <figcaption>browser-dom-tree.gif</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/a-long-task-function-calls.png" alt="">
-                    <figcaption>a-long-task-function-calls.png</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/browser-dns-lookup-latency.jpg" alt="">
-                    <figcaption>browser-dns-lookup-latency.jpg</figcaption>
-                </figure>
-            </li>
-
-            <li>
-                <figure>
-                    <img class="gallery_item" src="images/browser-rendering-css-rule.png" alt="">
-                    <figcaption>browser-rendering-css-rule.png</figcaption>
-                </figure>
-            </li>
-        </ul>
-    </ui-gallery>
-</article>
-
-<label for="tab3" slot="tab">Contact</label>
-<article id="tab3" slot="details">
-   <h3>Cotact Component</h3>
-   <ui-contact>
-    <h3 slot="first_name">gary</h3>
-    <h3 slot="last_name">whyte</h3>
-    <h3 slot="age">62</h3>
-    <h3 slot="email">gwhyte@gmail.com</h3>
-    <h3 slot="phone">000-000-0000</h3>
-    <img src="" alt="bio">
-    <img src="" alt="upc">
-</ui-contact>
-</article>
-
-<label for="tab4" slot="tab">es6-ts-this</label>
-<article id="tab4" slot="details">
-   <ui-view width="31"  height="82" url="html/es6-ts-this.html" >
-        <h3>es6-ts-this</h3>
-   </ui-view>
-</article>
-
-<label for="tab5" slot="tab">Table</label>
-<article id="tab5" slot="details">
-    <h3>Table Component</h3>
-    <ui-table></ui-table>
-</article>
-
-</ui-folder>  
-
-
- <main  class="bg_grey hide" style="position:relative">
+<main  class="bg_grey" style="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
    
-        <aside class="hide1 container_item" style="border:1px blue dashed">
+        <aside class="hide container_item" style="border:1px blue dashed">
             <ui-panel id="panel_left" height1="14rem" >
             <ul slot="menu" class="menu_y scroll_y1">
                 <li>left</li>
@@ -423,13 +307,13 @@
         </aside>
 
         <section id="output" class="container_item  width100" style="border:1px blue dashed;">
-           
+         <h1>Markup</h1>
             <div id="log">
 
             </div>
         </section>
 
-        <aside class="hide1 container_item" style="border:1px blue dashed">
+        <aside class="hide container_item" style="border:1px blue dashed">
             <ui-panel id="panel_right"   height2="14rem" >
             <ul slot="menu" class="menu_y scroll_y1">
                 <li>right</li>
@@ -449,589 +333,21 @@
     </div>
 </main>
 
- <!-- <img style="margin: 0 auto;" title="jmc512-version 1.1" src="images/icons/jmc512.png"> -->
-
- <h6>version: 1.1.0</h6>
-
-<footer class="bg_green position_bottom hide">
+<footer class="bg_green position_bottom">
     <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" >
         <ul slot="menu" class="menu_x scroll_x">
             <li>bottom</li>
             <li>panel</li>
             <li>phone</li>
+            <li>email</li>
+            <li>scores</li>
+            <li>highlights</li>
+            <li>fashion</li>
             <li>company</li>
             <li>work</li>
         </ul>
     </ui-panel>
 </footer>
-
-    <template id="dom_folder_template">
-    <style>
-    *,
-    *::after, 
-    *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    }
-
-    img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* margin: 0px auto; */
-    }
-
-    html{
-    scrollbar-gutter: stable;
-    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-    font-family: 'Cambria, Cochin, Georgia', 'Times New Roman', serif;
-    font-size: 1.2rem;
-    box-sizing: border-box;
-    }
-    li{
-    display: inline-block;
-    width: 4rem;
-    }
-    </style>
-    <nav-folder>
-    <label for="tab1" slot="tab">Tab 1</label>
-    <article id="tab1" slot="details">Article 1</article>
-
-    <label for="tab2" slot="tab">Tab 2</label>
-    <article id="tab2" slot="">Article 2</article>
-
-    <label for="tab3" slot="tab">Tab 3</label>
-    <article id="tab3" slot="">Article 3</article>
-    </nav-folder>
-    </template>
-
-    <template id="sdom_folder_template">
-    <style>
-    *,
-    *::after, 
-    *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    }
-
-    img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* margin: 0px auto; */
-    }
-
-    html{
-    scrollbar-gutter: stable;
-    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-    font-family: 'Cambria, Cochin, Georgia', 'Times New Roman', serif;
-    font-size: 1.2rem;
-    box-sizing: border-box;
-    }
-    li{
-    display: inline-block;
-    width: 4rem;
-    }
-    </style>
-    <form>
-    <ul id="buttons">
-    <li><slot name="tab"></slot></li>
-    </ul>
-    </form>
-
-    <h3>Article</h3>
-    <slot name="details"></slot>
-
-    <slot></slot>
-    </template>
-
-    <template id="blank_template">
-    <div>
-    <h1>blank template</h1>
-    </div>
-    </template>
-
-    <template id="sdom_blank_template"></template>
-
-    <template id="ui_tabs_template">
-    <style>
-    .tabs_menu{
-    display:flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    }
-
-    @media (min-width: 650px){
-    .tabs_menu{
-    flex-direction: row;
-    }
-    .tabs_menu li{
-    color:black;
-    background-color: rgb(95, 110, 110);
-    }
-    }
-
-    .tabs_menu > li{
-    /* 1=allow breaking of elementontent, 0=no breaking of element content */
-    flex-shrink: 0;
-    /* 1=allow elements to grow , 0=no growing of elements  */
-    flex-grow: 1;
-    }
-    .tabs_menu > *{
-    /* 1=allow breaking of elementontent, 0=no breaking of element content */
-    flex-shrink: 0;
-    /* 1=allow elements to grow , 0=no growing of elements  */
-    flex-grow: 1;
-    }
-    .tab_item{
-    color: black;
-    border: 1px solid green;
-    margin: .3rem;
-    }
-
-    .flex_column{
-    display: flex;
-    flex-direction: column;
-    }
-    .transition_width{
-    width: 100%;
-    transition: width 1000ms ease-in;
-    }
-    .transition_bg{
-    background-color: red;
-    transition: background-color 1000ms ease-in;
-    }
-    .transition_opacity{
-    opacity: 1;
-    transition: opacity 1000ms ease-in;
-    }
-    .transition_up{
-    transform: translateY(-105%);
-    transition: transform 1000ms ease-in;
-    }
-    .transition_down{
-    transform: translateY(1%);
-    transition: transform 1000ms ease-in;
-    }
-    </style>
-    <article >
-    <form id="tabs_menu_form" action="">
-    <ul id="tabs_menu_ul" class="tabs_menu">
-    <li><button name="action" value="tab1" class="tabs_item">Tab 1</button></li>
-    <li><button name="action" value="tab2" class="tabs_item">Tab 2</button></li>
-    <li><button name="action" value="tab3" class="tabs_item">Tab 3</button></li>
-    </ul>
-    </form>
-
-    <div id="tabs_output" class="tabs_output">
-
-    <slot name="tabs_out">
-    <p> default tab output </p>
-    </slot>
-
-    </div>
-    </article>
-    </template>
-    <template id="sdom_ui_tabs_template">
-    <link rel="stylesheet" href="./css/flexx.css">
-    <style>
-
-    *,
-    *::after, 
-    *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    }
-
-    img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* margin: 0px auto; */
-    }
-
-    :host{
-    background-color: palegreen;
-    border:3px rgb(131, 6, 79) solid;
-    width:20rem;
-    }
-
-    ::slotted(*){
-    color:yellow;
-    }
-    .flex_row{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 1rem;
-    }
-    .flex_col{
-    display:flex;
-    flex-direction: column;
-    gap: 1rem;
-    }
-    .flex_col > *{
-    /*width:100%;*/
-    background-color: #605d8a;
-    }
-
-    .text_wrap{
-    hyphens: auto;
-    overflow-wrap: break-word;
-    /* text-wrap: balance; */
-    width: 100%;
-    /* max-width: 67ch;   */
-    }
-
-    .tabs_menu{
-    display:flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    }
-
-    .tabs_output{
-    background-color: burlywood;           
-    }
-
-    @media (min-width: 650px){
-    .tabs_menu{
-    flex-direction: row;
-    }
-    .tabs_menu li{
-    color:black;
-    background-color: rgb(95, 110, 110);
-    }
-    }
-
-    .tabs_menu > li{
-    /* 1=allow breaking of elementontent, 0=no breaking of element content */
-    flex-shrink: 0;
-    /* 1=allow elements to grow , 0=no growing of elements  */
-    flex-grow: 1;
-    }
-    .tabs_menu > *{
-    /* 1=allow breaking of elementontent, 0=no breaking of element content */
-    flex-shrink: 0;
-    /* 1=allow elements to grow , 0=no growing of elements  */
-    flex-grow: 1;
-    }
-    .tab_item{
-    color: black;
-    margin: .3rem;
-    }
-
-    .transition_width{
-    width: 100%;
-    transition: width 1000ms ease-in;
-    }
-    .transition_bg{
-    background-color: red;
-    transition: background-color 1000ms ease-in;
-    }
-    .transition_opacity{
-    opacity: 1;
-    transition: opacity 1000ms ease-in;
-    }
-    .transition_up{
-    transform: translateY(-105%);
-    transition: transform 1000ms ease-in;
-    }
-    .transition_down{
-    transform: translateY(1%);
-    transition: transform 1000ms ease-in;
-    }
-    </style>
-    <article >
-    <form id="tabs_menu_form" action="*" >
-
-    <input type="text" name="search" value="hello world" >
-    <button name="action" value="search">search</button>
-
-    <ul id="tabs_menu_ul" class="menu_x scroll_x" width100>
-    <li><button  name="action" value="tab1" class="tabs_item">Tab 1</button></li>
-    <li><button  name="action" value="tab2" class="tabs_item">Tab 2</button></li>
-    <li><button  name="action" value="tab3" class="tabs_item">Tab 3</button></li>
-    </ul>
-
-    </form>
-
-    <div id="tabs_output"  class="tabs_output">
-
-    <div class="text_wrap1" >
-    <slot name="active">
-    <p> default tab output </p>
-    </slot>
-    </div>
-
-    </div>
-
-    </article>
-    </template>
-
-    <template id="dom_ui_contact_template">
-    <style>
-    ol{
-    background-color: red;
-    margin-left: 3rem;
-    width: fit-content;
-    border: 1px yellow dashed;
-    }
-    </style>
-    <article>
-
-    <h3>Contact</h3>
-
-    <div>
-    <table class=contact-details>
-    <tr><td>Name</td><td>Gary Whyte</td></tr>
-    <tr><td>Email</td><td>gmail@gmcil.com</td></tr>
-    <tr><td>Phone</td><td>000-000-0000</td></tr>
-    <tr><td>Title</td><td>Chief Executive Officer</td></tr>
-    </table>
-
-    <h4>User Image</h4>
-    <img src="/images/me2.png" alt="User">
-    </div>
-    <div>
-    <h4>ORC Image</h4>
-    <img src="/images/me2.png" alt="QRC">
-    </div>
-    </article>
-    </template>
-
-    <template id="sdom_ui_contact_template">
-    <link rel="stylesheet" href="./css/flexx.css">
-    <style>
-    ::slotted(img){
-    width: 17rem;
-    height: 17rem;
-    }
-    table{
-    /*margin: 0 auto;*/
-    background-color: green;
-    color: white;
-    border-left: 1px dashed yellow;
-    border-top: 1px dashed yellow;
-    }
-    table td{
-    border-bottom: 1px dashed yellow;
-    border-right: 1px dashed yellow;
-    }
-    .base_style{
-    color: teal;
-    margin: 0;
-    text-align: left;
-    display: initial;
-    }
-    img{
-    width:3rem;
-    height: 3rem;
-    }
-    </style>
-    <article class="base_style">
-    <div>
-    <table class=contact-details>
-    <tr><td>Name</td><td>Gary Whyte</td></tr>
-    <tr><td>Email</td><td>gmail@gmcil.com</td></tr>
-    <tr><td>Phone</td><td>000-000-0000</td></tr>
-    <tr><td>Title</td><td>Chief Executive Officer</td></tr>
-    </table>
-    </div>
-
-    <h4>User Image</h4>
-    <slot name="me">
-    <p>no user image provided.</p>
-    </slot>
-
-    <h4>User Image3</h4>
-    <slot name="me3">
-    <p>no user image3 provided.</p>
-    </slot>
-
-    <h3>Copyright</h3>
-    <slot name="copyright">
-    <b><b>no copyright was provided in light dom<</b></b>
-    </slot>
-
-    <div>
-    <h3>ORC Image</h3>
-    <slot name="qrc">
-    <p>no QRC image was provided</p>
-    </slot>
-    </div>
-
-    <div>
-    <h3>Unnamed Slots</h3>
-    <slot>_
-    <p>no unamed slots fond in light dom</p>
-    </slot>
-    </div>
-
-    <div>
-    <h3>Details Slot</h3>
-    <slot name="details">
-    <p>no contact details provided in light dom</p>
-    </slot>
-    </div>
-
-    </article>
-    </template>
-
-    <template id="dom_ui_table_template">
-    <style>
-    section{
-    background-color: slategrey;
-    }
-    table *{
-    border: 1px solid green;
-    }
-    .flex_column{
-    display: flex;
-    flex-direction: column;
-    }
-    .flex_row{
-    display: flex;
-    flex-direction: row;
-    }
-    .tab_item{
-    background-color: green;
-    border: none;
-    opacity: .30;
-    overflow: hidden;
-    transform: translateY(-105%);
-    }
-    .transition_width{
-    width: 100%;
-    transition: width 1000ms ease-in;
-    }
-    .transition_bg{
-    background-color: red;
-    transition: background-color 1000ms ease-in;
-    }
-    .transition_opacity{
-    opacity: 1;
-    transition: opacity 1000ms ease-in 1000ms;
-    }
-    .transition_up{
-    transform: translateY(-105%);
-    transition: transform 1000ms ease-in;
-    }
-    .transition_down{
-    transform: translateY(1%);
-    transition: transform 1000ms ease-in;
-    }
-    </style>
-    <section>
-    <table>
-    <thead>
-    <tr>
-    <td>header col 1</td>
-    <td>Header col 2</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td>1</td>
-    <td>soap</td>
-    </tr>
-    <tr>
-    <td>2</td>
-    <td>tooth paste</td>
-    </tr>
-    </tbody>
-    </table>
-    <div class="flex_row">
-    <details>
-    <summary>Legend one</summary>
-    </details>
-    <details>
-    <summary>Legend two</summary>
-    </details>
-    </div>
-    </section>
-
-    </template>
-
-    <template id="sdom_ui_table_template">
-    <link rel="stylesheet" href="./css/flexx.css">
-    <style>
-    *,
-    *::after, 
-    *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    }
-
-    img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* margin: 0px auto; */
-    }
-
-    section {
-    margin: 0 auto;
-    }
-    table{
-    margin: 0 auto;
-    background-color: green;
-    color: white;
-    border-left: 1px dashed black;
-    border-top: 1px dashed black;
-    }
-    table td{
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    }
-    .legend{
-    text-align: center;
-    }
-    .legend details{
-    display: inline-block;
-    margin-right: 2rem;
-    }
-    </style>
-    <section>
-    <table>
-    <thead>
-    <tr>
-    <td>header col 1</td>
-    <td>Header col 2</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <td>1</td>
-    <td>soap</td>
-    </tr>
-    <tr>
-    <td>2</td>
-    <td>tooth paste</td>
-    </tr>
-    </tbody>
-    </table>
-
-    <div id="legends" class="legend">
-    <details>
-    <summary>Legend one</summary>
-    </details>
-    <details>
-    <summary>Legend two</summary>
-    </details>
-    </div>
-    </section>
-    </template>
-
 <!-- Scripts -->
 <script src="/bundles/l2.infrastructure/src-page-mvc/markup/markup.js"></script>
 

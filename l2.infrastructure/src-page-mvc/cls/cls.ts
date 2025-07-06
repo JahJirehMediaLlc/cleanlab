@@ -76,7 +76,4 @@ tplus.content().then( frag =>{
 
 }
 
-test1();
-test2();
-
 const sw = new ServiceWorkerClient();

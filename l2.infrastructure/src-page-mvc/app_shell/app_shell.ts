@@ -215,4 +215,4 @@ function _showComponent(templateId:string){
 
 }
 
-const controller = new AppShellController();
+//const controller = new AppShellController();

@@ -5,9 +5,9 @@
     "short_name": "Cls Shell Short",
     "start_url": "/cls.html",
     "scope": ".",
-    "display": "standalone",
-    "theme_color": "#ffff00",
-    "background_color": "#ff00ff",
+   "display": "standalone",
+    "theme_color": "#0f0f0f",
+    "background_color": "#0000ff",
     "orientation": "any",
     "description": "Cls Shell PWA demo. Version 1",
     "screenshots": [

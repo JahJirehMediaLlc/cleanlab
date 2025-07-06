@@ -7,12 +7,14 @@ const cacheFiles = [
     'welcome.html',
     'markup.html',
     'cls.html',
+    'appshell.html',
     'data/web_components.html',
     'html/es6-ts-this.html',
     'html/js-for-loops.html',
     'manifest_welcome.json',
     'manifest_markup.json',
     'manifest_cls.json',
+     'manifest.json',
     'css/reset.css',
     'images/icons/jmc512.png',
     'images/icons/favicon.ico',
@@ -31,7 +33,6 @@ class ServiceWorker implements IServiceWorker{
 
         console.log(`sw version: ${version} handlers installed...`);
     }
-
 
     install(fe:FetchEvent){
 
@@ -54,7 +55,7 @@ class ServiceWorker implements IServiceWorker{
     addToCache(name:string, request:Request){
         if(this.pathName(request).length < 2)return;
 
-        console.log("sw cache update: ", request.url);
+        console.log(`sw cache:${name} update: `, request.url);
 
         caches.open(name).then( cache => cache.add(request) );
     }
@@ -69,7 +70,7 @@ class ServiceWorker implements IServiceWorker{
         if( cachedResponse ){
             const url =  new URL( cachedResponse!.url);
 
-            console.log("sw cache response:", url.pathname);
+            console.log("sw cached response:", url.pathname);
 
             return cachedResponse;
         }
@@ -77,7 +78,7 @@ class ServiceWorker implements IServiceWorker{
         if( cachedResponse2 ){
              const url =  new URL( cachedResponse2!.url);
 
-            console.log("sw cache2 response:", url.pathname);
+            console.log("sw cached2 response:", url.pathname);
 
             return cachedResponse2;
         }
@@ -93,9 +94,10 @@ class ServiceWorker implements IServiceWorker{
 
     fetch(fe:FetchEvent){
 
-        console.log("pathname", this.pathName(fe.request));
-
+        
         if(fe.request.method !== "GET")return;
+
+        console.log("GET pathname", this.pathName(fe.request));
 
         fe.respondWith( this.generateResponse(fe) );
     }

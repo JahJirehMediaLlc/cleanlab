@@ -3,11 +3,11 @@
     "name": "App Shell",
     "lang": "en-us",
     "short_name": "App Shell Short",
-    "start_url": ".",
+    "start_url": "/app_shell.html",
     "scope": ".",
     "display": "standalone",
     "theme_color": "#ffff00",
-    "background_color": "#ff00ff",
+    "background_color": "#0000bf",
     "orientation": "any",
     "description": "App Shell PWA demo. Version 1",
     "screenshots": [

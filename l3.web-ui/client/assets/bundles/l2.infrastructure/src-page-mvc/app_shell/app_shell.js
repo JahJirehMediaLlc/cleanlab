@@ -344,7 +344,7 @@
       return template;
     }
     createBlankTemplate() {
-      const rawCss11 = _css`
+      const rawCss10 = _css`
   <style>
 
       h1{
@@ -393,22 +393,22 @@
       }
   </style>
   `;
-      const rawHtml9 = _html`
+      const rawHtml8 = _html`
   <h1>blank template</h1>
   `;
-      return this.initTemplate(rawCss11, rawHtml9);
+      return this.initTemplate(rawCss10, rawHtml8);
     }
-    initTemplate(rawCss11, rawHtml9) {
-      this.insertAdjacentHtml(rawCss11, rawHtml9);
+    initTemplate(rawCss10, rawHtml8) {
+      this.insertAdjacentHtml(rawCss10, rawHtml8);
       return this.template;
     }
-    insertAdjacentHtml(rawCss11, rawHtml9, rawJS = "") {
+    insertAdjacentHtml(rawCss10, rawHtml8, rawJS = "") {
       const style = this.template.content.querySelector("style");
       style.replaceChildren();
-      style.insertAdjacentHTML("afterbegin", rawCss11);
+      style.insertAdjacentHTML("afterbegin", rawCss10);
       const div = this.template.content.querySelector("div");
       div.replaceChildren();
-      div.insertAdjacentHTML("afterbegin", rawHtml9);
+      div.insertAdjacentHTML("afterbegin", rawHtml8);
       const script = this.template.content.querySelector("script");
       script.replaceChildren();
       script.insertAdjacentHTML("afterbegin", rawJS);
@@ -1058,8 +1058,6 @@ flex-grow: 0;
 :host{
 display:block;
 contain:paint;
-
-border: 2px red dashed;
 color: white;
 background-color:purple;
 }
@@ -1328,7 +1326,7 @@ place your content here
     }
     fetchHtml(path, output) {
       const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.text()).then((rawHtml9) => output.innerHTML = this.parseRawHtml(rawHtml9)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml8) => output.innerHTML = this.parseRawHtml(rawHtml8)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1559,7 +1557,7 @@ flex-grow: 0;
       if (!article_url) return;
       console.log(`article url: ${article_url}`);
       const url = new URL(`http://localhost:3000/${article_url}`);
-      fetch(url).then((response) => response.text()).then((rawHtml9) => article.innerHTML = this.parseRawHtml(rawHtml9)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml8) => article.innerHTML = this.parseRawHtml(rawHtml8)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -2834,171 +2832,5 @@ flex-grow: 0;
     }
   };
   window.customElements.define("ui-search", HTMLUiSearch);
-
-  // ../../../l2.infrastructure/src-page-mvc/app_shell/app_shell.ts
-  var rawCss10 = `
-<style>
-    h1{
-        color:red;
-    }
-</style>
-`;
-  var rawHtml8 = `
-<h1>....Hello ....</h1>
-`;
-  var AppShellView = class {
-    topPanel;
-    bottomPanel;
-    centerPanel;
-    leftPanel;
-    rightPanel;
-    panels = /* @__PURE__ */ new Map();
-    constructor() {
-      this.topPanel = document.getElementById("top_panel");
-      this.panels.set("top", this.topPanel);
-      this.bottomPanel = document.getElementById("bottom_panel");
-      this.panels.set("bottom", this.bottomPanel);
-      this.centerPanel = document.getElementById("center_panel");
-      this.panels.set("center", this.centerPanel);
-      this.leftPanel = document.getElementById("left_panel");
-      this.panels.set("left", this.leftPanel);
-      this.rightPanel = document.getElementById("right_panel");
-      this.panels.set("right", this.rightPanel);
-      this.setupTemplate();
-    }
-    setupTemplate() {
-      const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss10, rawHtml8);
-      this.render(tplus.element);
-    }
-    render(node, panel = "center") {
-      if (!node) {
-        console.log("node is null");
-        return;
-      }
-      const outPanel = this.panels.get(panel) || this.centerPanel;
-      if (node instanceof DocumentFragment)
-        outPanel.replaceChildren(node);
-      else
-        outPanel.replaceChildren(node.content);
-    }
-    print(innerContent, format = "text") {
-      try {
-        if (format === "paragraph")
-          this.centerPanel.innerHTML += `<p>${innerContent}</p>`;
-        else
-          this.centerPanel.innerHTML += `<text>${innerContent}</text>`;
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-    addClass(element, className) {
-      this.listClass(element);
-      if (element.classList) element.classList.add(className);
-    }
-    deleteClass(element, className) {
-      this.listClass(element);
-      if (element.classList) element.classList.remove(className);
-    }
-    listClass(element) {
-      const results = [];
-      if (element.classList) element.classList.forEach((cl) => {
-        results.push(cl);
-      });
-      return results;
-    }
-    show(panel) {
-      if (panel.classList.contains("hide")) this.deleteClass(panel, "hide");
-    }
-    hide(panel) {
-      this.addClass(panel, "hide");
-    }
-    center(flag) {
-      if (flag)
-        this.centerPanel.classList.add("center");
-      else
-        this.centerPanel.classList.remove("center");
-    }
-    clear() {
-      if (this.centerPanel) this.centerPanel.replaceChildren();
-    }
-    showPanel(panel) {
-      if (panel == "left") this.show(this.leftPanel);
-      if (panel == "right") this.show(this.rightPanel);
-      if (panel == "top") this.show(this.topPanel);
-      if (panel == "bottom") this.show(this.bottomPanel);
-    }
-    hidePanel(panel) {
-      if (panel == "left") this.hide(this.leftPanel);
-      if (panel == "right") this.hide(this.rightPanel);
-      if (panel == "top") this.hide(this.topPanel);
-      if (panel == "bottom") this.hide(this.bottomPanel);
-    }
-  };
-  var AppShellModel = class {
-  };
-  var AppShellController = class {
-    _view = new AppShellView();
-    _model = new AppShellModel();
-    constructor() {
-      this.initHandlers();
-    }
-    // register domContentLoaded and winLoad and nav_event
-    initHandlers() {
-      globalThis.onload = this.windowLoaded.bind(this);
-      document.addEventListener("DOMContentLoaded", this.domLoaded.bind(this));
-      globalThis.addEventListener("nav_event", this.navEventHandler.bind(this));
-    }
-    // DocumentContentLoaded Handler
-    domLoaded() {
-      const tp = document.getElementById("top_panel");
-      tp.addEventListener("submit", (e) => alert("yadda..." + e.target));
-      console.log("DOM ready");
-    }
-    // WinLoad Handler
-    windowLoaded() {
-      const tplus = new TemplatePlus("nav_template");
-      controller.showPanel("top", tplus);
-      console.log("all resources are loaded");
-    }
-    navEventHandler(event) {
-      console.log("nav_event received", event.detail);
-      _showComponent(event.detail.template);
-    }
-    print(text) {
-      this._view.print(text, "text");
-    }
-    printLn(text) {
-      this._view.print(text, "paragraph");
-    }
-    showPanel(_panelName, tplus) {
-      tplus.getTemplateElement().then((telement) => this.render(telement, "top"));
-    }
-    hide(panelName) {
-      this._view.hidePanel(panelName);
-    }
-    centerView() {
-      this._view.center(true);
-    }
-    resetView() {
-      this.clearView();
-      this._view.center(false);
-    }
-    clearView() {
-      this._view.clear();
-    }
-    render(node, panel = "center") {
-      this._view.render(node, panel);
-    }
-  };
-  function _showComponent(templateId) {
-    const tplus = new TemplatePlus(templateId);
-    console.log("showing component ", templateId);
-    tplus.getTemplateElement().then((te) => {
-      controller.resetView();
-      controller.render(te, "center");
-    });
-  }
-  var controller = new AppShellController();
 })();
 //# sourceMappingURL=app_shell.js.map
