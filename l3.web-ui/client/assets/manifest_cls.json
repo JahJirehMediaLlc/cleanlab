@@ -3,7 +3,7 @@
     "name": "Cls Shell",
     "lang": "en-us",
     "short_name": "Cls Shell Short",
-    "start_url": ".",
+    "start_url": "/cls.html",
     "scope": ".",
     "display": "standalone",
     "theme_color": "#ffff00",
@@ -44,14 +44,14 @@
         "src": "images/icons/jmc144.png",
         "sizes": "144x144",
         "type": "image/png"
-        },
+    },
     {
     "src": "images/icons/jmc168.png",
     "sizes": "168x168",
     "type": "image/png"
     },
     {
-    "src": "images/icons/jmc92.png",
+    "src": "images/icons/jmc192.png",
     "sizes": "192x192",
     "type": "image/png"
     },

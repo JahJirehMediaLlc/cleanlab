@@ -3,18 +3,21 @@ const cacheName = "jmc_cache" + version;
 const cacheFiles = [
   "welcome.html",
   "markup.html",
+  "cls.html",
+  "data/web_components.html",
+  "html/es6-ts-this.html",
+  "html/js-for-loops.html",
+  "manifest_welcome.json",
   "manifest_markup.json",
   "manifest_cls.json",
-  "cls.html",
   "css/reset.css",
   "images/icons/jmc512.png",
-  "bundles/l2.infrastructure/src-page-mvc/markup/markup.js",
-  "data/web_components.html",
   "images/icons/favicon.ico",
   "images/icons/jmc144.png",
   "images/me3.png",
-  "html/es6-ts-this.html",
-  "html/js-for-loops.html"
+  "bundles/l2.infrastructure/src-page-mvc/markup/markup.js",
+  "bundles/l2.infrastructure/src-page-mvc/welcome/welcome.js",
+  "bundles/l2.infrastructure/src-page-mvc/cls/cls.js"
 ];
 class ServiceWorker {
   constructor() {
@@ -26,29 +29,44 @@ class ServiceWorker {
     });
     console.log(`sw version: ${version} handlers installed...`);
   }
-  addToCache(request, response) {
-    console.log("sw cache update: ", response.url);
-    caches.open(cacheName + "aux");
-    (cache) => cache.put(request, response);
-  }
   install(fe) {
     console.log("sw install event");
     fe.waitUntil(
       caches.open(cacheName).then((cache) => cache.addAll(cacheFiles)).then(() => self.skipWaiting())
     );
   }
+  pathName(request) {
+    const url = new URL(request.url);
+    return url.pathname;
+  }
+  addToCache(name, request) {
+    if (this.pathName(request).length < 2) return;
+    console.log("sw cache update: ", request.url);
+    caches.open(name).then((cache) => cache.add(request));
+  }
   async generateResponse(event) {
     const cache = await caches.open(cacheName);
+    const cache2 = await caches.open(cacheName + "aux");
     const cachedResponse = await cache.match(event.request);
+    const cachedResponse2 = await cache2.match(event.request);
     if (cachedResponse) {
-      console.log("sw cache response:", cachedResponse.url);
+      const url = new URL(cachedResponse.url);
+      console.log("sw cache response:", url.pathname);
       return cachedResponse;
     }
+    if (cachedResponse2) {
+      const url = new URL(cachedResponse2.url);
+      console.log("sw cache2 response:", url.pathname);
+      return cachedResponse2;
+    }
     const networkResponse = fetch(event.request);
-    networkResponse.then((nr) => this.addToCache(event.request, nr.clone()));
+    if (!cachedResponse) {
+      this.addToCache(cacheName + "aux", event.request);
+    }
     return networkResponse;
   }
   fetch(fe) {
+    console.log("pathname", this.pathName(fe.request));
     if (fe.request.method !== "GET") return;
     fe.respondWith(this.generateResponse(fe));
   }

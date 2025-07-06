@@ -1,4 +1,5 @@
 import { TemplatePlus,_css, _html} from "../../src-dom/domutils.ts";
+import {ServiceWorkerClient,} from "../../src-page-mvc/sw/sw-lib.ts";
 
 export * from '../../src-web-comps/web_components.ts';
 
@@ -77,3 +78,5 @@ tplus.content().then( frag =>{
 
 test1();
 test2();
+
+const sw = new ServiceWorkerClient();

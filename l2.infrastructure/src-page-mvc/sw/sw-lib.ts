@@ -19,7 +19,6 @@ export class ServiceWorkerClient{
             navigator.serviceWorker.register('sw.js').
             then( registration => this.printStatus(registration)).
             catch(error=>console.log("Service worker not supported...", error.message));
-
         }
     }
     printStatus( registration: any){

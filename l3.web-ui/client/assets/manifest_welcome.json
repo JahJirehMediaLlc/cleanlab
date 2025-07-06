@@ -1,15 +1,15 @@
 {
     "id": "/",
-    "name": "Markup Shell",
+    "name": "Welcome Shell",
     "lang": "en-us",
-    "short_name": "Markup Shell",
-    "start_url": "/markup.html",
+    "short_name": "Welcome Shell",
+    "start_url": "/welcome.html",
     "scope": ".",
     "display": "standalone",
     "theme_color": "#0f0f0f",
     "background_color": "#0000ff",
     "orientation": "any",
-    "description": "Markup Shell PWA demo. Version 1",
+    "description": "Welcome Shell PWA demo. Version 1",
     "screenshots": [
         {
     "src": "images/me3.png",

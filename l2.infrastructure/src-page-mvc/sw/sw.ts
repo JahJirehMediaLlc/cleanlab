@@ -6,18 +6,21 @@ const cacheName = "jmc_cache"+version;
 const cacheFiles = [
     'welcome.html',
     'markup.html',
+    'cls.html',
+    'data/web_components.html',
+    'html/es6-ts-this.html',
+    'html/js-for-loops.html',
+    'manifest_welcome.json',
     'manifest_markup.json',
     'manifest_cls.json',
-    'cls.html',
     'css/reset.css',
     'images/icons/jmc512.png',
-    'bundles/l2.infrastructure/src-page-mvc/markup/markup.js',
-    'data/web_components.html',
     'images/icons/favicon.ico',
     'images/icons/jmc144.png',
     'images/me3.png',
-    'html/es6-ts-this.html',
-    'html/js-for-loops.html'
+    'bundles/l2.infrastructure/src-page-mvc/markup/markup.js',
+    'bundles/l2.infrastructure/src-page-mvc/welcome/welcome.js',
+    'bundles/l2.infrastructure/src-page-mvc/cls/cls.js'
 ];
 
 class ServiceWorker implements IServiceWorker{
@@ -29,14 +32,6 @@ class ServiceWorker implements IServiceWorker{
         console.log(`sw version: ${version} handlers installed...`);
     }
 
-    addToCache(request:Request, response:Response){
-
-        console.log("sw cache update: ", response.url);
-
-        caches.open(cacheName+"aux");
-
-        cache => cache.put( request, response  );
-    }
 
     install(fe:FetchEvent){
 
@@ -50,30 +45,55 @@ class ServiceWorker implements IServiceWorker{
 
     }
 
+    pathName(request:Request):string{
+        const url:URL = new URL(request.url);
+
+        return url.pathname;
+    }
+
+    addToCache(name:string, request:Request){
+        if(this.pathName(request).length < 2)return;
+
+        console.log("sw cache update: ", request.url);
+
+        caches.open(name).then( cache => cache.add(request) );
+    }
+
     async generateResponse(event:FetchEvent):Promise<Response>{
         const cache = await caches.open(cacheName);
+        const cache2 = await caches.open(cacheName+"aux");
         const cachedResponse = await cache.match(event.request);
+        const cachedResponse2 = await cache2.match(event.request);
 
         // if not in cache fetch from network then add to cache
-        if(cachedResponse){
-            console.log("sw cache response:", cachedResponse.url);
+        if( cachedResponse ){
+            const url =  new URL( cachedResponse!.url);
+
+            console.log("sw cache response:", url.pathname);
+
             return cachedResponse;
         }
             
+        if( cachedResponse2 ){
+             const url =  new URL( cachedResponse2!.url);
+
+            console.log("sw cache2 response:", url.pathname);
+
+            return cachedResponse2;
+        }
+          
         const networkResponse = fetch(event.request);
 
-        // do not return until cache is updated in background
+       if( !cachedResponse ){
+           this.addToCache(cacheName+"aux",event.request);     
+       }
 
-        networkResponse.then( nr => this.addToCache(event.request, nr.clone()));     
-
-        // event.waitUntil( async () => { 
-        //     networkResponse.then( nr => this.addToCache(event.request, nr.clone()));         
-        // } );
-       
         return networkResponse;
      }
 
     fetch(fe:FetchEvent){
+
+        console.log("pathname", this.pathName(fe.request));
 
         if(fe.request.method !== "GET")return;
 
