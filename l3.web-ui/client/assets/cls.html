@@ -4,231 +4,35 @@
     <title>CLS Project</title>
 
     <meta charset="UTF-8">
-    <meta   name="viewport"
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta   name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <meta charset="UTF-8">
     <meta name="theme-color" content="#00ff00">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
     <link rel="shortcut icon" href="/images/icons/favicon.ico">
-    <link rel="apple-touch-icon" href="/images/icons/icon72.png">
+    <link rel="apple-touch-icon" href="/images/icons/jmc72.png">
     <link rel="manifest" href="manifest_cls.json">
 
     <link rel="stylesheet" href="./css/reset.css">
+     <link rel="stylesheet" href="./css/flex.css">
 
     <style>
-        *,
-        *::after,
-        *::before {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+      
+        img {
+            display: block;
+            width: 15rem;
+            height: 15rem;
+            height: auto;
         }
 
         a{
-            color: white;
-        }
-
-        ul a{
             color: yellow;
         }
 
-        img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            /* margin: 0px auto; */
-        }
-
-        img {
-            width: 3rem;
-            height: 3rem;
-        }
-
-        img {
-            display: block;
-            width: 5rem;
-            height: 5rem;
-            height: auto;
-        }
-
-        .center_new {
-            /*margin: 25vh auto 0;*/
-            background-color: burlywood;
-        }
-
-        .bg_blue {
-            background-color: cornflowerblue;
-        }
-
-        .bg_green {
-            background-color: darkolivegreen;
-        }
-
-        .bg_grey {
-            background-color: darkgray;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        .position_top {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .position_bottom {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .position_left {
-            position: fixed;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .position_right {
-            position: fixed;
-            right: 0;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .scroll_x {
-            overflow-x: scroll;
-        }
-
-        .scroll_y {
-            overflow-y: scroll;
-            width: fit-content;
-        }
-
-        .menu_x {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            overflow-x: auto;
-            color: white;
-        }
-
-        .menu_x > * {
-            flex-shrink: 0;
-        }
-
-        .menu_y {
-            display: flex;
-            flex-direction: column;
-            gap: 0.51rem;
-            text-align: center;
-            list-style: none;
-            width: fit-content;
-            color:white;
-        }
-
-        .menu_y > * {
-            margin: 0;
-            padding: 0;
-        }
-
-        .flex_row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            gap: 1rem;
-        }
-
-        .flex_col {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .fullscreen {
-            position: relative;
-            top: 2rem;
-            height: 100%;
-            /*width: 100%;*/
-        }
-
-        .width100{width:100%;max-width:100%;}
-        .width75{width:75%;max-width:75;}
-        .width50{width:50%;max-width:50%;}
-        .width25{width:25%;max-width:25%}
-        .fullwidth{width:100%;max-width:100%;}
-
-        .flex_center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .center {
-            display: flex;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .center * {
-            text-align: center;
-            margin: 0 auto;
-            display: inline-block;
-        }
-
-        .center_text {
-            text-align: center;
-        }
-
-        .space_between {
-            justify-content: space-between;
-        }
-
-        .space_around {
-            justify-content: space-around;
-        }
-
-        .wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        .border {
-            border: 1px green solid;
-        }
-        .border2 {
-            border: 2px green solid;
-        }
-        .grow_on {
-            flex-grow: 1;
-        }
-        .grow_off {
-            flex-grow: 0;
-        }
-        .shrink_on {
-            flex-shrink: 1;
-        }
-        .shrink_off {
-            flex-shrink: 0;
-        }
-        .margins {
-            margin: 1rem;
-        }
         .button_shift {
             width: 100px;
             height: 50px;
@@ -274,20 +78,24 @@
 
 <body>
 
-<header class="bg_green position_top">
+<header class="bg_green position_top flex_row space_between">
+    <ui-switch for="aside_left"><button slot="icon">#</button></ui-switch>
     <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="menu_x">
         <ul slot="menu" class="menu_x scroll_x">
             <li><a href="/welcome.html">Welcome</a></li>
             <li><a href="/cls.html">Cls</a></li>
-            <li><a href="/markup.html">Maekup</a></li>
+            <li><a href="/markup.html">Markup Project</a></li>
+            <li><a href="/appshell.html">App Shell</a></li>
+               <li><a href="/flex.html">Flex Project</a></li>
         </ul>
     </ui-panel>
+    <ui-switch for="aside_right"><button slot="icon">#</button></ui-switch>
 </header>
 
 <main  class="bg_grey" style="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
    
-        <aside class="hide container_item" style="border:1px blue dashed">
+        <aside id="aside_left" class="hide container_item" style="border:1px blue dashed">
             <ui-panel id="panel_left" height1="14rem" >
             <ul slot="menu" class="menu_y scroll_y1">
                 <li>left</li>
@@ -311,7 +119,7 @@
             </div>
         </section>
 
-        <aside class="hide container_item" style="border:1px blue dashed">
+        <aside id="aside_right" class="hide container_item" style="border:1px blue dashed">
             <ui-panel id="panel_right"   height2="14rem" >
             <ul slot="menu" class="menu_y scroll_y1">
                 <li>right</li>

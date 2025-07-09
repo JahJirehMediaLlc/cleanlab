@@ -5,16 +5,15 @@ const rawCss  = _css`
 *,
 *::after, 
 *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
+box-sizing: border-box;
+margin: 0;
+padding:0;
 }
 
 :host{
 display:block;
 contain:paint;
 color: white;
-background-color:purple;
 }
 
 
@@ -113,7 +112,8 @@ const rawHtml  = _html`
 class HTMLUiPanelView{;
     _shadowRoot: ShadowRoot;
     controller:HTMLUiPanelController;
-    id:string;
+    _id:string;
+    _template:string;
     height:string;
     scrollable:string;
     position:string;
@@ -123,7 +123,18 @@ class HTMLUiPanelView{;
     shadow_dom:Element;
     styles:string[] = [];
 
-
+    get id():string{
+        return this._id;
+    }
+    set id(value:string){
+    this._id = value;
+}
+    get template():string{
+        return this._template;
+    }
+    set template(value:string){
+    this._template = value;
+}
     constructor(shadowRoot: ShadowRoot){
         this._shadowRoot = shadowRoot;
     }
@@ -131,9 +142,12 @@ class HTMLUiPanelView{;
         const tplus = new TemplatePlus("");
         const template = tplus.initTemplate( rawCss, rawHtml );
 
-        let div =  template.content.querySelector("div");
+        const ui_panel =  document.querySelectorAll("ui-panel");
+        const template_attr =  document.querySelector("ui-panel")!.getAttribute("template");
 
         this.render( template.content.cloneNode(true) as DocumentFragment );
+
+         console.log(`panel id =${this._id} template =  ${this._template}`);
 
      }
     render(node: HTMLTemplateElement|DocumentFragment){
@@ -178,7 +192,7 @@ export class HTMLUiPanel extends HTMLElement implements WebComponentLifeCycle{
     observedAttributes: string[];  
 
     // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["position", "height" , "scrollable", "id", "top","left","bottom","right"];
+   static observedAttributes = ["template","position", "height" , "overflow", "id", "top","left","bottom","right"];
 
     constructor(){
         super();
@@ -200,7 +214,10 @@ export class HTMLUiPanel extends HTMLElement implements WebComponentLifeCycle{
      // @ts-ignore
         this.controller.view[name] = newValue;
 
-        if(name == "id")return;
+        if(name == "id" || name == "template"){
+            this.controller.view[name] = newValue;
+            return;
+        }
 
         if(name == "left" || name == "right"){
             this.controller.styles.push(`display:inline-block`);

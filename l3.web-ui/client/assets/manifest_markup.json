@@ -3,7 +3,7 @@
     "name": "Markup Shell",
     "lang": "en-us",
     "short_name": "Markup Shell",
-    "start_url": "/markup.html",
+    "start_url": "markup.html",
     "scope": ".",
    "display": "standalone",
     "theme_color": "#0f0f0f",

@@ -1,32 +1,22 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
 const rawCss = _css`
-    <style>
-            *,
-            *::after, 
-            *::before  {
-                box-sizing: border-box;
-                margin: 0;
-                padding:0;
-            }
-                
+<style>
+*,
+*::after, 
+*::before  {
+box-sizing: border-box;
+margin: 0;
+padding:0;
+}
+
 :host{
 display:block;
 contain:paint;
-
-border: 2px red dashed;
 color: white;
-background-color:purple;
 }
 
-            img{
-                display: block;
-                max-width: 100%;
-                height: auto;
-                /* margin: 0px auto; */
-            }
-
-    </style>
+</style>
 `;
 const rawHtml  = _html`
 <slot>
@@ -42,19 +32,25 @@ class HTMLUiNullView{
         this._shadowRoot = shadowRoot;
         this.setupTemplate();
     }
+    private initEventHandlers(){
+        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+        this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+    }
    setupTemplate() {
         const tplus = new TemplatePlus("tid");
         
         tplus.initTemplate( rawCss, rawHtml );
 
         this.render( tplus.element );
-     }
+
+        this.initEventHandlers();
+    }
      render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
         else
             this._shadowRoot.appendChild(node);
-     }
+    }
     processClickEvent(event: Event){
         const selectedElement = event.target as HTMLElement;
     }
@@ -77,9 +73,10 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
     view: HTMLUiNullView;
     controller:HTMLUiNullController;
     // satisfies webcomponentlifecycle interface
-   observedAttributes: string[]; 
-   // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["width", "height", "url"];
+    observedAttributes: string[]; 
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["width", "height", "url"];
+
 
     constructor(){
         super();
@@ -89,8 +86,6 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
 
         console.log("ui-null registered....");
     }
- 
-
     connectedCallback(): void {
       //  console.log('connectedCallback Method not implemented.');
     }

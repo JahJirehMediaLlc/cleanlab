@@ -1,5 +1,33 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
+const rawCss  = _css`
+<style>
+*,
+*::after, 
+*::before  {
+box-sizing: border-box;
+margin: 0;
+padding:0;
+}
+
+:host{
+display:block;
+contain:paint;
+color: white;
+}
+
+
+
+</style>
+`;
+
+const rawHtml  = _html`
+<div id="nav_action">
+<button>no slots provided</button>
+</div> 
+`;
+
+
 class HTMLUiNavActionView{
     tplus:TemplatePlus;
     _shadowRoot: ShadowRoot;
@@ -36,8 +64,8 @@ export class HTMLUiNavAction extends HTMLElement{
     constructor(){
         super();
 
-        console.log("ui-navaction registered..");
+        console.log("ui-nav-action registered..");
     }
 }
 
-window.customElements.define("ui-navaction", HTMLUiNavAction);
+window.customElements.define("ui-nav-action", HTMLUiNavAction);

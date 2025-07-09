@@ -189,6 +189,7 @@ class HTMLUiSearchView{
 
         this.render( tplus.element );
      }
+     
      render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);

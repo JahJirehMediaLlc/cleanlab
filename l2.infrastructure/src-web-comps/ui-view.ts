@@ -35,12 +35,13 @@ class HTMLUiViewView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiViewController;
     _url = new URL("http://localhost:3000/");
+    pathName:string;
 
     get url(): URL{
         return this._url;
     }
-    set url(value:string){
-    this._url = value;
+    set url(pathName:string){
+    this._url.pathname = pathName;
 
     this.setupTemplate();
     }
@@ -69,17 +70,18 @@ class HTMLUiViewView{
 
         const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
 
-        this.fetchHtml(this._url, outputEl);
+        this.fetchHtml(this._url.pathname, outputEl as HTMLElement);
     }
     parseRawHtml(rawhtml:string):string{
     const dom = new DOMParser().parseFromString(rawhtml,"text/html");
     const style = dom.querySelector("style");
     const body = dom.querySelector("body");
 
-    console.log(dom);
+    //console.log(dom);
 
     return `<style>${style!.innerHTML}</style> ${body!.innerHTML}`;
     }
+
     fetchHtml(path:string, output:HTMLElement){
            const url = new  URL( `http://localhost:3000/${path}` );
             fetch(url)
@@ -87,6 +89,7 @@ class HTMLUiViewView{
             .then( rawHtml => output.innerHTML = this.parseRawHtml(rawHtml) )
             .catch( e => console.log(e) )
     }
+
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);

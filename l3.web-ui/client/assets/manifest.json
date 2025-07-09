@@ -3,7 +3,7 @@
     "name": "App Shell",
     "lang": "en-us",
     "short_name": "App Shell Short",
-    "start_url": "/app_shell.html",
+    "start_url": "appshell.html",
     "scope": ".",
     "display": "standalone",
     "theme_color": "#ffff00",
@@ -48,11 +48,6 @@
     {
     "src": "images/icons/jmc168.png",
     "sizes": "168x168",
-    "type": "image/png"
-    },
-    {
-    "src": "images/icons/jmc92.png",
-    "sizes": "192x192",
     "type": "image/png"
     },
     {

@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Flex Project</title>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flexbox Project</title>
-    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.ico">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link rel="shortcut icon" href="/images/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/icons/jmc72.png">
+
     <link rel="stylesheet" href="/css/reset.css">  
-    <link rel="stylesheet" href="/css/flex.css">  
-    <style></style>
+    <link rel="stylesheet" href="/css/flex.css"> 
+
+    <style>
+        a{
+            color:yellow;
+        }
+    </style>
 </head>
 <body>
 
-<header class="pos_top">
-
+<header class="bg_green position_top flex_row space_between">
+    <ui-switch for="aside_left"><button slot="icon">#</button></ui-switch>
+    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="menu_x">
+        <ul slot="menu" class="menu_x scroll_x">
+            <li><a href="/welcome.html">Welcome</a></li>
+            <li><a href="/cls.html">Cls</a></li>
+            <li><a href="/markup.html">Markup Project</a></li>
+            <li><a href="/appshell.html">App Shell</a></li>
+               <li><a href="/flex.html">Flex Project</a></li>
+        </ul>
+    </ui-panel>
+    <ui-switch for="aside_right"><button slot="icon">#</button></ui-switch>
 </header>
 
-<ul class="menu_x">
-    <li><a class="cta" href="/cls.html">Cls Project</a></li>
-    <li><a class="cta" href="/markup.html">Markup Project</a></li>
-</ul>
-
 <main class="container">
-    <h1>Web Component</h1>
-
+<h1>Web Component</h1>
 </main>
 
 <footer class="pos_bottom">
@@ -404,7 +421,7 @@
     </template>
 </div>
 <!-- Scripts -->
-<script src="/bundles/flex/markup.js"></script>
+<script src="/bundles/l2.infrastructure/src-page-mvc/flex/flex.js"></script>
 
 </body>
 </html>

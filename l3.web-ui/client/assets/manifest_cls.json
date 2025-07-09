@@ -3,7 +3,7 @@
     "name": "Cls Shell",
     "lang": "en-us",
     "short_name": "Cls Shell Short",
-    "start_url": "/cls.html",
+    "start_url": "cls.html",
     "scope": ".",
    "display": "standalone",
     "theme_color": "#0f0f0f",

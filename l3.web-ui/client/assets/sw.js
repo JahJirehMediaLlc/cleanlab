@@ -13,13 +13,14 @@ const cacheFiles = [
   "manifest_cls.json",
   "manifest.json",
   "css/reset.css",
+  "css/flex.css",
   "images/icons/jmc512.png",
   "images/icons/favicon.ico",
   "images/icons/jmc144.png",
   "images/me3.png",
-  "bundles/l2.infrastructure/src-page-mvc/markup/markup.js",
-  "bundles/l2.infrastructure/src-page-mvc/welcome/welcome.js",
-  "bundles/l2.infrastructure/src-page-mvc/cls/cls.js"
+  "bundles/l2.infrastructure/src-page-mvc/welcome/welcome.js"
+  // 'bundles/l2.infrastructure/src-page-mvc/markup/markup.js',
+  // 'bundles/l2.infrastructure/src-page-mvc/cls/cls.js'
 ];
 class ServiceWorker {
   constructor() {

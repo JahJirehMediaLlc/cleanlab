@@ -18,8 +18,8 @@ export *  from './ui-route-list.ts';
 export *  from './ui-route.ts';
 export *  from './ui-icon.ts';
 
-export *  from './ui-choice.ts';
+export *  from './ui-action.ts';
+export *  from './ui-switch.ts';
 export * from './ui-select.ts';
 export * from './ui-option.ts';
 export *  from './ui-search.ts';
-

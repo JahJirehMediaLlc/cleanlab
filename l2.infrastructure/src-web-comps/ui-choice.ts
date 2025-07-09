@@ -177,9 +177,9 @@ const rawHtml  = _html`
 </select>
 `;
 
-class HTMLUiChoiceView{
+class HTMLUiSwitchView{
     _shadowRoot: ShadowRoot;
-    controller:HTMLUiChoiceController;
+    controller:HTMLUiSwitchController;
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
@@ -205,29 +205,29 @@ class HTMLUiChoiceView{
     processSubmitForm(evt:SubmitEvent){}
 }
 
-class HTMLUiChoiceController{
-    view:HTMLUiChoiceView;
-    parent:HTMLUiChoice;
-    controller:HTMLUiChoiceController;
+class HTMLUiSwitchController{
+    view:HTMLUiSwitchView;
+    parent:HTMLUiSwitch;
+    controller:HTMLUiSwitchController;
 
-    constructor(parent:HTMLUiChoice) {
+    constructor(parent:HTMLUiSwitch) {
         this.parent = parent;
-        this.view = new HTMLUiChoiceView(this.parent._shadowRoot);
+        this.view = new HTMLUiSwitchView(this.parent._shadowRoot);
     }
 }
 
-export class HTMLUiChoice extends HTMLElement implements WebComponentLifeCycle{
+export class HTMLUiSwitch extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
-    view: HTMLUiChoiceView;
-    controller:HTMLUiChoiceController;
+    view: HTMLUiSwitchView;
+    controller:HTMLUiSwitchController;
 
     constructor(){
         super();
 
         this._shadowRoot = this.attachShadow({mode: 'open'});
-        this.controller = new HTMLUiChoiceController(this);
+        this.controller = new HTMLUiSwitchController(this);
 
-        console.log("ui-choice registered....");
+        console.log("ui-Switch registered....");
     }
 
     connectedCallback(): void {
@@ -246,4 +246,4 @@ export class HTMLUiChoice extends HTMLElement implements WebComponentLifeCycle{
     }
 }
 
-window.customElements.define("ui-choice", HTMLUiChoice);
+window.customElements.define("ui-switch", HTMLUiSwitch);
