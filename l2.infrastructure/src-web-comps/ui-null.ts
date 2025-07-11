@@ -28,6 +28,20 @@ class HTMLUiNullView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiNullController;
 
+    _slot:string;
+    _width:string;
+    _heightstring;
+    _url:string;
+
+    get slot():string{return this._slot};
+    set slot(value:string){this._slot=value};
+    get width():string{return this._width};
+    set width(value:string){this._width=value};
+    get height():string{return this._height};
+    set height(value:string){this._height=value};
+    get url():string{return this._url};
+    set url(value:string){this._url=value};
+
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
         this.setupTemplate();
@@ -53,8 +67,17 @@ class HTMLUiNullView{
     }
     processClickEvent(event: Event){
         const selectedElement = event.target as HTMLElement;
+         alert(selectedElement.tagName);
     }
-    processSubmitForm(evt:SubmitEvent){}
+   processSubmitForm(event:SubmitEvent){
+        event.preventDefault();
+
+        const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
+        const fdata = new FormData(form, event.submitter);
+        const form_input = fdata.get("action") as string;
+
+        alert(form_input);
+    }
 }
 
 class HTMLUiNullController{
@@ -75,8 +98,7 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[]; 
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["width", "height", "url"];
-
+    static observedAttributes = ["slot","width", "height", "url"];
 
     constructor(){
         super();
@@ -93,7 +115,7 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
      //   console.log('disconnectedCallback Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-        console.log('attributeChangedCallback Method not implemented.');
+        this.controller.view[name] = newValue;
     }
     
 }

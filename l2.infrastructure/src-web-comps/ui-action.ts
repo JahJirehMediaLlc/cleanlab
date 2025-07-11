@@ -20,9 +20,11 @@ color: white;
 `;
 
 const rawHtml  = _html`
-<button id="nav_action">
+<form>
+<button id="nav_action" type="submit" name="action" value="doPrint">
 <slot>no slots provided</slot>
 </button> 
+</form>
 `;
 
 class HTMLUiActionView{
@@ -30,14 +32,28 @@ class HTMLUiActionView{
     controller:HTMLUiActionController;
     tplus:TemplatePlus;
 
+    _slot:string;
+    _dialog:string;
+    _href:string;
+    _action:string;
+
+    get slot():string{return this._slot};
+    set slot(value:string){this._slot=value};
+    get dialog():string{return this._dialog};
+    set dialog(value:string){this._dialog=value};
+    get href():string{return this._href};
+    set href(value:string){this._href=value};
+    get action():string{return this._action};
+    set action(value:string){this._action=value};
+
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
         this.tplus = new TemplatePlus("ui_nav_template", new URL("http://localhost:3000/data/web_components.html"));
         this.setupTemplate();
     }
     private initEventHandlers(){
-this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+     //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate(){
        const tplus = new TemplatePlus("tid");
@@ -57,8 +73,18 @@ this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     processClickEvent(event: Event){
         const selectedElement = event.target as HTMLElement;
+
+        alert(selectedElement.tagName);
     }
-    processSubmitForm(evt:SubmitEvent){}
+    processSubmitForm(event:SubmitEvent){
+        event.preventDefault();
+
+        const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
+        const fdata = new FormData(form, event.submitter);
+        const form_input = fdata.get("action") as string;
+
+        alert(form_input);
+    }
 }
 class HTMLUiActionController {
     view:HTMLUiActionView;
@@ -73,7 +99,6 @@ class HTMLUiActionController {
 
 export class HTMLUiAction extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
-    view: HTMLUiActionView;
     controller:HTMLUiActionController;
         // satisfies webcomponentlifecycle interface
    observedAttributes: string[]; 
@@ -94,7 +119,7 @@ export class HTMLUiAction extends HTMLElement implements WebComponentLifeCycle{
      //   console.log('disconnectedCallback Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-     //  console.log('attributeChangedCallback Method not implemented.');
+     this.controller.view[name] = newValue;
     }
 
 }

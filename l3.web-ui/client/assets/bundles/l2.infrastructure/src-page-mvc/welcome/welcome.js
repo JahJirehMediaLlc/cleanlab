@@ -2054,14 +2054,44 @@ color: white;
 </style>
 `;
   var rawHtml7 = _html`
-<button id="nav_action">
+<form>
+<button id="nav_action" type="submit" name="action" value="doPrint">
 <slot>no slots provided</slot>
 </button> 
+</form>
 `;
   var HTMLUiActionView = class {
     _shadowRoot;
     controller;
     tplus;
+    _slot;
+    _dialog;
+    _href;
+    _action;
+    get slot() {
+      return this._slot;
+    }
+    set slot(value) {
+      this._slot = value;
+    }
+    get dialog() {
+      return this._dialog;
+    }
+    set dialog(value) {
+      this._dialog = value;
+    }
+    get href() {
+      return this._href;
+    }
+    set href(value) {
+      this._href = value;
+    }
+    get action() {
+      return this._action;
+    }
+    set action(value) {
+      this._action = value;
+    }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
       this.tplus = new TemplatePlus("ui_nav_template", new URL("http://localhost:3000/data/web_components.html"));
@@ -2069,7 +2099,6 @@ color: white;
     }
     initEventHandlers() {
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
-      this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
     }
     setupTemplate() {
       const tplus = new TemplatePlus("tid");
@@ -2085,8 +2114,14 @@ color: white;
     }
     processClickEvent(event) {
       const selectedElement = event.target;
+      alert(selectedElement.tagName);
     }
-    processSubmitForm(evt) {
+    processSubmitForm(event) {
+      event.preventDefault();
+      const form = this._shadowRoot.querySelector("form");
+      const fdata = new FormData(form, event.submitter);
+      const form_input = fdata.get("action");
+      alert(form_input);
     }
   };
   var HTMLUiActionController = class {
@@ -2100,7 +2135,6 @@ color: white;
   };
   var HTMLUiAction = class extends HTMLElement {
     _shadowRoot;
-    view;
     controller;
     // satisfies webcomponentlifecycle interface
     observedAttributes;
@@ -2117,6 +2151,7 @@ color: white;
     disconnectedCallback() {
     }
     attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
     }
   };
   window.customElements.define("ui-action", HTMLUiAction);
@@ -2146,6 +2181,13 @@ color: white;
     _shadowRoot;
     controller;
     tplus;
+    _forLable;
+    get forLable() {
+      return this._forLable;
+    }
+    set forLable(value) {
+      this._forLable = value;
+    }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
       this.tplus = new TemplatePlus("ui_nav_template", new URL("http://localhost:3000/data/web_components.html"));
@@ -2208,6 +2250,7 @@ color: white;
     disconnectedCallback() {
     }
     attributeChangedCallback(name, oldValue, newValue) {
+      if (name == "for") this.controller.view.forLable = newValue;
     }
   };
   window.customElements.define("ui-switch", HTMLUiSwitch);
@@ -2835,9 +2878,38 @@ color: white;
   window.customElements.define("ui-search", HTMLUiSearch);
 
   // ../../../l2.infrastructure/src-page-mvc/welcome/welcome.ts
-  var Welcome = class {
+  var WelcomeView = class {
+    logo;
+    topPanel;
+    bottopPanel;
+    header;
+    main;
+    footer;
+    constructor() {
+      this.logo = document.getElementById("logo");
+      this.header = document.getElementById("header");
+      this.main = document.getElementById("main");
+      this.footer = document.getElementById("footer");
+    }
+    Logo(toggle) {
+      this.logo.classList.toggle("hide");
+    }
+    Main(toggle) {
+      this.header.classList.toggle("hide");
+      this.main.classList.toggle("hide");
+      this.footer.classList.toggle("hide");
+    }
   };
-  var sw = new ServiceWorkerClient();
+  var WelcomeController = class {
+    view = new WelcomeView();
+    sw = new ServiceWorkerClient();
+    constructor() {
+      console.log("welcome.ts constructor ...");
+    }
+  };
+  var controller = new WelcomeController();
+  setTimeout(() => {
+  }, 2e3);
   console.log("welcome.ts module loaded...");
 })();
 //# sourceMappingURL=welcome.js.map

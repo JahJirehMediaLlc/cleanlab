@@ -23,11 +23,29 @@
 
     <style>
       
-        img {
-            display: block;
-            width: 15rem;
-            height: 15rem;
-            height: auto;
+        .bg_image_cover{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+        }
+
+        .bg_image_contain{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center center;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+        }
+
+        .bg_image{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
         }
 
         a{
@@ -43,93 +61,55 @@
             width: 200px;
         }
 
-        .img_responsive {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .button_shift_free {
-            width: 100px;
-            height: 50px;
-            transform: scale(1);
-            transition: transform 0.5s ease;
-        }
-
-        .button_shift_free:hover {
-            transform: scale(1.2);
-        }
-
-        .items {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .item {
-            width: 150px;
-            transition: transform 0.5s ease;
-        }
-
-        .item:hover {
-            transform: scale(1.1);
-        }
     </style>
 
 </head>
 
 <body>
 
-<header class="bg_green position_top flex_row space_between">
+<section id="logo" class="bg_image hide"  style="height:100vh;">
+</section>
+
+<header id="header" class="bg_green position_top flex_row space_between">
     <ui-switch for="aside_left"><button slot="icon">#</button></ui-switch>
-    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="dialog2">
+    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="header_template">
         <ul slot="menu" class="menu_x scroll_x">
             <li><a href="/welcome.html">Welcome</a></li>
             <li><a href="/cls.html">Cls</a></li>
             <li><a href="/markup.html">Markup Project</a></li>
             <li><a href="/appshell.html">App Shell</a></li>
-            <li><a href="/flex.html">Flex Project</a></li>
+               <li><a href="/flex.html">Flex Project</a></li>
         </ul>
     </ui-panel>
     <ui-switch for="aside_right"><button slot="icon">#</button></ui-switch>
 </header>
 
-<main  class="bg_grey"  style="position:relative">
-    <div class="main_container flex_row space_between" style="margin:1rem 0;">
+<main  class="bg_grey" style="position:relative">
+    <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
    
-        <aside id="aside_left" class="hide container_item" style="position:absolute;left:0;">
-            <ui-panel id="panel_left" height1="14rem" template="dialog-9">
-                <ul slot="menu" class="menu_y">
-                    <li> <ui-action>Action 1</ui-action> </li>
-                     <li> <ui-action>Action 2</ui-action> </li>
-                     <li> <ui-action>Action 3</ui-action> </li>
-                </ul>
+        <aside id="aside_left" class="hide container_item" style="position:absolute">
+            <ui-panel id="panel_left" height1="14rem" template="aside_left_template">
+            <ul slot="menu" class="menu_y">
+                <li><ui-action>DoPrint</ui-action></li>
+                 <li><ui-action>DoEmail</ui-action></li>
+                 <li><ui-action>DoContact</ui-action></li>
+            </ul>
             </ui-panel>
         </aside>
 
-        <section id="output" class="container_item  width100" >
-            <h1 class="center_text">Welcome</h1>
-            <br />
-            <br />
-            <img style="margin:0 auto;" src="images/jmc2.png">
+        <section id="output" class="container_item  width100">
+            <h1>Welcome</h1>
             <div id="log">
 
             </div>
         </section>
 
         <aside id="aside_right" class="hide container_item" style="position:absolute;right:0;">
-            <ui-panel id="panel_right"   height2="14rem" template="dialog-8" >
-            <ul slot="menu" class="menu_y scroll_y1">
-                <li>right</li>
-                <li>panel</li>
-                <li>phone</li>
-                <li>work</li>
-                <li>church</li>
-                <li>apartments</li>
-                <li>cars</li>
-                <li>trucks</li>
-                <li>taxi</li>
-                <li>sanitation</li>
+            <ui-panel id="panel_right"   height2="14rem"  template="aside_left_template" >
+            <ul slot="menu" class="menu_y">
+                 <li><ui-action>DoPrint</ui-action></li>
+                 <li><ui-action>DoEmail</ui-action></li>
+                 <li><ui-action>DoContact</ui-action></li>
             </ul>
             </ui-panel>
         </aside>
@@ -137,8 +117,8 @@
     </div>
 </main>
 
-<footer class="bg_green position_bottom">
-    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem"  template="dialog3">
+<footer id="footer" class="bg_green position_bottom">
+    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
         <ul slot="menu" class="menu_x scroll_x">
             <li>bottom</li>
             <li>panel</li>
@@ -153,7 +133,7 @@
     </ui-panel>
 </footer>
 
+<!-- Scripts -->
 <script src="/bundles/l2.infrastructure/src-page-mvc/welcome/welcome.js"></script>
-
 </body>
 </html>

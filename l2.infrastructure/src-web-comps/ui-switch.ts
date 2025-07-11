@@ -27,6 +27,10 @@ class HTMLUiSwitchView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiSwitchController;
     tplus:TemplatePlus;
+    _forLable:string;
+
+    get forLable():string{return this._forLable};
+    set forLable(value:string){this._forLable=value};
 
 constructor(shadowRoot: ShadowRoot) {
 this._shadowRoot = shadowRoot;
@@ -109,7 +113,8 @@ export class HTMLUiSwitch extends HTMLElement implements WebComponentLifeCycle{
      //   console.log('disconnectedCallback Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
-     //  console.log('attributeChangedCallback Method not implemented.');
+
+        if(name == "for")this.controller.view.forLable = newValue;
     }
 
 }

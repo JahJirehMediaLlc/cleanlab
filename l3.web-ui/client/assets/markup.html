@@ -96,49 +96,36 @@
 <main  class="bg_grey" style="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
    
-        <aside id="aside_left" class="hide container_item" style="border:1px blue dashed">
-            <ui-panel id="panel_left" height1="14rem" >
-            <ul slot="menu" class="menu_y scroll_y1">
-                <li>left</li>
-                <li>panel</li>
-                <li>phone</li>
-                <li>work</li>
-                <li>church</li>
-                <li>apartments</li>
-                <li>cars</li>
-                <li>trucks</li>
-                <li>taxi</li>
-                <li>sanitation</li>
+        <aside id="aside_left" class="hide container_item" style="position:absolute">
+            <ui-panel id="panel_left" height1="14rem" template="aside_left_template">
+            <ul slot="menu" class="menu_y">
+                <li><ui-action>DoPrint</ui-action></li>
+                 <li><ui-action>DoEmail</ui-action></li>
+                 <li><ui-action>DoContact</ui-action></li>
             </ul>
             </ui-panel>
         </aside>
 
-        <section id="output" class="container_item  width100" style="border:1px blue dashed;">
-         <h1>Markup</h1>
+        <section id="output" class="container_item  width100">
+            <h1>Mark Up</h1>
             <div id="log">
 
             </div>
         </section>
 
-        <aside id="aside_right" class="hide container_item" style="border:1px blue dashed">
-            <ui-panel id="panel_right"   height2="14rem" >
-            <ul slot="menu" class="menu_y scroll_y1">
-                <li>right</li>
-                <li>panel</li>
-                <li>phone</li>
-                <li>work</li>
-                <li>church</li>
-                <li>apartments</li>
-                <li>cars</li>
-                <li>trucks</li>
-                <li>taxi</li>
-                <li>sanitation</li>
+        <aside id="aside_right" class="hide container_item" style="position:absolute;right:0;">
+            <ui-panel id="panel_right"   height2="14rem"  template="aside_left_template" >
+            <ul slot="menu" class="menu_y">
+                 <li><ui-action>DoPrint</ui-action></li>
+                 <li><ui-action>DoEmail</ui-action></li>
+                 <li><ui-action>DoContact</ui-action></li>
             </ul>
             </ui-panel>
         </aside>
 
     </div>
 </main>
+
 
 <footer class="bg_green position_bottom">
     <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" >
