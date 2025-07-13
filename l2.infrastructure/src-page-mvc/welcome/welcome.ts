@@ -16,10 +16,10 @@ class WelcomeView{
     footer:HTMLElement;
 
     constructor(){
-        this.logo = document.getElementById("logo");
-        this.header = document.getElementById("header");
-        this.main = document.getElementById("main");
-        this.footer = document.getElementById("footer");
+        this.logo = document.querySelector("ui-logo")!;
+        this.header = document.getElementById("header")!;
+        this.main = document.getElementById("main")!;
+        this.footer = document.getElementById("footer")!;
     }
     Logo(toggle: "on"|"off"){
         this.logo.classList.toggle("hide");
@@ -37,13 +37,17 @@ class WelcomeController{
     constructor(){
         console.log("welcome.ts constructor ...");
     }
+    Enter(){
+        setTimeout(() => {
+            controller.view.Logo("off");
+            controller.view.Main("on");
+        }, 4000);
+    }
 }
 
  const controller = new WelcomeController();
+ const logo = document.querySelector("ui-logo");
 
- setTimeout(() => {
-    // controller.view.Logo();
-    // controller.view.Main();
- }, 2000);
+ logo!.addEventListener("click", controller.Enter.bind(controller));
 
  console.log("welcome.ts module loaded...");

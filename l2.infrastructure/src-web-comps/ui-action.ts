@@ -100,7 +100,7 @@ class HTMLUiActionController {
 export class HTMLUiAction extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiActionController;
-        // satisfies webcomponentlifecycle interface
+    // satisfies webcomponentlifecycle interface
    observedAttributes: string[]; 
    // this property must be static inorder to receive attributechangedcallback allsbe 
    static observedAttributes = ["slot", "dialog", "href", "action"];

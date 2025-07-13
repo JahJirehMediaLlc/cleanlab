@@ -78,7 +78,7 @@
 
 <body>
 
-<header class="bg_green position_top flex_row space_between">
+<header id="header" class="bg_green position_top flex_row space_between">
     <ui-switch for="aside_left"><button slot="icon">#</button></ui-switch>
     <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="menu_x">
         <ul slot="menu" class="menu_x scroll_x">
@@ -92,7 +92,7 @@
     <ui-switch for="aside_right"><button slot="icon">#</button></ui-switch>
 </header>
 
-<main  class="bg_grey" style="position:relative">
+<main  id="main" class="bg_grey" style="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
    
         <aside id="aside_left" class="hide container_item" style="position:absolute">
@@ -126,7 +126,7 @@
 </main>
 
 
-<footer class="bg_green position_bottom">
+<footer id="footer" class="bg_green position_bottom">
     <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" >
         <ul slot="menu" class="menu_x scroll_x">
             <li>bottom</li>
