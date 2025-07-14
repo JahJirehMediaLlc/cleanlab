@@ -515,8 +515,8 @@ export class TemplatePlus{
 
     this.createBlankTemplate();
 
-    if(templateId){
-       this.getTemplateElement(this.templateId).then( t => this.template = t);
+    if(templateId !== ""){
+       throw new Error(`templateId ${templateId }.`);
     }
       
   }

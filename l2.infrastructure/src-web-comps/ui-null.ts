@@ -30,7 +30,7 @@ class HTMLUiNullView{
 
     _slot:string;
     _width:string;
-    _heightstring;
+    _height:string;
     _url:string;
 
     get slot():string{return this._slot};
@@ -51,7 +51,7 @@ class HTMLUiNullView{
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
    setupTemplate() {
-        const tplus = new TemplatePlus("tid");
+        const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );
 

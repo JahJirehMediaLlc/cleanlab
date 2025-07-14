@@ -1,4 +1,20 @@
 (() => {
+  // ../../../l2.infrastructure/src-page-mvc/sw/sw-lib.ts
+  var ServiceWorkerClient = class {
+    constructor() {
+      this.init();
+    }
+    init() {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js").then((registration) => this.printStatus(registration)).catch((error) => console.log("Service worker not supported...", error.message));
+      }
+    }
+    printStatus(registration) {
+      console.log("SW file.  registration completed. scope =", registration.scope);
+      console.log("SW file.  registration.active!.state    =", registration.active.state);
+    }
+  };
+
   // ../../../l2.infrastructure/src-dom/domutils.ts
   var Html = class {
     static insertElements(element, htmlText) {
@@ -318,8 +334,8 @@
       this._url = url;
       this._templatesMap = /* @__PURE__ */ new Map();
       this.createBlankTemplate();
-      if (templateId) {
-        this.getTemplateElement(this.templateId).then((t) => this.template = t);
+      if (templateId !== "") {
+        throw new Error(`templateId ${templateId}.`);
       }
     }
     // creation logic
@@ -454,22 +470,6 @@
         output.appendChild(this.template.content.cloneNode(true));
       } else
         output.append(`${this.templateId} the template content not defined !!!!`);
-    }
-  };
-
-  // ../../../l2.infrastructure/src-page-mvc/sw/sw-lib.ts
-  var ServiceWorkerClient = class {
-    constructor() {
-      this.init();
-    }
-    init() {
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("sw.js").then((registration) => this.printStatus(registration)).catch((error) => console.log("Service worker not supported...", error.message));
-      }
-    }
-    printStatus(registration) {
-      console.log("SW file.  registration completed. scope =", registration.scope);
-      console.log("SW file.  registration.active!.state    =", registration.active.state);
     }
   };
 
@@ -1345,7 +1345,7 @@ place your content here
     }
     setupTemplate() {
       const ui_view = document.querySelector("ui-view");
-      const tplus = new TemplatePlus("tid");
+      const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss3, rawHtml3);
       this.render(tplus.element);
       const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
@@ -2032,6 +2032,15 @@ color: white;
       super();
       console.log("ui-icon registered..");
     }
+    connectedCallback() {
+      throw new Error("Method not implemented.");
+    }
+    disconnectedCallback() {
+      throw new Error("Method not implemented.");
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      throw new Error("Method not implemented.");
+    }
   };
   window.customElements.define("ui-icon", HTMLUiIcon);
 
@@ -2094,14 +2103,13 @@ color: white;
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      this.tplus = new TemplatePlus("ui_nav_template", new URL("http://localhost:3000/data/web_components.html"));
       this.setupTemplate();
     }
     initEventHandlers() {
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("tid");
+      const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss7, rawHtml7);
       this.render(tplus.element);
       this.initEventHandlers();
@@ -2172,10 +2180,26 @@ display:block;
 contain:paint;
 color: white;
 }
+
+::slotted(.icon){
+    font-size: large;
+    pading: 0 4reem;
+    margin: 0 3rem;
+}
+
+.icon_btn{
+    background-color: yellow;
+}
 </style>
 `;
   var rawHtml8 = _html`
-<slot name="icon"><button>$</button></slot>
+<form>
+    <button type="submit" class="icon_btn">
+        <slot name="icon">
+        <span class="icon" slot="icon">&</span>
+        </slot>
+    </button>
+</form>
 `;
   var HTMLUiSwitchView = class {
     _shadowRoot;
@@ -2190,15 +2214,15 @@ color: white;
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      this.tplus = new TemplatePlus("ui_nav_template", new URL("http://localhost:3000/data/web_components.html"));
+      this.tplus = new TemplatePlus("");
       this.setupTemplate();
     }
     initEventHandlers() {
+      const btn = this._shadowRoot.querySelector("button");
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
-      this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("tid");
+      const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss8, rawHtml8);
       this.render(tplus.element);
       this.initEventHandlers();
@@ -2213,13 +2237,18 @@ color: white;
       const selectedElement = event.target;
       const ui_switch = selectedElement.parentElement;
       const for_attr = ui_switch.getAttribute("for");
-      console.log("parent", selectedElement.parentElement);
       if (ui_switch && for_attr) {
         const aside = document.getElementById(for_attr);
         aside?.classList.toggle("hide");
       }
     }
-    processSubmitForm(evt) {
+    processSubmitForm(event) {
+      event.preventDefault();
+      const form = this._shadowRoot.querySelector("form");
+      const fdata = new FormData(form, event.submitter);
+      const form_input = fdata.get("action");
+      const aside = document.getElementById(this.forLable);
+      aside?.classList.toggle("hide");
     }
   };
   var HTMLUiSwitchController = class {
@@ -2350,7 +2379,7 @@ color: white;
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("tid");
+      const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss9, rawHtml9);
       this.render(tplus.element);
       this.initEventHandlers();
@@ -2575,7 +2604,7 @@ color: white;
       this.setupTemplate();
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("tid");
+      const tplus = new TemplatePlus("");
       this.render(tplus.element);
     }
     render(node) {
@@ -2825,6 +2854,8 @@ color: white;
   window.customElements.define("ui-search", HTMLUiSearch);
 
   // ../../../l2.infrastructure/src-page-mvc/cls/cls.ts
+  var ClsModel = class {
+  };
   var ClsView = class {
     constructor() {
     }
@@ -2853,10 +2884,7 @@ color: white;
       this.view.render(template);
     }
   };
-  var ClsModel = class {
-  };
   var controller = new ClsController();
-  var host = document.getElementById("log");
   var sw = new ServiceWorkerClient();
 })();
 //# sourceMappingURL=cls.js.map
