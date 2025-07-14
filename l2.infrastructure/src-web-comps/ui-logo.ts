@@ -89,7 +89,7 @@ class HTMLUiLogoView{
     }
     setupTemplate() {
 
-        const tplus = new TemplatePlus("tid");
+        const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );
 

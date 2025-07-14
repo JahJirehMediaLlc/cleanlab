@@ -1,6 +1,10 @@
-import {TemplatePlus} from "../src-dom/domutils.ts";
+import {TemplatePlus, WebComponentLifeCycle,} from "../src-dom/domutils.ts";
 
-export class HTMLUiIcon extends HTMLElement{
+
+class HTMLUiIconController{}
+
+class HTMLUiIconView{}
+export class HTMLUiIcon extends HTMLElement implements WebComponentLifeCycle{
         // satisfies webcomponentlifecycle interface
    observedAttributes: string[]; 
    // this property must be static inorder to receive attributechangedcallback allsbe 
@@ -11,10 +15,17 @@ export class HTMLUiIcon extends HTMLElement{
 
         console.log("ui-icon registered..");
     }
+    connectedCallback(): void {
+        throw new Error("Method not implemented.");
+    }
+    disconnectedCallback(): void {
+        throw new Error("Method not implemented.");
+    }
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+        throw new Error("Method not implemented.");
+    }
 }
 
-class HTMLUiIconController{}
 
-class HTMLUiIconView{}
 
 window.customElements.define("ui-icon", HTMLUiIcon);

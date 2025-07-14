@@ -62,7 +62,7 @@ class HTMLUiViewView{
     }
     setupTemplate() {
         const ui_view = document.querySelector("ui-view");
-        const tplus = new TemplatePlus("tid");
+        const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );
 

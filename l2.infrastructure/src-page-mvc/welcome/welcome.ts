@@ -4,7 +4,6 @@ import {ServiceWorkerClient,} from "../../src-page-mvc/sw/sw-lib.ts";
 
 export * from '../../src-web-comps/web_components.ts';
 
-
 class WelcomeModel{    
 }
 class WelcomeView{
@@ -41,7 +40,7 @@ class WelcomeController{
         setTimeout(() => {
             controller.view.Logo("off");
             controller.view.Main("on");
-        }, 4000);
+        }, 400);
     }
 }
 

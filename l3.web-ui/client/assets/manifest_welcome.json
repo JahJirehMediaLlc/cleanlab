@@ -1,15 +1,15 @@
 {
     "id": "/",
-    "name": "Welcome Shell",
+    "name": "Welcome V1",
     "lang": "en-us",
-    "short_name": "Welcome Shell",
+    "short_name": "Welcome V1",
     "start_url": "/welcome.html",
     "scope": ".",
     "display": "standalone",
     "theme_color": "#0f0f0f",
     "background_color": "#0000ff",
     "orientation": "any",
-    "description": "Welcome Shell PWA demo. Version 1",
+    "description": "Welcome PWA demo. Version 1",
     "screenshots": [
         {
     "src": "images/me3.png",
@@ -18,7 +18,7 @@
     "label": "Application form factor wide"
     },
     {
-    "src": "images/browser-dom-tree.gif",
+    "src": "images/me3.png",
     "sizes": "754x689",
     "form_factor": "narrow",
     "label": "Application form factor none"

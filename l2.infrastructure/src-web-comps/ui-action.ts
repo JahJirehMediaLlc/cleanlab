@@ -48,7 +48,6 @@ class HTMLUiActionView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.tplus = new TemplatePlus("ui_nav_template", new URL("http://localhost:3000/data/web_components.html"));
         this.setupTemplate();
     }
     private initEventHandlers(){
@@ -56,7 +55,7 @@ class HTMLUiActionView{
      //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate(){
-       const tplus = new TemplatePlus("tid");
+       const tplus = new TemplatePlus("");
       
         tplus.initTemplate( rawCss, rawHtml );
     

@@ -21,11 +21,29 @@
 
     <style>
       
-        img {
-            display: block;
-            width: 15rem;
-            height: 15rem;
-            height: auto;
+        .bg_image_cover{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+        }
+
+        .bg_image_contain{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center center;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+        }
+
+        .bg_image{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
         }
 
         a{
@@ -41,60 +59,29 @@
             width: 200px;
         }
 
-        .img_responsive {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .button_shift_free {
-            width: 100px;
-            height: 50px;
-            transform: scale(1);
-            transition: transform 0.5s ease;
-        }
-
-        .button_shift_free:hover {
-            transform: scale(1.2);
-        }
-
-        .items {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .item {
-            width: 150px;
-            transition: transform 0.5s ease;
-        }
-
-        .item:hover {
-            transform: scale(1.1);
-        }
     </style>
 </head>
 
 <body>
 
 <header id="header" class="bg_green position_top flex_row space_between">
-    <ui-switch for="aside_left"><button slot="icon">#</button></ui-switch>
-    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="menu_x">
+    <ui-switch for="aside_left"><span class="icon" slot="icon">#</span></ui-switch>
+    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="header_template">
         <ul slot="menu" class="menu_x scroll_x">
             <li><a href="/welcome.html">Welcome</a></li>
             <li><a href="/cls.html">Cls</a></li>
             <li><a href="/markup.html">Markup Project</a></li>
             <li><a href="/appshell.html">App Shell</a></li>
-            <li><a href="/flex.html">Flex Project</a></li>
+               <li><a href="/flex.html">Flex Project</a></li>
         </ul>
     </ui-panel>
-    <ui-switch for="aside_right"><button slot="icon">#</button></ui-switch>
+    <ui-switch for="aside_right"><span class="icon" slot="icon">[]</span></ui-switch>
 </header>
 
-<main  id="main" class="bg_grey" style="position:relative">
-    <div class="main_container bg_blue flex_row space_between" style="margin:1rem 0;">
+<main id="main" class="bg_grey" style="position:relative">
+    <div class="main_container bg_blue flex_row space_between" style="margin:2rem 0;">
    
-        <aside id="aside_left" class="hide container_item" style="position:absolute">
+        <aside id="aside_left" class="hide bg_green container_item" style="position:absolute">
             <ui-panel id="panel_left" height1="14rem" template="aside_left_template">
             <ul slot="menu" class="menu_y">
                 <li><ui-action>DoPrint</ui-action></li>
@@ -111,7 +98,7 @@
             </div>
         </section>
 
-        <aside id="aside_right" class="hide container_item" style="position:absolute;right:0;">
+        <aside id="aside_right" class="hide  bg_green container_item" style="position:absolute;right:0;">
             <ui-panel id="panel_right"   height2="14rem"  template="aside_left_template" >
             <ul slot="menu" class="menu_y">
                  <li><ui-action>DoPrint</ui-action></li>
@@ -124,19 +111,15 @@
     </div>
 </main>
 
-
-<footer id="footer" class="bg_green position_bottom">
-    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" >
+<footer id="footer" class="bg_green  position_bottom">
+    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
         <ul slot="menu" class="menu_x scroll_x">
-            <li>bottom</li>
-            <li>panel</li>
-            <li>phone</li>
-            <li>email</li>
-            <li>scores</li>
-            <li>highlights</li>
-            <li>fashion</li>
-            <li>company</li>
-            <li>work</li>
+            <li><ui-action>Maps</ui-action></li>
+            <li><ui-action>Outline</ui-action></li>
+            <li><ui-action>Commentary</ui-action></li>
+            <li><ui-action>References</ui-action></li>
+            <li><ui-action>History</ui-action></li>
+            <li><ui-action>Conclusion</ui-action></li>
         </ul>
     </ui-panel>
 </footer>

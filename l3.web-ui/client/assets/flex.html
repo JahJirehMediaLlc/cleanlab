@@ -17,16 +17,52 @@
     <link rel="stylesheet" href="/css/flex.css"> 
 
     <style>
-        a{
-            color:yellow;
+      
+        .bg_image_cover{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
         }
+
+        .bg_image_contain{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center center;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+        }
+
+        .bg_image{
+            background-image: url("images/jmc2.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-position: 0% 0%;
+        }
+
+        a{
+            color: yellow;
+        }
+
+        .button_shift {
+            width: 100px;
+            height: 50px;
+            transition: width 0.5s ease;
+        }
+        .button_shift:hover {
+            width: 200px;
+        }
+
     </style>
 </head>
 <body>
 
-<header class="bg_green position_top flex_row space_between">
-    <ui-switch for="aside_left"><button slot="icon">#</button></ui-switch>
-    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="menu_x">
+<header id="header" class="bg_green position_top flex_row space_between">
+    <ui-switch for="aside_left"><span class="icon" slot="icon">#</span></ui-switch>
+    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="header_template">
         <ul slot="menu" class="menu_x scroll_x">
             <li><a href="/welcome.html">Welcome</a></li>
             <li><a href="/cls.html">Cls</a></li>
@@ -35,15 +71,24 @@
                <li><a href="/flex.html">Flex Project</a></li>
         </ul>
     </ui-panel>
-    <ui-switch for="aside_right"><button slot="icon">#</button></ui-switch>
+    <ui-switch for="aside_right"><span class="icon" slot="icon">[]</span></ui-switch>
 </header>
 
 <main class="container">
-<h1>Web Component</h1>
+<h1>Flex Web Component</h1>
 </main>
 
-<footer class="pos_bottom">
-
+<footer id="footer" class="bg_green  position_bottom">
+    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
+        <ul slot="menu" class="menu_x scroll_x">
+            <li><ui-action>Maps</ui-action></li>
+            <li><ui-action>Outline</ui-action></li>
+            <li><ui-action>Commentary</ui-action></li>
+            <li><ui-action>References</ui-action></li>
+            <li><ui-action>History</ui-action></li>
+            <li><ui-action>Conclusion</ui-action></li>
+        </ul>
+    </ui-panel>
 </footer>
 
 <!-- Templates -->

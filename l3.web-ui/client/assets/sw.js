@@ -54,12 +54,10 @@ class ServiceWorker {
     const cachedResponse2 = await cache2.match(event.request);
     if (cachedResponse) {
       const url = new URL(cachedResponse.url);
-      console.log("sw cached response:", url.pathname);
       return cachedResponse;
     }
     if (cachedResponse2) {
       const url = new URL(cachedResponse2.url);
-      console.log("sw cached2 response:", url.pathname);
       return cachedResponse2;
     }
     const networkResponse = fetch(event.request);
@@ -70,7 +68,6 @@ class ServiceWorker {
   }
   fetch(fe) {
     if (fe.request.method !== "GET") return;
-    console.log("GET pathname", this.pathName(fe.request));
     fe.respondWith(this.generateResponse(fe));
   }
   push(event) {

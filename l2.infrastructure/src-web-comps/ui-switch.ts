@@ -16,11 +16,27 @@ display:block;
 contain:paint;
 color: white;
 }
+
+::slotted(.icon){
+    font-size: large;
+    pading: 0 4reem;
+    margin: 0 3rem;
+}
+
+.icon_btn{
+    background-color: yellow;
+}
 </style>
 `;
 
 const rawHtml  = _html`
-<slot name="icon"><button>$</button></slot>
+<form>
+    <button type="submit" class="icon_btn">
+        <slot name="icon">
+        <span class="icon" slot="icon">&</span>
+        </slot>
+    </button>
+</form>
 `;
 
 class HTMLUiSwitchView{
@@ -34,18 +50,21 @@ class HTMLUiSwitchView{
 
 constructor(shadowRoot: ShadowRoot) {
 this._shadowRoot = shadowRoot;
-this.tplus = new TemplatePlus("ui_nav_template", new URL("http://localhost:3000/data/web_components.html"));
+this.tplus = new TemplatePlus("");
 this.setupTemplate();
 }
 
 private initEventHandlers(){
-this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+const btn = this._shadowRoot.querySelector("button");
+
+ this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+
+// btn!.addEventListener("click",this.processClickEvent.bind(this));
 }
 
 setupTemplate(){
 
-    const tplus = new TemplatePlus("tid");
+    const tplus = new TemplatePlus("");
 
     tplus.initTemplate( rawCss, rawHtml );
 
@@ -66,7 +85,7 @@ const selectedElement = event.target as HTMLElement;
 const ui_switch = selectedElement.parentElement;
 const for_attr = ui_switch!.getAttribute("for");
 
-console.log("parent",selectedElement.parentElement);
+// console.log("parent",selectedElement.parentElement);
 
 if(ui_switch  && for_attr){
     const aside = document.getElementById(for_attr);
@@ -75,7 +94,20 @@ if(ui_switch  && for_attr){
 
 }
 
-processSubmitForm(evt:SubmitEvent){}
+processSubmitForm(event:SubmitEvent){
+    event.preventDefault();
+
+    const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
+    const fdata = new FormData(form, event.submitter);
+    const form_input = fdata.get("action") as string;
+
+    //console.log(this.forLable,event.submitter);
+
+    const aside = document.getElementById(this.forLable);
+    aside?.classList.toggle("hide");
+
+}
+
 }
 
 class HTMLUiSwitchController{
