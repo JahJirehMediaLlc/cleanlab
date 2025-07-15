@@ -59,7 +59,7 @@ class HTMLUiNullView{
 
         this.initEventHandlers();
     }
-     render(node: HTMLTemplateElement|DocumentFragment){
+    render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
         else
@@ -69,7 +69,7 @@ class HTMLUiNullView{
         const selectedElement = event.target as HTMLElement;
          alert(selectedElement.tagName);
     }
-   processSubmitForm(event:SubmitEvent){
+    processSubmitForm(event:SubmitEvent){
         event.preventDefault();
 
         const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
@@ -109,7 +109,7 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
         console.log("ui-null registered....");
     }
     connectedCallback(): void {
-      //  console.log('connectedCallback Method not implemented.');
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');

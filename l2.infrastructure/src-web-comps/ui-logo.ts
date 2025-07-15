@@ -61,7 +61,7 @@ const rawCss = _css`
     </style>
 `;
 const rawHtml  = _html`
-<button id="logo" class="bg_image full_screen">
+<button id="logo" title="images/jmc2.png" class="bg_image full_screen">
 </button>
 `;
 
@@ -81,7 +81,6 @@ class HTMLUiLogoView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.setupTemplate();
     }
     private initEventHandlers(){
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
@@ -138,7 +137,7 @@ export class HTMLUiLogo extends HTMLElement implements WebComponentLifeCycle{
     }
 
     connectedCallback(): void {
-      //  console.log('connectedCallback Method not implemented.');
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');

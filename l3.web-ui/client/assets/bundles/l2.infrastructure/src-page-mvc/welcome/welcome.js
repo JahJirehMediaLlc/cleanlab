@@ -360,7 +360,7 @@
       return template;
     }
     createBlankTemplate() {
-      const rawCss12 = _css`
+      const rawCss11 = _css`
   <style>
 
       h1{
@@ -409,22 +409,22 @@
       }
   </style>
   `;
-      const rawHtml11 = _html`
+      const rawHtml10 = _html`
   <h1>blank template</h1>
   `;
-      return this.initTemplate(rawCss12, rawHtml11);
+      return this.initTemplate(rawCss11, rawHtml10);
     }
-    initTemplate(rawCss12, rawHtml11) {
-      this.insertAdjacentHtml(rawCss12, rawHtml11);
+    initTemplate(rawCss11, rawHtml10) {
+      this.insertAdjacentHtml(rawCss11, rawHtml10);
       return this.template;
     }
-    insertAdjacentHtml(rawCss12, rawHtml11, rawJS = "") {
+    insertAdjacentHtml(rawCss11, rawHtml10, rawJS = "") {
       const style = this.template.content.querySelector("style");
       style.replaceChildren();
-      style.insertAdjacentHTML("afterbegin", rawCss12);
+      style.insertAdjacentHTML("afterbegin", rawCss11);
       const div = this.template.content.querySelector("div");
       div.replaceChildren();
-      div.insertAdjacentHTML("afterbegin", rawHtml11);
+      div.insertAdjacentHTML("afterbegin", rawHtml10);
       const script = this.template.content.querySelector("script");
       script.replaceChildren();
       script.insertAdjacentHTML("afterbegin", rawJS);
@@ -1057,6 +1057,12 @@ flex-grow: 0;
       this._controller = new HTMLUiGalleryController(this);
       console.log("ui-gallery registered....");
     }
+    connectedCallback() {
+    }
+    disconnectedCallback() {
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+    }
   };
   window.customElements.define("ui-gallery", HTMLUiGallery);
 
@@ -1359,7 +1365,7 @@ place your content here
     }
     fetchHtml(path, output) {
       const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.text()).then((rawHtml11) => output.innerHTML = this.parseRawHtml(rawHtml11)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml10) => output.innerHTML = this.parseRawHtml(rawHtml10)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1590,7 +1596,7 @@ flex-grow: 0;
       if (!article_url) return;
       console.log(`article url: ${article_url}`);
       const url = new URL(`http://localhost:3000/${article_url}`);
-      fetch(url).then((response) => response.text()).then((rawHtml11) => article.innerHTML = this.parseRawHtml(rawHtml11)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml10) => article.innerHTML = this.parseRawHtml(rawHtml10)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -2045,30 +2051,6 @@ color: white;
   window.customElements.define("ui-icon", HTMLUiIcon);
 
   // ../../../l2.infrastructure/src-web-comps/ui-action.ts
-  var rawCss7 = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-</style>
-`;
-  var rawHtml7 = _html`
-<form>
-<button id="nav_action" type="submit" name="action" value="doPrint">
-<slot>no slots provided</slot>
-</button> 
-</form>
-`;
   var HTMLUiActionView = class {
     _shadowRoot;
     controller;
@@ -2103,14 +2085,41 @@ color: white;
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      this.setupTemplate();
     }
     initEventHandlers() {
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss7, rawHtml7);
+      const rawCss11 = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        }
+
+        :host{
+        display:block;
+        contain:paint;
+        color: white;
+        }
+        </style>
+        `;
+      const rawHtml10 = _html`
+        <form>
+        <input name="slot" value="${this.slot}" type="text" hidden >
+        <input name="href" value="${this.href}" type="text" hidden >
+        <input name="dialog" value="${this.dialog}" type="text" hidden >
+        <button id="nav_action" type="submit" name="action" value="${this.action}">
+        <slot>no slots provided</slot>
+        </button> 
+        </form>
+        `;
+      console.log(`ui-action.setupTemplate() ${this._action}  ${this.href} ${this.dialog}  ${this.slot}`);
+      tplus.initTemplate(rawCss11, rawHtml10);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2128,8 +2137,11 @@ color: white;
       event.preventDefault();
       const form = this._shadowRoot.querySelector("form");
       const fdata = new FormData(form, event.submitter);
-      const form_input = fdata.get("action");
-      alert(form_input);
+      const action = fdata.get("action");
+      const dialog = fdata.get("dialog");
+      const slot = fdata.get("slot");
+      const href = fdata.get("href");
+      alert(`${action}   ${dialog}  ${slot}  ${href}`);
     }
   };
   var HTMLUiActionController = class {
@@ -2155,17 +2167,20 @@ color: white;
       console.log("ui-action registered..");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
+      console.log("ui-action connectedCallback");
     }
     disconnectedCallback() {
     }
     attributeChangedCallback(name, oldValue, newValue) {
       this.controller.view[name] = newValue;
+      console.log(`ui-action.attributeChanged()  ${name} : ${newValue}`);
     }
   };
   window.customElements.define("ui-action", HTMLUiAction);
 
   // ../../../l2.infrastructure/src-web-comps/ui-switch.ts
-  var rawCss8 = _css`
+  var rawCss7 = _css`
 <style>
 *,
 *::after, 
@@ -2192,7 +2207,7 @@ color: white;
 }
 </style>
 `;
-  var rawHtml8 = _html`
+  var rawHtml7 = _html`
 <form>
     <button type="submit" class="icon_btn">
         <slot name="icon">
@@ -2223,7 +2238,7 @@ color: white;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss8, rawHtml8);
+      tplus.initTemplate(rawCss7, rawHtml7);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2248,6 +2263,7 @@ color: white;
       const fdata = new FormData(form, event.submitter);
       const form_input = fdata.get("action");
       const aside = document.getElementById(this.forLable);
+      if (!aside) alert(`aside element ${this.forLable} does not exist`);
       aside?.classList.toggle("hide");
     }
   };
@@ -2286,7 +2302,7 @@ color: white;
 
   // ../../../l2.infrastructure/src-web-comps/ui-logo.ts
   var bg_url = `url("images/jmc2.png")`;
-  var rawCss9 = _css`
+  var rawCss8 = _css`
     <style>
         *,
         *::after, 
@@ -2343,8 +2359,8 @@ color: white;
 
     </style>
 `;
-  var rawHtml9 = _html`
-<button id="logo" class="bg_image full_screen">
+  var rawHtml8 = _html`
+<button id="logo" title="images/jmc2.png" class="bg_image full_screen">
 </button>
 `;
   var HTMLUiLogoView = class {
@@ -2380,7 +2396,7 @@ color: white;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss9, rawHtml9);
+      tplus.initTemplate(rawCss8, rawHtml8);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2429,7 +2445,7 @@ color: white;
   window.customElements.define("ui-logo", HTMLUiLogo);
 
   // ../../../l2.infrastructure/src-web-comps/ui-option.ts
-  var rawCss10 = _css`
+  var rawCss9 = _css`
     <style>
         img{
             width: 3rem;
@@ -2625,7 +2641,7 @@ color: white;
   customElements.define("ui-option", HTMLUIOption);
 
   // ../../../l2.infrastructure/src-web-comps/ui-search.ts
-  var rawCss11 = _css`
+  var rawCss10 = _css`
     <style>
         img{
             width: 3rem;
@@ -2793,7 +2809,7 @@ color: white;
 
     </style>
 `;
-  var rawHtml10 = _html`
+  var rawHtml9 = _html`
 <slot></slot>`;
   var HTMLUiSearchView = class {
     template;
@@ -2805,7 +2821,7 @@ color: white;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("tid");
-      tplus.initTemplate(rawCss11, rawHtml10);
+      tplus.initTemplate(rawCss10, rawHtml9);
       this.render(tplus.element);
     }
     render(node) {
@@ -2872,8 +2888,6 @@ color: white;
     }
     Main(toggle) {
       this.header.classList.toggle("hide");
-      this.main.classList.toggle("hide");
-      this.footer.classList.toggle("hide");
     }
   };
   var WelcomeController = class {

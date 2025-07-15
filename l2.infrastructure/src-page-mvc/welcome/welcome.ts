@@ -25,8 +25,10 @@ class WelcomeView{
     }
     Main(toggle: "on"|"off"){
         this.header.classList.toggle("hide");
-        this.main.classList.toggle("hide");
-        this.footer.classList.toggle("hide");
+
+    //    this.main.classList.toggle("hide");
+
+    //    this.footer.classList.toggle("hide");
     }
 }
 class WelcomeController{

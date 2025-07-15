@@ -1,31 +1,6 @@
 // @ts-ignore
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-const rawCss  = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-</style>
-`;
-
-const rawHtml  = _html`
-<form>
-<button id="nav_action" type="submit" name="action" value="doPrint">
-<slot>no slots provided</slot>
-</button> 
-</form>
-`;
 
 class HTMLUiActionView{
     _shadowRoot: ShadowRoot;
@@ -37,33 +12,66 @@ class HTMLUiActionView{
     _href:string;
     _action:string;
 
-    get slot():string{return this._slot};
-    set slot(value:string){this._slot=value};
-    get dialog():string{return this._dialog};
-    set dialog(value:string){this._dialog=value};
-    get href():string{return this._href};
-    set href(value:string){this._href=value};
-    get action():string{return this._action};
-    set action(value:string){this._action=value};
+    get slot():string{return this._slot}
+    set slot(value:string){this._slot=value}
+    get dialog():string{return this._dialog}
+    set dialog(value:string){this._dialog=value}
+    get href():string{return this._href}
+    set href(value:string){this._href=value}
+    get action():string{return this._action}
+    set action(value:string){this._action=value}
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.setupTemplate();
+
+       // this.setupTemplate();
     }
     private initEventHandlers(){
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
      //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate(){
-       const tplus = new TemplatePlus("");
-      
+        const tplus = new TemplatePlus("");
+        const rawCss  = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        }
+
+        :host{
+        display:block;
+        contain:paint;
+        color: white;
+        }
+        </style>
+        `;
+
+        const rawHtml  = _html`
+        <form>
+        <input name="slot" value="${this.slot}" type="text" hidden >
+        <input name="href" value="${this.href}" type="text" hidden >
+        <input name="dialog" value="${this.dialog}" type="text" hidden >
+        <button id="nav_action" type="submit" name="action" value="${this.action}">
+        <slot>no slots provided</slot>
+        </button> 
+        </form>
+        `;
+
+       // get attributes from light dom
+        console.log(`ui-action.setupTemplate() ${this._action}  ${this.href} ${this.dialog}  ${this.slot}`);
+ //        throw new Error('Method not implemented.');
+
+       // set shadowdom form attributes
         tplus.initTemplate( rawCss, rawHtml );
     
         this.render( tplus.element );
     
         this.initEventHandlers();
     }
-
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
@@ -80,9 +88,12 @@ class HTMLUiActionView{
 
         const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
         const fdata = new FormData(form, event.submitter);
-        const form_input = fdata.get("action") as string;
+        const action = fdata.get("action") as string;
+        const dialog = fdata.get("dialog") as string;
+        const slot = fdata.get("slot") as string;
+        const href = fdata.get("href") as string;
 
-        alert(form_input);
+        alert(`${action}   ${dialog}  ${slot}  ${href}`);
     }
 }
 class HTMLUiActionController {
@@ -112,13 +123,15 @@ export class HTMLUiAction extends HTMLElement implements WebComponentLifeCycle{
         console.log("ui-action registered..");
     }
     connectedCallback(): void {
-      //  console.log('connectedCallback Method not implemented.');
+        this.controller.view.setupTemplate();
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
      this.controller.view[name] = newValue;
+
+     console.log(`ui-action.attributeChanged()  ${name} : ${newValue}`);
     }
 
 }

@@ -1,44 +1,6 @@
 // @ts-ignore
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-const rawCss = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-
-::slotted(.icon){
-    font-size: large;
-    pading: 0 4reem;
-    margin: 0 3rem;
-}
-
-.icon_btn{
-    background-color: yellow;
-}
-</style>
-`;
-
-const rawHtml  = _html`
-<form>
-    <button type="submit" class="icon_btn">
-        <slot name="icon">
-        <span class="icon" slot="icon">&</span>
-        </slot>
-    </button>
-</form>
-`;
-
 class HTMLUiSwitchView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiSwitchController;
@@ -51,7 +13,7 @@ class HTMLUiSwitchView{
 constructor(shadowRoot: ShadowRoot) {
 this._shadowRoot = shadowRoot;
 this.tplus = new TemplatePlus("");
-this.setupTemplate();
+// this.setupTemplate();
 }
 
 private initEventHandlers(){
@@ -63,7 +25,43 @@ const btn = this._shadowRoot.querySelector("button");
 }
 
 setupTemplate(){
+    const rawCss = _css`
+    <style>
+    *,
+    *::after, 
+    *::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    }
 
+    :host{
+    display:block;
+    contain:paint;
+    color: white;
+    }
+
+    ::slotted(.icon){
+        font-size: large;
+        pading: 0 4reem;
+        margin: 0 3rem;
+    }
+
+    .icon_btn{
+        background-color: yellow;
+    }
+    </style>
+    `;
+
+    const rawHtml  = _html`
+    <form>
+        <button type="submit" class="icon_btn">
+            <slot name="icon">
+            <span class="icon" slot="icon">&</span>
+            </slot>
+        </button>
+    </form>
+    `;
     const tplus = new TemplatePlus("");
 
     tplus.initTemplate( rawCss, rawHtml );
@@ -104,8 +102,10 @@ processSubmitForm(event:SubmitEvent){
     //console.log(this.forLable,event.submitter);
 
     const aside = document.getElementById(this.forLable);
-    aside?.classList.toggle("hide");
 
+    if(!aside)alert(`aside element ${this.forLable} does not exist`);
+
+    aside?.classList.toggle("hide");
 }
 
 }
@@ -139,7 +139,7 @@ export class HTMLUiSwitch extends HTMLElement implements WebComponentLifeCycle{
         console.log("ui-switch registered...");
     }
     connectedCallback(): void {
-      //  console.log('connectedCallback Method not implemented.');
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');

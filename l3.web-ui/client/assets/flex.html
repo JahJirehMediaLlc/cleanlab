@@ -74,19 +74,18 @@
     <ui-switch for="aside_right"><span class="icon" slot="icon">[]</span></ui-switch>
 </header>
 
-<main class="container">
-<h1>Flex Web Component</h1>
+<main id="main" class="bg_grey" style="position:relative" style="margin:4rem 0;">
+<h1>Flex Web Components</h1>
 </main>
+
+<ul slot="menu" class="menu_x scroll_x">
+    <li><ui-action href="hef" dialog="dialog" slot="slot" action="action">Print</ui-action></li>
+</ul>
 
 <footer id="footer" class="bg_green  position_bottom">
     <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
         <ul slot="menu" class="menu_x scroll_x">
-            <li><ui-action>Maps</ui-action></li>
-            <li><ui-action>Outline</ui-action></li>
-            <li><ui-action>Commentary</ui-action></li>
-            <li><ui-action>References</ui-action></li>
-            <li><ui-action>History</ui-action></li>
-            <li><ui-action>Conclusion</ui-action></li>
+            <li><ui-action href="hef1" dialog="dialog2" slot="slot3" action="action5">Maps</ui-action></li>
         </ul>
     </ui-panel>
 </footer>

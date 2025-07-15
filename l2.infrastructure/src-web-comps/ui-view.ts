@@ -1,62 +1,18 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-const rawCss = _css`
-    <style>
-            *,
-            *::after, 
-            *::before  {
-                box-sizing: border-box;
-                margin: 0;
-                padding:0;
-            }
-                
-:host{
-display:block;
-contain:paint;
-
-border: 2px red dashed;
-color: white;
-background-color: orange;
-}
-</style>
-`;
-
-const rawHtml  = _html`
-<slot>
-<p>ui-view component</p>
-</slot>
-<div id="output">
-place your content here 
-(html id is "output")
-</div>
-`;
-
 class HTMLUiViewView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiViewController;
     _url = new URL("http://localhost:3000/");
     pathName:string;
 
-    get url(): URL{
-        return this._url;
-    }
-    set url(pathName:string){
-    this._url.pathname = pathName;
+    get url(): URL{return this._url}
+    set url(pathName:string){this._url.pathname = pathName;this.setupTemplate();}
+    get width():string{return this.width}
+    set width(value:string){this.width = value}
+    get height():string{return this.height}
+    set height(value:string){this.height = value}
 
-    this.setupTemplate();
-    }
-    get width():string{
-    return "";
-    }
-    set width(value:string){
-    //     console.log("set height", value);
-    }
-    get height():string{
-        return "";
-    }
-    set height(value:string){
-    //    console.log("set height", value);
-    }
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
     }
@@ -132,8 +88,8 @@ export class HTMLUiView extends HTMLElement implements WebComponentLifeCycle{
         console.log("ui-view registered....");
     }
     connectedCallback(): void {
-     // this.controller.view.setupTemplate() ;
-      //  console.log('connectedCallback Method not implemented.');
+      this.controller.view.setupTemplate() ;
+     
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');

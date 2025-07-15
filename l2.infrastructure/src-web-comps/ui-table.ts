@@ -14,7 +14,6 @@ class HTMLUiTableView{
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
         this.template = new TemplatePlus("ui_table_template", new URL("http://localhost:3000/data/web_components.html"));
-      //  this.setupTemplate();
     }
     setupTemplate(){
 
