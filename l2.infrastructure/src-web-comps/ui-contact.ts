@@ -1,6 +1,32 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-const rawCss = _css`
+
+class HTMLUiContactView{
+    template:TemplatePlus;
+    _shadowRoot: ShadowRoot;
+    controller:HTMLUiContactController;
+
+        _slot:string;
+    _width:string;
+    _height:string;
+    _url:string;
+
+    get slot():string{return this._slot};
+    set slot(value:string){this._slot=value};
+    get width():string{return this._width};
+    set width(value:string){this._width=value};
+    get height():string{return this._height};
+    set height(value:string){this._height=value};
+    get url():string{return this._url};
+    set url(value:string){this._url=value};
+
+    constructor(shadowRoot: ShadowRoot) {
+        this._shadowRoot = shadowRoot;
+
+        this.setupTemplate();
+    }
+    setupTemplate() {
+        const rawCss = _css`
 <style>
 *,
 *::after, 
@@ -144,66 +170,55 @@ flex-grow: 0;
 
 
 </style>
-`;
+        `;
 
-const rawHtml  = _html`
-<form>
-
-
-<slot name="first_name">
-<p>no first_name provided</p>
-<label for="first_name">first_name</label>
-<input id="first_name" name="first_name" type="text" autocomplete="true">
-</slot>
+        const rawHtml  = _html`
+        <form>
 
 
-<slot name="last_name">
-<p>no last_name provided</p>
-<label for="last_name">last_name</label>
-<input id="last_name" name="last_name" type="text" autocomplete="true">
-</slot>
+        <slot name="first_name">
+        <p>no first_name provided</p>
+        <label for="first_name">first_name</label>
+        <input id="first_name" name="first_name" type="text" autocomplete="true">
+        </slot>
 
 
-<slot name="age">
-<p>no age provided</p>
-<label for="age">age</label>
-<input id="age" name="age" type="number" autocomplete="true">
-</slot>
+        <slot name="last_name">
+        <p>no last_name provided</p>
+        <label for="last_name">last_name</label>
+        <input id="last_name" name="last_name" type="text" autocomplete="true">
+        </slot>
 
 
-<slot name="email">
-<p>no email provided</p>
-<label for="email">"email</label>
-<input id="email" name="email" type="text" autocomplete="true">
-</slot>
+        <slot name="age">
+        <p>no age provided</p>
+        <label for="age">age</label>
+        <input id="age" name="age" type="number" autocomplete="true">
+        </slot>
 
-<slot name="phone">
-<p>no phone provided</p>
-<label for="phone">"phone</label>
-<input id="phone" name="phone" type="phone" autocomplete="true">
-</slot>
 
-<button type="submit">Done</button> 
-</form>
-<slot></slot>
-`;
+        <slot name="email">
+        <p>no email provided</p>
+        <label for="email">"email</label>
+        <input id="email" name="email" type="text" autocomplete="true">
+        </slot>
 
-class HTMLUiContactView{
-    template:TemplatePlus;
-    _shadowRoot: ShadowRoot;
-    controller:HTMLUiContactController;
+        <slot name="phone">
+        <p>no phone provided</p>
+        <label for="phone">"phone</label>
+        <input id="phone" name="phone" type="phone" autocomplete="true">
+        </slot>
 
-    constructor(shadowRoot: ShadowRoot) {
-        this._shadowRoot = shadowRoot;
+        <button type="submit">Done</button> 
+        </form>
+        <slot></slot>
+        `;
 
-        this.setupTemplate();
-    }
-    setupTemplate() {
-            const tplus = new TemplatePlus("");
-        
-            tplus.initTemplate(rawCss,rawHtml);
-        
-            this.render(tplus.element);
+        const tplus = new TemplatePlus("");
+    
+        tplus.initTemplate(rawCss,rawHtml);
+    
+        this.render(tplus.element);
     }
     //
      render(node: HTMLTemplateElement|DocumentFragment){
@@ -220,14 +235,14 @@ class HTMLUiContactView{
 }
 
 class HTMLUiContactController{
-    _view:HTMLUiContactView;
+    view:HTMLUiContactView;
     _parent:HTMLUiContact;
     _shadowRoot: ShadowRoot;
-    controller:HTMLUiContactController;
 
     constructor(parent:HTMLUiContact) {
         this._parent = parent;
-        this._view = new HTMLUiContactView(this._parent._shadowRoot);
+
+        this.view = new HTMLUiContactView(this._parent._shadowRoot);
     }
 }
 
@@ -237,7 +252,10 @@ export class HTMLUiContact extends HTMLElement implements WebComponentLifeCycle{
     template:TemplatePlus;
     thead:HTMLElement;
     tbody:HTMLElement;
-
+    // satisfies webcomponentlifecycle interface
+    observedAttributes: string[]; 
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["slot","width", "height", "url"];
     constructor(){
         super();
 
@@ -248,7 +266,7 @@ export class HTMLUiContact extends HTMLElement implements WebComponentLifeCycle{
     }
 
     connectedCallback(): void {
-      //  console.log("connectedCallback Method not implemented.");
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback(): void {
         console.log("disconnectedCallback Method not implemented.");
@@ -256,12 +274,6 @@ export class HTMLUiContact extends HTMLElement implements WebComponentLifeCycle{
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
         throw new Error("Method not implemented.");
     }
-      // satisfies webcomponentlifecycle interface
-    observedAttributes: string[];  
-
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["position", "height" , "scrollable", "person-json"];
-
-  }
+}
 
 window.customElements.define("ui-contact", HTMLUiContact);

@@ -1,28 +1,5 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-const rawCss = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-
-</style>
-`;
-const rawHtml  = _html`
-<slot>
-<p>null component</p>
-</slot>
-`;
 
 class HTMLUiNullView{
     _shadowRoot: ShadowRoot;
@@ -51,6 +28,30 @@ class HTMLUiNullView{
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
    setupTemplate() {
+        const rawCss = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        }
+
+        :host{
+        display:block;
+        contain:paint;
+        color: white;
+        }
+
+        </style>
+        `;
+        const rawHtml  = _html`
+        <slot>
+        <p>null component</p>
+        </slot>
+        `;
+
         const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );
@@ -93,7 +94,6 @@ class HTMLUiNullController{
 
 export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
-    view: HTMLUiNullView;
     controller:HTMLUiNullController;
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[]; 

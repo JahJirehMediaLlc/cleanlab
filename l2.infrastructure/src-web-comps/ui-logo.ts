@@ -1,69 +1,7 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-
 let bg_url:string = `url("images/jmc2.png")`;
 
-const rawCss = _css`
-    <style>
-        *,
-        *::after, 
-        *::before  {
-        box-sizing: border-box;
-        margin: 0;
-        padding:0;
-        }
-
-        :host{
-        display:block;
-        contain:paint;
-        color: white;
-        }
-        
-        img{
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .hide{
-            display:none;
-        }
-
-        .bg_image_cover{
-            background-image: ${bg_url};
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-            background-size: 100% 100%;
-            background-position: 0% 0%;
-        }
-
-        .bg_image_contain{
-            background-image: ${bg_url};
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center center;
-            background-size: 100% 100%;
-            background-position: 0% 0%;
-        }
-
-        .bg_image{
-            background-image: ${bg_url};
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            background-position: 0% 0%;
-        }
-
-        .full_screen{
-            height:99vh;
-            width: 99vw;
-        }
-
-    </style>
-`;
-const rawHtml  = _html`
-<button id="logo" title="images/jmc2.png" class="bg_image full_screen">
-</button>
-`;
 
 class HTMLUiLogoView{
     _shadowRoot: ShadowRoot;
@@ -87,7 +25,67 @@ class HTMLUiLogoView{
      //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate() {
+        const rawCss = _css`
+            <style>
+                *,
+                *::after, 
+                *::before  {
+                box-sizing: border-box;
+                margin: 0;
+                padding:0;
+                }
 
+                :host{
+                display:block;
+                contain:paint;
+                color: white;
+                }
+                
+                img{
+                    width: 3rem;
+                    height: 3rem;
+                }
+
+                .hide{
+                    display:none;
+                }
+
+                .bg_image_cover{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center center;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .bg_image_contain{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center center;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .bg_image{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .full_screen{
+                    height:99vh;
+                    width: 99vw;
+                }
+
+            </style>
+        `;
+        const rawHtml  = _html`
+        <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
+        </button>
+        `;
         const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );

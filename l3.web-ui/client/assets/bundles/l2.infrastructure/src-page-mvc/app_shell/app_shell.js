@@ -344,7 +344,7 @@
       return template;
     }
     createBlankTemplate() {
-      const rawCss9 = _css`
+      const rawCss6 = _css`
   <style>
 
       h1{
@@ -393,22 +393,22 @@
       }
   </style>
   `;
-      const rawHtml8 = _html`
+      const rawHtml5 = _html`
   <h1>blank template</h1>
   `;
-      return this.initTemplate(rawCss9, rawHtml8);
+      return this.initTemplate(rawCss6, rawHtml5);
     }
-    initTemplate(rawCss9, rawHtml8) {
-      this.insertAdjacentHtml(rawCss9, rawHtml8);
+    initTemplate(rawCss6, rawHtml5) {
+      this.insertAdjacentHtml(rawCss6, rawHtml5);
       return this.template;
     }
-    insertAdjacentHtml(rawCss9, rawHtml8, rawJS = "") {
+    insertAdjacentHtml(rawCss6, rawHtml5, rawJS = "") {
       const style = this.template.content.querySelector("style");
       style.replaceChildren();
-      style.insertAdjacentHTML("afterbegin", rawCss9);
+      style.insertAdjacentHTML("afterbegin", rawCss6);
       const div = this.template.content.querySelector("div");
       div.replaceChildren();
-      div.insertAdjacentHTML("afterbegin", rawHtml8);
+      div.insertAdjacentHTML("afterbegin", rawHtml5);
       const script = this.template.content.querySelector("script");
       script.replaceChildren();
       script.insertAdjacentHTML("afterbegin", rawJS);
@@ -458,7 +458,44 @@
   };
 
   // ../../../l2.infrastructure/src-web-comps/ui-contact.ts
-  var rawCss = _css`
+  var HTMLUiContactView = class {
+    template;
+    _shadowRoot;
+    controller;
+    _slot;
+    _width;
+    _height;
+    _url;
+    get slot() {
+      return this._slot;
+    }
+    set slot(value) {
+      this._slot = value;
+    }
+    get width() {
+      return this._width;
+    }
+    set width(value) {
+      this._width = value;
+    }
+    get height() {
+      return this._height;
+    }
+    set height(value) {
+      this._height = value;
+    }
+    get url() {
+      return this._url;
+    }
+    set url(value) {
+      this._url = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+      this.setupTemplate();
+    }
+    setupTemplate() {
+      const rawCss6 = _css`
 <style>
 *,
 *::after, 
@@ -602,59 +639,50 @@ flex-grow: 0;
 
 
 </style>
-`;
-  var rawHtml = _html`
-<form>
+        `;
+      const rawHtml5 = _html`
+        <form>
 
 
-<slot name="first_name">
-<p>no first_name provided</p>
-<label for="first_name">first_name</label>
-<input id="first_name" name="first_name" type="text" autocomplete="true">
-</slot>
+        <slot name="first_name">
+        <p>no first_name provided</p>
+        <label for="first_name">first_name</label>
+        <input id="first_name" name="first_name" type="text" autocomplete="true">
+        </slot>
 
 
-<slot name="last_name">
-<p>no last_name provided</p>
-<label for="last_name">last_name</label>
-<input id="last_name" name="last_name" type="text" autocomplete="true">
-</slot>
+        <slot name="last_name">
+        <p>no last_name provided</p>
+        <label for="last_name">last_name</label>
+        <input id="last_name" name="last_name" type="text" autocomplete="true">
+        </slot>
 
 
-<slot name="age">
-<p>no age provided</p>
-<label for="age">age</label>
-<input id="age" name="age" type="number" autocomplete="true">
-</slot>
+        <slot name="age">
+        <p>no age provided</p>
+        <label for="age">age</label>
+        <input id="age" name="age" type="number" autocomplete="true">
+        </slot>
 
 
-<slot name="email">
-<p>no email provided</p>
-<label for="email">"email</label>
-<input id="email" name="email" type="text" autocomplete="true">
-</slot>
+        <slot name="email">
+        <p>no email provided</p>
+        <label for="email">"email</label>
+        <input id="email" name="email" type="text" autocomplete="true">
+        </slot>
 
-<slot name="phone">
-<p>no phone provided</p>
-<label for="phone">"phone</label>
-<input id="phone" name="phone" type="phone" autocomplete="true">
-</slot>
+        <slot name="phone">
+        <p>no phone provided</p>
+        <label for="phone">"phone</label>
+        <input id="phone" name="phone" type="phone" autocomplete="true">
+        </slot>
 
-<button type="submit">Done</button> 
-</form>
-<slot></slot>
-`;
-  var HTMLUiContactView = class {
-    template;
-    _shadowRoot;
-    controller;
-    constructor(shadowRoot) {
-      this._shadowRoot = shadowRoot;
-      this.setupTemplate();
-    }
-    setupTemplate() {
+        <button type="submit">Done</button> 
+        </form>
+        <slot></slot>
+        `;
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss, rawHtml);
+      tplus.initTemplate(rawCss6, rawHtml5);
       this.render(tplus.element);
     }
     //
@@ -672,13 +700,12 @@ flex-grow: 0;
     //
   };
   var HTMLUiContactController = class {
-    _view;
+    view;
     _parent;
     _shadowRoot;
-    controller;
     constructor(parent) {
       this._parent = parent;
-      this._view = new HTMLUiContactView(this._parent._shadowRoot);
+      this.view = new HTMLUiContactView(this._parent._shadowRoot);
     }
   };
   var HTMLUiContact = class extends HTMLElement {
@@ -687,6 +714,10 @@ flex-grow: 0;
     template;
     thead;
     tbody;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["slot", "width", "height", "url"];
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
@@ -694,6 +725,7 @@ flex-grow: 0;
       console.log("<ui-contact> registered....");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback() {
       console.log("disconnectedCallback Method not implemented.");
@@ -701,10 +733,6 @@ flex-grow: 0;
     attributeChangedCallback(name, oldValue, newValue) {
       throw new Error("Method not implemented.");
     }
-    // satisfies webcomponentlifecycle interface
-    observedAttributes;
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["position", "height", "scrollable", "person-json"];
   };
   window.customElements.define("ui-contact", HTMLUiContact);
 
@@ -712,22 +740,19 @@ flex-grow: 0;
   var HTMLUiTabsView = class {
     _shadowRoot;
     controller;
-    tplus;
     currentElement;
     currentTab;
     tabs_menu_form;
     tabs_menu_ul;
     tabs_output;
     //
-    constructor(shadowRoot, _controller) {
+    constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      this.tplus = new TemplatePlus("ui_tabs_template", new URL("http://localhost:3000/data/web_components.html"));
-      this.controller = _controller;
-      this.setupTemplate();
     }
     //
     setupTemplate() {
-      this.tplus.content().then((frag) => {
+      const tplus = new TemplatePlus("ui_tabs_template", new URL("http://localhost:3000/data/web_components.html"));
+      tplus.content().then((frag) => {
         this.tabs_menu_form = frag.getElementById("tabs_menu_form");
         this.tabs_menu_ul = frag.getElementById("tabs_menu_ul");
         this.tabs_output = frag.getElementById("tabs_output");
@@ -740,7 +765,7 @@ flex-grow: 0;
         }
         let _frag = this.initFormButtons();
         this.tabs_menu_ul.replaceChildren(_frag);
-        this.render(this.tplus.element);
+        this.render(tplus.element);
       });
     }
     initFormButtons() {
@@ -787,21 +812,21 @@ flex-grow: 0;
     }
   };
   var HTMLUiTabsController = class {
-    _view;
+    view;
     _parent;
     tabs = [];
     version = "1.0.0";
     fi = new FormInput(null);
     get currentTab() {
-      return this._view.currentTab;
+      return this.view.currentTab;
     }
     set currentTab(value) {
-      this._view.showTab(value);
+      this.view.showTab(value);
     }
     //
     constructor(parent) {
       this._parent = parent;
-      this._view = new HTMLUiTabsView(this._parent._shadowRoot, this);
+      this.view = new HTMLUiTabsView(this._parent._shadowRoot);
       this.version = "1.0.0";
     }
     initTabsAttributes() {
@@ -820,8 +845,8 @@ flex-grow: 0;
       console.log("Controller.processRequest()", articleID);
     }
     saveFormData() {
-      const tplate_Form = this._view.currentElement.querySelector("form");
-      const tab_output_Form = this._view.tabs_output.querySelector("form");
+      const tplate_Form = this.view.currentElement.querySelector("form");
+      const tab_output_Form = this.view.tabs_output.querySelector("form");
       if (!tab_output_Form && !tplate_Form) return;
       const tab_output_fdata = new FormData(tab_output_Form);
       this.fi.attachForm(tplate_Form);
@@ -832,7 +857,7 @@ flex-grow: 0;
     }
   };
   var HTMLUiTabs = class extends HTMLElement {
-    _controller;
+    controller;
     _shadowRoot = this.attachShadow({ mode: "open" });
     // satisfies webcomponentlifecycle interface
     observedAttributes;
@@ -840,8 +865,17 @@ flex-grow: 0;
     static observedAttributes = ["position", "height", "scrollable", "id", "top", "left", "bottom", "right"];
     constructor() {
       super();
-      this._controller = new HTMLUiTabsController(this);
+      this.controller = new HTMLUiTabsController(this);
       console.log("...ui-tabs registered..");
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+    }
+    disconnectedCallback() {
+      throw new Error("Method not implemented.");
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
     }
   };
   window.customElements.define("ui-tabs", HTMLUiTabs);
@@ -1051,7 +1085,7 @@ flex-grow: 0;
   window.customElements.define("ui-gallery", HTMLUiGallery);
 
   // ../../../l2.infrastructure/src-web-comps/ui-panel.ts
-  var rawCss2 = _css`
+  var rawCss = _css`
 <style>
 *,
 *::after, 
@@ -1151,7 +1185,7 @@ img{
     }
 </style>
 `;
-  var rawHtml2 = _html`
+  var rawHtml = _html`
 <div id="panel">
 <slot name="menu">
 <p>no slots provided</p>
@@ -1188,7 +1222,7 @@ img{
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      const template = tplus.initTemplate(rawCss2, rawHtml2);
+      const template = tplus.initTemplate(rawCss, rawHtml);
       const ui_panel = document.querySelectorAll("ui-panel");
       const template_attr = document.querySelector("ui-panel").getAttribute("template");
       this.render(template.content.cloneNode(true));
@@ -1307,7 +1341,7 @@ img{
       this._shadowRoot = shadowRoot;
     }
     setupTemplate() {
-      const rawCss9 = _css`
+      const rawCss6 = _css`
         <style>
         *,
         *::after, 
@@ -1327,7 +1361,7 @@ img{
         }
         </style>
         `;
-      const rawHtml8 = _html`
+      const rawHtml5 = _html`
         <slot>
         <p>ui-view component</p>
         </slot>
@@ -1338,7 +1372,7 @@ img{
         `;
       const ui_view = document.querySelector("ui-view");
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss9, rawHtml8);
+      tplus.initTemplate(rawCss6, rawHtml5);
       this.render(tplus.element);
       const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
       this.fetchHtml(this._url.pathname, outputEl);
@@ -1351,7 +1385,7 @@ img{
     }
     fetchHtml(path, output) {
       const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.text()).then((rawHtml8) => output.innerHTML = this.parseRawHtml(rawHtml8)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml5) => output.innerHTML = this.parseRawHtml(rawHtml5)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1399,7 +1433,7 @@ img{
   window.customElements.define("ui-view", HTMLUiView);
 
   // ../../../l2.infrastructure/src-web-comps/ui-folder.ts
-  var rawCss3 = _css`
+  var rawCss2 = _css`
 <style>
 *,
 *::after, 
@@ -1535,7 +1569,7 @@ flex-grow: 0;
 
 </style>
 `;
-  var rawHtml3 = _html`
+  var rawHtml2 = _html`
 <form>
 <nav id="nav" class="flex_row menu_x">
     <slot name="tab">
@@ -1564,7 +1598,7 @@ flex-grow: 0;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss3, rawHtml3);
+      tplus.initTemplate(rawCss2, rawHtml2);
       this.render(tplus.element);
       this.initEventHandlers();
       const slots = this._shadowRoot.querySelectorAll("slot");
@@ -1583,7 +1617,7 @@ flex-grow: 0;
       if (!article_url) return;
       console.log(`article url: ${article_url}`);
       const url = new URL(`http://localhost:3000/${article_url}`);
-      fetch(url).then((response) => response.text()).then((rawHtml8) => article.innerHTML = this.parseRawHtml(rawHtml8)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml5) => article.innerHTML = this.parseRawHtml(rawHtml5)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1659,7 +1693,7 @@ flex-grow: 0;
   window.customElements.define("ui-folder", HTMLUiFolder);
 
   // ../../../l2.infrastructure/src-web-comps/ui-nav.ts
-  var rawCss4 = _css`
+  var rawCss3 = _css`
     <style>
         *,
         *::after, 
@@ -1859,7 +1893,7 @@ flex-grow: 0;
 
     </style>
 `;
-  var rawHtml4 = _html`
+  var rawHtml3 = _html`
   <nav class="bg_blue flex_row">
     <form id="nav_form"  action="">
             <select> 
@@ -1895,7 +1929,7 @@ flex-grow: 0;
     setupTemplate() {
       const tplus = new TemplatePlus("");
       const slots = document.querySelectorAll(`[slot="nav-action"]`);
-      const template = tplus.initTemplate(rawCss4, rawHtml4);
+      const template = tplus.initTemplate(rawCss3, rawHtml3);
       const ul = template.content.querySelector(`ul`);
       const select = template.content.querySelector(`select`);
       let li = "";
@@ -1960,7 +1994,7 @@ flex-grow: 0;
   window.customElements.define("ui-nav", HTMLUiNav);
 
   // ../../../l2.infrastructure/src-web-comps/ui-nav-action.ts
-  var rawCss5 = _css`
+  var rawCss4 = _css`
 <style>
 *,
 *::after, 
@@ -1980,7 +2014,7 @@ color: white;
 
 </style>
 `;
-  var rawHtml5 = _html`
+  var rawHtml4 = _html`
 <div id="nav_action">
 <button>no slots provided</button>
 </div> 
@@ -2078,7 +2112,7 @@ color: white;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      const rawCss9 = _css`
+      const rawCss6 = _css`
         <style>
         *,
         *::after, 
@@ -2095,7 +2129,7 @@ color: white;
         }
         </style>
         `;
-      const rawHtml8 = _html`
+      const rawHtml5 = _html`
         <form>
         <input name="slot" value="${this.slot}" type="text" hidden >
         <input name="href" value="${this.href}" type="text" hidden >
@@ -2105,7 +2139,7 @@ color: white;
         </button> 
         </form>
         `;
-      tplus.initTemplate(rawCss9, rawHtml8);
+      tplus.initTemplate(rawCss6, rawHtml5);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2184,7 +2218,7 @@ color: white;
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
     }
     setupTemplate() {
-      const rawCss9 = _css`
+      const rawCss6 = _css`
     <style>
     *,
     *::after, 
@@ -2211,7 +2245,7 @@ color: white;
     }
     </style>
     `;
-      const rawHtml8 = _html`
+      const rawHtml5 = _html`
     <form>
         <button type="submit" class="icon_btn">
             <slot name="icon">
@@ -2221,7 +2255,7 @@ color: white;
     </form>
     `;
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss9, rawHtml8);
+      tplus.initTemplate(rawCss6, rawHtml5);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2286,67 +2320,6 @@ color: white;
 
   // ../../../l2.infrastructure/src-web-comps/ui-logo.ts
   var bg_url = `url("images/jmc2.png")`;
-  var rawCss6 = _css`
-    <style>
-        *,
-        *::after, 
-        *::before  {
-        box-sizing: border-box;
-        margin: 0;
-        padding:0;
-        }
-
-        :host{
-        display:block;
-        contain:paint;
-        color: white;
-        }
-        
-        img{
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .hide{
-            display:none;
-        }
-
-        .bg_image_cover{
-            background-image: ${bg_url};
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-            background-size: 100% 100%;
-            background-position: 0% 0%;
-        }
-
-        .bg_image_contain{
-            background-image: ${bg_url};
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center center;
-            background-size: 100% 100%;
-            background-position: 0% 0%;
-        }
-
-        .bg_image{
-            background-image: ${bg_url};
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            background-position: 0% 0%;
-        }
-
-        .full_screen{
-            height:99vh;
-            width: 99vw;
-        }
-
-    </style>
-`;
-  var rawHtml6 = _html`
-<button id="logo" title="images/jmc2.png" class="bg_image full_screen">
-</button>
-`;
   var HTMLUiLogoView = class {
     _shadowRoot;
     controller;
@@ -2378,8 +2351,69 @@ color: white;
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
     }
     setupTemplate() {
+      const rawCss6 = _css`
+            <style>
+                *,
+                *::after, 
+                *::before  {
+                box-sizing: border-box;
+                margin: 0;
+                padding:0;
+                }
+
+                :host{
+                display:block;
+                contain:paint;
+                color: white;
+                }
+                
+                img{
+                    width: 3rem;
+                    height: 3rem;
+                }
+
+                .hide{
+                    display:none;
+                }
+
+                .bg_image_cover{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center center;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .bg_image_contain{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center center;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .bg_image{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .full_screen{
+                    height:99vh;
+                    width: 99vw;
+                }
+
+            </style>
+        `;
+      const rawHtml5 = _html`
+        <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
+        </button>
+        `;
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss6, rawHtml6);
+      tplus.initTemplate(rawCss6, rawHtml5);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2429,7 +2463,7 @@ color: white;
   window.customElements.define("ui-logo", HTMLUiLogo);
 
   // ../../../l2.infrastructure/src-web-comps/ui-option.ts
-  var rawCss7 = _css`
+  var rawCss5 = _css`
     <style>
         img{
             width: 3rem;
@@ -2625,176 +2659,6 @@ color: white;
   customElements.define("ui-option", HTMLUIOption);
 
   // ../../../l2.infrastructure/src-web-comps/ui-search.ts
-  var rawCss8 = _css`
-    <style>
-        img{
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .bg_blue{
-            background-color: cornflowerblue;
-        }
-        .bg_green{
-            background-color: darkolivegreen;
-        }
-        .bg_grey{
-            background-color: darkgray;
-        }
-
-        .hide{
-            display:none;
-        }
-
-        .position_top{
-            position: fixed;
-            top: 0;
-            width:100%;
-            z-index: 1;
-        }
-        .position_bottom{
-            position: fixed;
-            bottom: 0;
-            width:100%;
-            z-index: 1;
-        }
-        .position_left{
-            position: fixed;
-            left: 0;
-            width:100%;
-            z-index: 1;
-        }
-        .position_right{
-            position: fixed;
-            right: 0;
-            width:100%;
-            z-index: 1;
-        }
-
-        .scroll_x{
-            overflow-x: scroll;
-        }
-        .scroll_y{
-            overflow-y: scroll;
-            width: fit-content;
-        }
-
-        .menu_x{
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            overflow-x: scroll;
-        }
-        .menu_x > *{
-            flex-shrink: 0;
-        }
-        .menu_y{
-            display: flex;
-            flex-direction:column;
-            gap: .51rem;
-            text-align: center;
-            list-style: none;
-            width: fit-content;;
-            border: 2px red solid;
-        }
-        .menu_y > *{
-            margin:0;
-            padding:0;
-        }
-
-        .flex_row{
-            display:flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            gap: 1rem;
-        }
-        .flex_col{
-            display:flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .fullscreen{
-            position: relative;
-            top: 2rem;
-            height: 80vh;
-            /*width: 100%;*/
-        }
-
-        .width100{width:100%;}
-        .width75{width:75%;}
-        .width50{width:50%;}
-        .width50{width:25%;}
-
-        .fullwidth{
-            width: 100%;
-        }
-
-        .flex_center{
-            display:flex;
-            align-items: center ;
-            justify-content: center;
-        }
-
-        .center{
-            display:flex;
-            text-align: center;
-            align-items: center ;
-            justify-content: center;
-        }
-        .center *{
-            text-align: center;
-            margin: 0 auto;
-            display: inline-block;
-        }
-        .center_text{
-            text-align: center;
-        }
-
-        .space_between{
-            justify-content: space-between;
-        }
-        .space_around{
-            justify-content: space-around;
-        }
-
-        .wrap{
-            display:flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .hide{
-            display:none;
-        }
-
-        .border{
-            border:1px green solid;
-        }
-        .border2{
-            border: 2px green solid;
-        }
-        .grow_on{
-            flex-grow: 1;
-        }
-        .grow_off{
-            flex-grow: 0;
-        }
-
-        .shrink_on{
-            flex-shrink: 1;
-        }
-        .shrink_off{
-            flex-shrink: 0;
-        }
-
-        .margins{
-            margin: 1rem;
-        }
-
-    </style>
-`;
-  var rawHtml7 = _html`
-<slot></slot>`;
   var HTMLUiSearchView = class {
     template;
     _shadowRoot;
@@ -2804,8 +2668,178 @@ color: white;
       this.setupTemplate();
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("tid");
-      tplus.initTemplate(rawCss8, rawHtml7);
+      const rawCss6 = _css`
+        <style>
+            img{
+                width: 3rem;
+                height: 3rem;
+            }
+
+            .bg_blue{
+                background-color: cornflowerblue;
+            }
+            .bg_green{
+                background-color: darkolivegreen;
+            }
+            .bg_grey{
+                background-color: darkgray;
+            }
+
+            .hide{
+                display:none;
+            }
+
+            .position_top{
+                position: fixed;
+                top: 0;
+                width:100%;
+                z-index: 1;
+            }
+            .position_bottom{
+                position: fixed;
+                bottom: 0;
+                width:100%;
+                z-index: 1;
+            }
+            .position_left{
+                position: fixed;
+                left: 0;
+                width:100%;
+                z-index: 1;
+            }
+            .position_right{
+                position: fixed;
+                right: 0;
+                width:100%;
+                z-index: 1;
+            }
+
+            .scroll_x{
+                overflow-x: scroll;
+            }
+            .scroll_y{
+                overflow-y: scroll;
+                width: fit-content;
+            }
+
+            .menu_x{
+                display: flex;
+                list-style: none;
+                gap: 2rem;
+                overflow-x: scroll;
+            }
+            .menu_x > *{
+                flex-shrink: 0;
+            }
+            .menu_y{
+                display: flex;
+                flex-direction:column;
+                gap: .51rem;
+                text-align: center;
+                list-style: none;
+                width: fit-content;;
+                border: 2px red solid;
+            }
+            .menu_y > *{
+                margin:0;
+                padding:0;
+            }
+
+            .flex_row{
+                display:flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 1rem;
+            }
+            .flex_col{
+                display:flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .fullscreen{
+                position: relative;
+                top: 2rem;
+                height: 80vh;
+                /*width: 100%;*/
+            }
+
+            .width100{width:100%;}
+            .width75{width:75%;}
+            .width50{width:50%;}
+            .width50{width:25%;}
+
+            .fullwidth{
+                width: 100%;
+            }
+
+            .flex_center{
+                display:flex;
+                align-items: center ;
+                justify-content: center;
+            }
+
+            .center{
+                display:flex;
+                text-align: center;
+                align-items: center ;
+                justify-content: center;
+            }
+            .center *{
+                text-align: center;
+                margin: 0 auto;
+                display: inline-block;
+            }
+            .center_text{
+                text-align: center;
+            }
+
+            .space_between{
+                justify-content: space-between;
+            }
+            .space_around{
+                justify-content: space-around;
+            }
+
+            .wrap{
+                display:flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .hide{
+                display:none;
+            }
+
+            .border{
+                border:1px green solid;
+            }
+            .border2{
+                border: 2px green solid;
+            }
+            .grow_on{
+                flex-grow: 1;
+            }
+            .grow_off{
+                flex-grow: 0;
+            }
+
+            .shrink_on{
+                flex-shrink: 1;
+            }
+            .shrink_off{
+                flex-shrink: 0;
+            }
+
+            .margins{
+                margin: 1rem;
+            }
+
+        </style>
+    `;
+      const rawHtml5 = _html`
+    <slot></slot>`;
+      const tplus = new TemplatePlus("");
+      tplus.initTemplate(rawCss6, rawHtml5);
       this.render(tplus.element);
     }
     render(node) {
@@ -2834,6 +2868,10 @@ color: white;
     _shadowRoot;
     view;
     controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["id"];
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
@@ -2841,14 +2879,12 @@ color: white;
       console.log("ui-search registered....");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback() {
     }
     attributeChangedCallback(name, oldValue, newValue) {
-      throw new Error("Method not implemented.");
-    }
-    get observedAttributes() {
-      throw new Error("Method not implemented.");
+      this.controller.view[name] = newValue;
     }
   };
   window.customElements.define("ui-search", HTMLUiSearch);
