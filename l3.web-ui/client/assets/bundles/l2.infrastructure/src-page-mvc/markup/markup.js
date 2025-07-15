@@ -2121,7 +2121,6 @@ color: white;
         </button> 
         </form>
         `;
-      console.log(`ui-action.setupTemplate() ${this._action}  ${this.href} ${this.dialog}  ${this.slot}`);
       tplus.initTemplate(rawCss9, rawHtml8);
       this.render(tplus.element);
       this.initEventHandlers();
@@ -2176,7 +2175,6 @@ color: white;
     }
     attributeChangedCallback(name, oldValue, newValue) {
       this.controller.view[name] = newValue;
-      console.log(`ui-action.attributeChanged()  ${name} : ${newValue}`);
     }
   };
   window.customElements.define("ui-action", HTMLUiAction);

@@ -61,11 +61,6 @@ class HTMLUiActionView{
         </form>
         `;
 
-       // get attributes from light dom
-        console.log(`ui-action.setupTemplate() ${this._action}  ${this.href} ${this.dialog}  ${this.slot}`);
- //        throw new Error('Method not implemented.');
-
-       // set shadowdom form attributes
         tplus.initTemplate( rawCss, rawHtml );
     
         this.render( tplus.element );
@@ -131,7 +126,7 @@ export class HTMLUiAction extends HTMLElement implements WebComponentLifeCycle{
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
      this.controller.view[name] = newValue;
 
-     console.log(`ui-action.attributeChanged()  ${name} : ${newValue}`);
+    // console.log(`ui-action.attributeChanged()  ${name} : ${newValue}`);
     }
 
 }
