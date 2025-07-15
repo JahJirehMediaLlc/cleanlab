@@ -344,7 +344,7 @@
       return template;
     }
     createBlankTemplate() {
-      const rawCss11 = _css`
+      const rawCss9 = _css`
   <style>
 
       h1{
@@ -393,22 +393,22 @@
       }
   </style>
   `;
-      const rawHtml10 = _html`
+      const rawHtml8 = _html`
   <h1>blank template</h1>
   `;
-      return this.initTemplate(rawCss11, rawHtml10);
+      return this.initTemplate(rawCss9, rawHtml8);
     }
-    initTemplate(rawCss11, rawHtml10) {
-      this.insertAdjacentHtml(rawCss11, rawHtml10);
+    initTemplate(rawCss9, rawHtml8) {
+      this.insertAdjacentHtml(rawCss9, rawHtml8);
       return this.template;
     }
-    insertAdjacentHtml(rawCss11, rawHtml10, rawJS = "") {
+    insertAdjacentHtml(rawCss9, rawHtml8, rawJS = "") {
       const style = this.template.content.querySelector("style");
       style.replaceChildren();
-      style.insertAdjacentHTML("afterbegin", rawCss11);
+      style.insertAdjacentHTML("afterbegin", rawCss9);
       const div = this.template.content.querySelector("div");
       div.replaceChildren();
-      div.insertAdjacentHTML("afterbegin", rawHtml10);
+      div.insertAdjacentHTML("afterbegin", rawHtml8);
       const script = this.template.content.querySelector("script");
       script.replaceChildren();
       script.insertAdjacentHTML("afterbegin", rawJS);
@@ -950,8 +950,6 @@ flex-grow: 0;
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
       this.template = new TemplatePlus("ui_gallery_template", new URL("http://localhost:3000/data/web_components.html"));
-      this.setupTemplate();
-      ;
     }
     //
     setupTemplate() {
@@ -1020,17 +1018,17 @@ flex-grow: 0;
     }
   };
   var HTMLUiGalleryController = class {
-    _view;
-    _parent;
+    view;
+    parent;
     //
     constructor(parent) {
-      this._parent = parent;
-      this._view = new HTMLUiGalleryView(this._parent._shadowRoot);
+      this.parent = parent;
+      this.view = new HTMLUiGalleryView(this.parent._shadowRoot);
     }
   };
   var HTMLUiGallery = class extends HTMLElement {
-    _controller;
     _shadowRoot;
+    controller;
     // satisfies webcomponentlifecycle interface
     observedAttributes;
     // this property must be static inorder to receive attributechangedcallback allsbe 
@@ -1038,14 +1036,16 @@ flex-grow: 0;
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
-      this._controller = new HTMLUiGalleryController(this);
+      this.controller = new HTMLUiGalleryController(this);
       console.log("ui-gallery registered....");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback() {
     }
     attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
     }
   };
   window.customElements.define("ui-gallery", HTMLUiGallery);
@@ -1279,35 +1279,6 @@ img{
   window.customElements.define("ui-panel", HTMLUiPanel);
 
   // ../../../l2.infrastructure/src-web-comps/ui-view.ts
-  var rawCss3 = _css`
-    <style>
-            *,
-            *::after, 
-            *::before  {
-                box-sizing: border-box;
-                margin: 0;
-                padding:0;
-            }
-                
-:host{
-display:block;
-contain:paint;
-
-border: 2px red dashed;
-color: white;
-background-color: orange;
-}
-</style>
-`;
-  var rawHtml3 = _html`
-<slot>
-<p>ui-view component</p>
-</slot>
-<div id="output">
-place your content here 
-(html id is "output")
-</div>
-`;
   var HTMLUiViewView = class {
     _shadowRoot;
     controller;
@@ -1321,22 +1292,53 @@ place your content here
       this.setupTemplate();
     }
     get width() {
-      return "";
+      return this.width;
     }
     set width(value) {
+      this.width = value;
     }
     get height() {
-      return "";
+      return this.height;
     }
     set height(value) {
+      this.height = value;
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
     }
     setupTemplate() {
+      const rawCss9 = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+            box-sizing: border-box;
+            margin: 0;
+            padding:0;
+        }
+            
+        :host{
+        display:block;
+        contain:paint;
+
+        border: 2px red dashed;
+        color: white;
+        background-color: orange;
+        }
+        </style>
+        `;
+      const rawHtml8 = _html`
+        <slot>
+        <p>ui-view component</p>
+        </slot>
+        <div id="output">
+        place your content here 
+        (html id is "output")
+        </div>
+        `;
       const ui_view = document.querySelector("ui-view");
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss3, rawHtml3);
+      tplus.initTemplate(rawCss9, rawHtml8);
       this.render(tplus.element);
       const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
       this.fetchHtml(this._url.pathname, outputEl);
@@ -1349,7 +1351,7 @@ place your content here
     }
     fetchHtml(path, output) {
       const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.text()).then((rawHtml10) => output.innerHTML = this.parseRawHtml(rawHtml10)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml8) => output.innerHTML = this.parseRawHtml(rawHtml8)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1386,6 +1388,7 @@ place your content here
       console.log("ui-view registered....");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback() {
     }
@@ -1396,7 +1399,7 @@ place your content here
   window.customElements.define("ui-view", HTMLUiView);
 
   // ../../../l2.infrastructure/src-web-comps/ui-folder.ts
-  var rawCss4 = _css`
+  var rawCss3 = _css`
 <style>
 *,
 *::after, 
@@ -1532,7 +1535,7 @@ flex-grow: 0;
 
 </style>
 `;
-  var rawHtml4 = _html`
+  var rawHtml3 = _html`
 <form>
 <nav id="nav" class="flex_row menu_x">
     <slot name="tab">
@@ -1561,7 +1564,7 @@ flex-grow: 0;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss4, rawHtml4);
+      tplus.initTemplate(rawCss3, rawHtml3);
       this.render(tplus.element);
       this.initEventHandlers();
       const slots = this._shadowRoot.querySelectorAll("slot");
@@ -1580,7 +1583,7 @@ flex-grow: 0;
       if (!article_url) return;
       console.log(`article url: ${article_url}`);
       const url = new URL(`http://localhost:3000/${article_url}`);
-      fetch(url).then((response) => response.text()).then((rawHtml10) => article.innerHTML = this.parseRawHtml(rawHtml10)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml8) => article.innerHTML = this.parseRawHtml(rawHtml8)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1656,7 +1659,7 @@ flex-grow: 0;
   window.customElements.define("ui-folder", HTMLUiFolder);
 
   // ../../../l2.infrastructure/src-web-comps/ui-nav.ts
-  var rawCss5 = _css`
+  var rawCss4 = _css`
     <style>
         *,
         *::after, 
@@ -1856,7 +1859,7 @@ flex-grow: 0;
 
     </style>
 `;
-  var rawHtml5 = _html`
+  var rawHtml4 = _html`
   <nav class="bg_blue flex_row">
     <form id="nav_form"  action="">
             <select> 
@@ -1892,7 +1895,7 @@ flex-grow: 0;
     setupTemplate() {
       const tplus = new TemplatePlus("");
       const slots = document.querySelectorAll(`[slot="nav-action"]`);
-      const template = tplus.initTemplate(rawCss5, rawHtml5);
+      const template = tplus.initTemplate(rawCss4, rawHtml4);
       const ul = template.content.querySelector(`ul`);
       const select = template.content.querySelector(`select`);
       let li = "";
@@ -1957,7 +1960,7 @@ flex-grow: 0;
   window.customElements.define("ui-nav", HTMLUiNav);
 
   // ../../../l2.infrastructure/src-web-comps/ui-nav-action.ts
-  var rawCss6 = _css`
+  var rawCss5 = _css`
 <style>
 *,
 *::after, 
@@ -1977,7 +1980,7 @@ color: white;
 
 </style>
 `;
-  var rawHtml6 = _html`
+  var rawHtml5 = _html`
 <div id="nav_action">
 <button>no slots provided</button>
 </div> 
@@ -2075,7 +2078,7 @@ color: white;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      const rawCss11 = _css`
+      const rawCss9 = _css`
         <style>
         *,
         *::after, 
@@ -2092,7 +2095,7 @@ color: white;
         }
         </style>
         `;
-      const rawHtml10 = _html`
+      const rawHtml8 = _html`
         <form>
         <input name="slot" value="${this.slot}" type="text" hidden >
         <input name="href" value="${this.href}" type="text" hidden >
@@ -2103,7 +2106,7 @@ color: white;
         </form>
         `;
       console.log(`ui-action.setupTemplate() ${this._action}  ${this.href} ${this.dialog}  ${this.slot}`);
-      tplus.initTemplate(rawCss11, rawHtml10);
+      tplus.initTemplate(rawCss9, rawHtml8);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2152,7 +2155,6 @@ color: white;
     }
     connectedCallback() {
       this.controller.view.setupTemplate();
-      console.log("ui-action connectedCallback");
     }
     disconnectedCallback() {
     }
@@ -2164,42 +2166,6 @@ color: white;
   window.customElements.define("ui-action", HTMLUiAction);
 
   // ../../../l2.infrastructure/src-web-comps/ui-switch.ts
-  var rawCss7 = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-
-::slotted(.icon){
-    font-size: large;
-    pading: 0 4reem;
-    margin: 0 3rem;
-}
-
-.icon_btn{
-    background-color: yellow;
-}
-</style>
-`;
-  var rawHtml7 = _html`
-<form>
-    <button type="submit" class="icon_btn">
-        <slot name="icon">
-        <span class="icon" slot="icon">&</span>
-        </slot>
-    </button>
-</form>
-`;
   var HTMLUiSwitchView = class {
     _shadowRoot;
     controller;
@@ -2214,15 +2180,50 @@ color: white;
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
       this.tplus = new TemplatePlus("");
-      this.setupTemplate();
     }
     initEventHandlers() {
       const btn = this._shadowRoot.querySelector("button");
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
     }
     setupTemplate() {
+      const rawCss9 = _css`
+    <style>
+    *,
+    *::after, 
+    *::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    }
+
+    :host{
+    display:block;
+    contain:paint;
+    color: white;
+    }
+
+    ::slotted(.icon){
+        font-size: large;
+        pading: 0 4reem;
+        margin: 0 3rem;
+    }
+
+    .icon_btn{
+        background-color: yellow;
+    }
+    </style>
+    `;
+      const rawHtml8 = _html`
+    <form>
+        <button type="submit" class="icon_btn">
+            <slot name="icon">
+            <span class="icon" slot="icon">&</span>
+            </slot>
+        </button>
+    </form>
+    `;
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss7, rawHtml7);
+      tplus.initTemplate(rawCss9, rawHtml8);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2275,6 +2276,7 @@ color: white;
       console.log("ui-switch registered...");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback() {
     }
@@ -2286,7 +2288,7 @@ color: white;
 
   // ../../../l2.infrastructure/src-web-comps/ui-logo.ts
   var bg_url = `url("images/jmc2.png")`;
-  var rawCss8 = _css`
+  var rawCss6 = _css`
     <style>
         *,
         *::after, 
@@ -2343,7 +2345,7 @@ color: white;
 
     </style>
 `;
-  var rawHtml8 = _html`
+  var rawHtml6 = _html`
 <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
 </button>
 `;
@@ -2373,14 +2375,13 @@ color: white;
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      this.setupTemplate();
     }
     initEventHandlers() {
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
     }
     setupTemplate() {
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss8, rawHtml8);
+      tplus.initTemplate(rawCss6, rawHtml6);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2419,6 +2420,7 @@ color: white;
       console.log("ui-logo registered....");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback() {
     }
@@ -2429,7 +2431,7 @@ color: white;
   window.customElements.define("ui-logo", HTMLUiLogo);
 
   // ../../../l2.infrastructure/src-web-comps/ui-option.ts
-  var rawCss9 = _css`
+  var rawCss7 = _css`
     <style>
         img{
             width: 3rem;
@@ -2625,7 +2627,7 @@ color: white;
   customElements.define("ui-option", HTMLUIOption);
 
   // ../../../l2.infrastructure/src-web-comps/ui-search.ts
-  var rawCss10 = _css`
+  var rawCss8 = _css`
     <style>
         img{
             width: 3rem;
@@ -2793,7 +2795,7 @@ color: white;
 
     </style>
 `;
-  var rawHtml9 = _html`
+  var rawHtml7 = _html`
 <slot></slot>`;
   var HTMLUiSearchView = class {
     template;
@@ -2805,7 +2807,7 @@ color: white;
     }
     setupTemplate() {
       const tplus = new TemplatePlus("tid");
-      tplus.initTemplate(rawCss10, rawHtml9);
+      tplus.initTemplate(rawCss8, rawHtml7);
       this.render(tplus.element);
     }
     render(node) {

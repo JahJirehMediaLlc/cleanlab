@@ -17,6 +17,36 @@ class HTMLUiViewView{
         this._shadowRoot = shadowRoot;
     }
     setupTemplate() {
+        const rawCss = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+            box-sizing: border-box;
+            margin: 0;
+            padding:0;
+        }
+            
+        :host{
+        display:block;
+        contain:paint;
+
+        border: 2px red dashed;
+        color: white;
+        background-color: orange;
+        }
+        </style>
+        `;
+
+        const rawHtml  = _html`
+        <slot>
+        <p>ui-view component</p>
+        </slot>
+        <div id="output">
+        place your content here 
+        (html id is "output")
+        </div>
+        `;
         const ui_view = document.querySelector("ui-view");
         const tplus = new TemplatePlus("");
         
