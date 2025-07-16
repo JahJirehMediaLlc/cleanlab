@@ -1,6 +1,4 @@
 .idea/
 .vscode/
 deno.*
-assets/bundles/
-wwwroot/images/
 server.cmd
