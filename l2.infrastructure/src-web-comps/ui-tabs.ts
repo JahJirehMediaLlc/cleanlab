@@ -1,12 +1,4 @@
-import {createElement, wrapElement, TemplatePlus} from "../src-dom/domutils.ts";
-import {FormInput, Dimensions} from '../src-dom/domutils';
-
-interface WebComponentLifeCycle{
-    connectedCallback():void;
-    disconnectedCallback():void;
-    attributeChangedCallback(name: string, oldValue: string, newValue: string):void;
-    get observedAttributes():string[];
-}
+import {_html, _css, FormInput, WebComponentLifeCycle, TemplatePlus, createElement, wrapElement,} from  '../src-dom/domutils.ts';
 
 type tab_attr = {
     slot:string,
@@ -19,7 +11,6 @@ type tab_attr = {
 class HTMLUiTabsView{
     private _shadowRoot: ShadowRoot;
     private controller:HTMLUiTabsController;
-    private tplus:TemplatePlus;
     public currentElement: DocumentFragment;
     public currentTab: string;
 
@@ -27,19 +18,14 @@ class HTMLUiTabsView{
     tabs_menu_ul:HTMLElement;
     tabs_output:HTMLElement;
     //
-    constructor(shadowRoot: ShadowRoot,_controller:HTMLUiTabsController) {
-
+    constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.tplus = new TemplatePlus("ui_tabs_template", new URL("http://localhost:3000/data/web_components.html"));
-        this.controller = _controller;
-
-        this.setupTemplate();
     }
     //
     setupTemplate() {
+        const tplus = new TemplatePlus("ui_tabs_template", new URL("http://localhost:3000/data/web_components.html"));
 
-
-        this.tplus.content().then( frag => {
+        tplus.content().then( frag => {
 
         this.tabs_menu_form = frag.getElementById("tabs_menu_form")!;
         this.tabs_menu_ul = frag.getElementById("tabs_menu_ul")!;
@@ -63,7 +49,7 @@ class HTMLUiTabsView{
 
          // display the desired template
         
-        this.render(this.tplus.element); 
+        this.render(tplus.element); 
        });
 
     }
@@ -84,7 +70,7 @@ class HTMLUiTabsView{
             _frag.appendChild(_li);
         }
 
-return _frag;
+        return _frag;
     }
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
@@ -130,17 +116,17 @@ return _frag;
  }
 //
 class HTMLUiTabsController{
-    _view:HTMLUiTabsView;
+    view:HTMLUiTabsView;
     _parent:HTMLUiTabs;
     tabs:tab_attr[] = [];
     version = "1.0.0";
     fi:FormInput = new FormInput(null as unknown as HTMLFormElement);
-    get currentTab():string{return this._view.currentTab};
-    set currentTab(value){this._view.showTab(value)};
+    get currentTab():string{return this.view.currentTab};
+    set currentTab(value){this.view.showTab(value)};
     //
     constructor(parent:HTMLUiTabs) {
         this._parent = parent;
-        this._view = new HTMLUiTabsView(this._parent._shadowRoot, this);
+        this.view = new HTMLUiTabsView(this._parent._shadowRoot);
         this.version = "1.0.0";
     }
     initTabsAttributes(){
@@ -164,8 +150,8 @@ class HTMLUiTabsController{
     }
     saveFormData(){
 
-        const tplate_Form = this._view.currentElement.querySelector<HTMLFormElement>("form");
-        const tab_output_Form = this._view.tabs_output.querySelector<HTMLFormElement>("form");
+        const tplate_Form = this.view.currentElement.querySelector<HTMLFormElement>("form");
+        const tab_output_Form = this.view.tabs_output.querySelector<HTMLFormElement>("form");
 
         if(!tab_output_Form  && !tplate_Form)return;
 
@@ -182,21 +168,29 @@ class HTMLUiTabsController{
     }
 }
 //
-export class HTMLUiTabs extends HTMLElement {
-    _controller:HTMLUiTabsController;
+export class HTMLUiTabs extends HTMLElement implements WebComponentLifeCycle{
+    controller:HTMLUiTabsController;
     _shadowRoot: ShadowRoot = this.attachShadow({mode: 'open'});
         // satisfies webcomponentlifecycle interface
     observedAttributes: string[];  
-
     // this property must be static inorder to receive attributechangedcallback allsbe 
    static observedAttributes = ["position", "height" , "scrollable", "id", "top","left","bottom","right"];
 
     constructor(){
         super();
 
-        this._controller = new HTMLUiTabsController(this);
+        this.controller = new HTMLUiTabsController(this);
 
         console.log("...ui-tabs registered..");
+    }
+    connectedCallback(): void {
+        this.controller.view.setupTemplate();
+    }
+    disconnectedCallback(): void {
+        throw new Error('Method not implemented.');
+    }
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+        this.controller.view[name] = newValue;
     }
 }
 //

@@ -1,5 +1,4 @@
-import {TemplatePlus, wrapElement} from "../src-dom/domutils.ts";
-import {addClass,createElement,Css,getElementIndex} from "../src-dom/domutils.ts";
+import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
 class HTMLUiGalleryView{
     _shadowRoot: ShadowRoot;
@@ -25,11 +24,9 @@ class HTMLUiGalleryView{
     }
     //
     constructor(shadowRoot: ShadowRoot) {
-
         this._shadowRoot = shadowRoot;
         this.template = new TemplatePlus("ui_gallery_template", new URL("http://localhost:3000/data/web_components.html"));
 
-        this.setupTemplate();;
     }
     //
     setupTemplate(){
@@ -145,31 +142,40 @@ class HTMLUiGalleryView{
 }
 //
 class HTMLUiGalleryController{
-    _view:HTMLUiGalleryView;
-    _parent:HTMLUiGallery;
+    view:HTMLUiGalleryView;
+    parent:HTMLUiGallery;
     //
     constructor(parent:HTMLUiGallery) {
-        this._parent = parent;
-        this._view = new HTMLUiGalleryView(this._parent._shadowRoot);
+        this.parent = parent;
+        this.view = new HTMLUiGalleryView(this.parent._shadowRoot);
     }
 }
 //
-export class HTMLUiGallery extends HTMLElement{
-    _controller:HTMLUiGalleryController;
+export class HTMLUiGallery extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
-        // satisfies webcomponentlifecycle interface
+    controller:HTMLUiGalleryController;
+    // satisfies webcomponentlifecycle interface
    observedAttributes: string[]; 
    // this property must be static inorder to receive attributechangedcallback allsbe 
    static observedAttributes = ["width", "height", "url"];
-
 
     constructor(){
         super();
 
         this._shadowRoot = this.attachShadow({mode: 'open'});
-        this._controller = new HTMLUiGalleryController(this);
+        this.controller = new HTMLUiGalleryController(this);
 
         console.log("ui-gallery registered....");
+    }
+    connectedCallback(): void {
+         this.controller.view.setupTemplate();
+    
+    }
+    disconnectedCallback(): void {
+    //    throw new Error('Method not implemented.');
+    }
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+    this.controller.view[name] = newValue;
     }
 }
 //
