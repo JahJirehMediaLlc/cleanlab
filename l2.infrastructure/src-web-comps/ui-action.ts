@@ -1,4 +1,3 @@
-// @ts-ignore
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
 
