@@ -1,157 +1,5 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-const rawCss = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-img{
-display: block;
-max-width: 100%;
-height: auto;
-/* margin: 0px auto; */
-}
-
-:host{
-display:block;
-contain:paint;
-
-border: 2px red dashed;
-color: white;
-background-color:purple;
-}
-
-::slotted(label){
-color: yellow;
-flex-shrink: 0;
-}
-
-::slotted(label:hover){
-color: red;
-}
-
-::slotted(.focus){
-background-color:grey;
-}
-
-::slotted(article){
-height: 25rem;;
-overflow:auto;
-}
-
-.focus{
-border: 2px yellow solid;
-background-color:green;
-}
-
-.scroll_x{
-overflow-x: scroll;
-}
-.scroll_y{
-overflow-y: scroll;
-width: fit-content;
-}
-
-.menu_x{
-display: flex;
-list-style: none;
-gap: 2rem;
-overflow-x: auto;
-}
-.menu_x > *{
-flex-shrink: 0;
-}
-.menu_y{
-display: flex;
-flex-direction:column;
-gap: .51rem;
-text-align: center;
-list-style: none;
-width: fit-content;;
-border: 2px red solid;
-}
-.menu_y > *{
-margin:0;
-padding:0;
-}
-
-.flex_row{
-display:flex;
-flex-direction: row;
-flex-wrap: nowrap;
-gap: 1rem;
-}
-.flex_col{
-display:flex;
-flex-direction: column;
-gap: 1rem;
-}
-.center_text{
-text-align: center;
-}
-
-.space_between{
-justify-content: space-between;
-}
-.space_around{
-justify-content: space-around;
-}
-
-.wrap{
-display:flex;
-flex-wrap: wrap;
-gap: 1rem;
-}
-.hide{
-display:none;
-}
-
-.border{
-border:1px green solid;
-}
-.border2{
-border: 2px green solid;
-}
-
-.shrink_off{
-flex-shrink: 1;
-}
-.shrink_on{
-flex-shrink: 0;
-}
-
-.grow_on{
-flex-grow: 1;
-}
-.grow_off{
-flex-grow: 0;
-}
-
-
-
-</style>
-`;
-
-const rawHtml  = _html`
-<form>
-<nav id="nav" class="flex_row menu_x">
-    <slot name="tab">
-      <p>no labels provided...</p>
-    </slot>
-</nav>
-</form>
-
-<h3Article</h3>
-<slot name="details">
-<p>no details provided...</p>
-</slot>
-`;
-
 class HTMLUiFolderView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiFolderController;
@@ -159,7 +7,7 @@ class HTMLUiFolderView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.setupTemplate();
+     //   this.setupTemplate();
         this.showDetails(this.currentTab);
     }
     private initEventHandlers(){
@@ -167,6 +15,158 @@ class HTMLUiFolderView{
     this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate(){
+
+        const rawCss = _css`
+    <style>
+    *,
+    *::after, 
+    *::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    }
+
+    img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* margin: 0px auto; */
+    }
+
+    :host{
+    display:block;
+    contain:paint;
+
+    border: 2px red dashed;
+    color: white;
+    background-color:purple;
+    }
+
+    ::slotted(label){
+    color: yellow;
+    flex-shrink: 0;
+    }
+
+    ::slotted(label:hover){
+    color: red;
+    }
+
+    ::slotted(.focus){
+    background-color:grey;
+    }
+
+    ::slotted(article){
+    height: 25rem;;
+    overflow:auto;
+    }
+
+    .focus{
+    border: 2px yellow solid;
+    background-color:green;
+    }
+
+    .scroll_x{
+    overflow-x: scroll;
+    }
+    .scroll_y{
+    overflow-y: scroll;
+    width: fit-content;
+    }
+
+    .menu_x{
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    overflow-x: auto;
+    }
+    .menu_x > *{
+    flex-shrink: 0;
+    }
+    .menu_y{
+    display: flex;
+    flex-direction:column;
+    gap: .51rem;
+    text-align: center;
+    list-style: none;
+    width: fit-content;;
+    border: 2px red solid;
+    }
+    .menu_y > *{
+    margin:0;
+    padding:0;
+    }
+
+    .flex_row{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    }
+    .flex_col{
+    display:flex;
+    flex-direction: column;
+    gap: 1rem;
+    }
+    .center_text{
+    text-align: center;
+    }
+
+    .space_between{
+    justify-content: space-between;
+    }
+    .space_around{
+    justify-content: space-around;
+    }
+
+    .wrap{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    }
+    .hide{
+    display:none;
+    }
+
+    .border{
+    border:1px green solid;
+    }
+    .border2{
+    border: 2px green solid;
+    }
+
+    .shrink_off{
+    flex-shrink: 1;
+    }
+    .shrink_on{
+    flex-shrink: 0;
+    }
+
+    .grow_on{
+    flex-grow: 1;
+    }
+    .grow_off{
+    flex-grow: 0;
+    }
+
+
+
+    </style>
+    `;
+
+    const rawHtml  = _html`
+    <form>
+    <nav id="nav" class="flex_row menu_x">
+        <slot name="tab">
+        <p>no labels provided...</p>
+        </slot>
+    </nav>
+    </form>
+
+    <h3Article</h3>
+    <slot name="details">
+    <p>no details provided...</p>
+    </slot>
+    `;
     const tplus = new TemplatePlus("");
 
     tplus.initTemplate(rawCss,rawHtml);
@@ -294,7 +294,7 @@ export class HTMLUiFolder extends HTMLElement implements WebComponentLifeCycle{
     }
 
     connectedCallback(): void {
-      //  console.log('connectedCallback Method not implemented.');
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');
