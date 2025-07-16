@@ -78,21 +78,21 @@
     <ui-switch for="aside_right"><span class="icon" slot="icon">[]</span></ui-switch>
 </header>
 
-<main id="main" class="bg_grey" style="position:relative">
+<main id="main" class="hbg_grey" style="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:2rem 0;">
    
         <aside id="aside_left" class="hide bg_green container_item" style="position:absolute">
             <ui-panel id="panel_left" height1="14rem" template="aside_left_template">
             <ul slot="menu" class="menu_y">
-                <li><ui-action>DoPrint</ui-action></li>
-                 <li><ui-action>DoEmail</ui-action></li>
-                 <li><ui-action>DoContact</ui-action></li>
+                <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoPrint">Print</ui-action></li>
+                 <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoEmail">Email</ui-action></li>
+                 <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoContac">Contact</ui-action></li>
             </ul>
             </ui-panel>
         </aside>
 
         <section id="output" class="container_item  width100">
-            <h1>App Shell</h1>
+            <h1>AppShell</h1>
             <div id="log">
 
             </div>
@@ -101,9 +101,9 @@
         <aside id="aside_right" class="hide  bg_green container_item" style="position:absolute;right:0;">
             <ui-panel id="panel_right"   height2="14rem"  template="aside_left_template" >
             <ul slot="menu" class="menu_y">
-                 <li><ui-action>DoPrint</ui-action></li>
-                 <li><ui-action>DoEmail</ui-action></li>
-                 <li><ui-action>DoContact</ui-action></li>
+                 <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoHelp">Help</ui-action></li>
+                 <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoLogo">Logo</ui-action></li>
+                 <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoOld">Old</ui-action></li>
             </ul>
             </ui-panel>
         </aside>
@@ -114,12 +114,12 @@
 <footer id="footer" class="bg_green  position_bottom">
     <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
         <ul slot="menu" class="menu_x scroll_x">
-            <li><ui-action>Maps</ui-action></li>
-            <li><ui-action>Outline</ui-action></li>
-            <li><ui-action>Commentary</ui-action></li>
-            <li><ui-action>References</ui-action></li>
-            <li><ui-action>History</ui-action></li>
-            <li><ui-action>Conclusion</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
         </ul>
     </ui-panel>
 </footer>
