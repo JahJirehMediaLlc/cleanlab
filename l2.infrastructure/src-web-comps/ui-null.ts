@@ -1,6 +1,5 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-
 class HTMLUiNullView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiNullController;
@@ -9,7 +8,10 @@ class HTMLUiNullView{
     _width:string;
     _height:string;
     _url:string;
+    _items: string[];
 
+    get items():string[]{return this._items};
+    set items(value:string[]){this._items=value};
     get slot():string{return this._slot};
     set slot(value:string){this._slot=value};
     get width():string{return this._width};
@@ -21,13 +23,14 @@ class HTMLUiNullView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.setupTemplate();
+      //  this.setupTemplate();
     }
     private initEventHandlers(){
+        this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
-   setupTemplate() {
+    setupTemplate() {
         const rawCss = _css`
         <style>
         *,
@@ -79,6 +82,13 @@ class HTMLUiNullView{
 
         alert(form_input);
     }
+    processSlotChange(event:Event){
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const items = slot.assignedElements().map(el => el.innerHTML );
+        
+        this[slot.name] = this.items;
+    }
 }
 
 class HTMLUiNullController{
@@ -105,11 +115,11 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
 
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this.controller = new HTMLUiNullController(this);
-
-        console.log("ui-null registered....");
     }
     connectedCallback(): void {
       this.controller.view.setupTemplate();
+      
+       console.log("ui-null registered....");
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');
