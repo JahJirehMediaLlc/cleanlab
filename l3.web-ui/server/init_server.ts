@@ -23,43 +23,35 @@ wwwrootDir:string
 }
 //
 const _aConfig:config = {
-port: Deno.env.get("APP_PORT") || 3000,
-version :'v1.90',
-serverDir: Deno.cwd(),
-clientDir: Deno.cwd().replace("server","client"),
-viewsDir : path.join(Deno.cwd(), 'views'),
-assetsDir : path.join(clientDir, 'assets'),
-wwwrootDir : path.join(clientDir, 'wwwroot'),
+ port: Deno.env.get("APP_PORT") || 3000,
+ version :'v1.90',
+ serverDir: Deno.cwd(),
+ clientDir: Deno.cwd().replace("server","client"),
+ viewsDir : path.join(Deno.cwd(), 'views'),
+ assetsDir : path.join(clientDir, 'assets'),
+ wwwrootDir : path.join(clientDir, 'wwwroot'),
 }
 //
 function handleRoutes(user_server:Server){
-// show welcome web page
-user_server.app.get("/", (_req:Request,res:Response) => {
-res.sendFile(path.join(_aConfig.assetsDir,"welcome.html"));     // send file from static path
+ // show welcome web page
+ user_server.app.get("/", (_req:Request,res:Response) => {
+ res.sendFile(path.join(_aConfig.assetsDir,"welcome.html"));     // send file from static path
 });
 // show index web page
 user_server.app.get("/index", (_req:Request,res:Response) => {
-  res.render(`index`, _aConfig);  // send file from view engine
-});
+  // send file from view engine
+  res.render(`index`, _aConfig);  
+ });
 
-// handle custom routes
-user_server.app.use( "/user", user_router );
+ // handle custom routes
+
+ user_server.app.use( "/user", user_router );
 user_server.app.use( "/contact", contact_router );
 user_server.app.use( "/about", about_router );
 user_server.app.use( "/pizza", pizza_router );
 user_server.app.use( "/repo", repository_router );
 }
-/*   
-  viewsDir:   "E:\\projects\\CleanLab\\l3.web-ui\\server\\views",
-  assetsDir:  "E:\\projects\\CleanLab\\l3.web-ui\\server\\assets",
-  wwwrootDir: "E:\\projects\\CleanLab\\l3.web-ui\\server\\wwwroot" 
 
-  viewsDir:   "E:\\projects\\CleanLab\\l3.web-ui\\server\\views",
-  assetsDir:  "E:\\projects\\CleanLab\\l3.web-ui\\client\\assets",
-  wwwrootDir: "E:\\projects\\CleanLab\\l3.web-ui\\client\\wwwroot"
-  */
-
-//
 async function setupServer(){
 
 const user_server = new Server(_aConfig);

@@ -34,9 +34,6 @@ class HTMLUiLogoView{
                 margin: 0;
                 padding:0;
                 }
-
-<<<<<<< HEAD
-=======
                 :host{
                 display:block;
                 contain:paint;
@@ -88,7 +85,6 @@ class HTMLUiLogoView{
         <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
         </button>
         `;
->>>>>>> dev
         const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );

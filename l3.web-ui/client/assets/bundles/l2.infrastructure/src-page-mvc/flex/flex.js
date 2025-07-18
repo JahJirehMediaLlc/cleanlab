@@ -317,19 +317,17 @@
       this.template = this.createTemplate();
       this._url = url;
       this._templatesMap = /* @__PURE__ */ new Map();
-      this.createBlankTemplate();
-      if (templateId !== "") {
-        throw new Error(`templateId ${templateId}.`);
-      }
+      this.template = this.localTemplate(templateId);
     }
     // creation logic
     localTemplate(id) {
       let temp = document.getElementById(id);
-      if (temp)
+      if (temp && id.trim()) {
         this.template = temp;
-      else
+        this.templateId = id;
+      } else {
         this.template = this.createBlankTemplate();
-      this.templateId = id;
+      }
       return this.template;
     }
     createTemplate() {
@@ -344,7 +342,7 @@
       return template;
     }
     createBlankTemplate() {
-      const rawCss6 = _css`
+      const rawCss4 = _css`
   <style>
 
       h1{
@@ -393,22 +391,22 @@
       }
   </style>
   `;
-      const rawHtml5 = _html`
+      const rawHtml3 = _html`
   <h1>blank template</h1>
   `;
-      return this.initTemplate(rawCss6, rawHtml5);
+      return this.initTemplate(rawCss4, rawHtml3);
     }
-    initTemplate(rawCss6, rawHtml5) {
-      this.insertAdjacentHtml(rawCss6, rawHtml5);
+    initTemplate(rawCss4, rawHtml3) {
+      this.insertAdjacentHtml(rawCss4, rawHtml3);
       return this.template;
     }
-    insertAdjacentHtml(rawCss6, rawHtml5, rawJS = "") {
+    insertAdjacentHtml(rawCss4, rawHtml3, rawJS = "") {
       const style = this.template.content.querySelector("style");
       style.replaceChildren();
-      style.insertAdjacentHTML("afterbegin", rawCss6);
+      style.insertAdjacentHTML("afterbegin", rawCss4);
       const div = this.template.content.querySelector("div");
       div.replaceChildren();
-      div.insertAdjacentHTML("afterbegin", rawHtml5);
+      div.insertAdjacentHTML("afterbegin", rawHtml3);
       const script = this.template.content.querySelector("script");
       script.replaceChildren();
       script.insertAdjacentHTML("afterbegin", rawJS);
@@ -495,7 +493,7 @@
       this.setupTemplate();
     }
     setupTemplate() {
-      const rawCss6 = _css`
+      const rawCss4 = _css`
 <style>
 *,
 *::after, 
@@ -640,7 +638,7 @@ flex-grow: 0;
 
 </style>
         `;
-      const rawHtml5 = _html`
+      const rawHtml3 = _html`
         <form>
 
 
@@ -682,7 +680,7 @@ flex-grow: 0;
         <slot></slot>
         `;
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss6, rawHtml5);
+      tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
     }
     //
@@ -1084,516 +1082,13 @@ flex-grow: 0;
   };
   window.customElements.define("ui-gallery", HTMLUiGallery);
 
-  // ../../../l2.infrastructure/src-web-comps/ui-panel.ts
-  var rawCss = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-
-
-img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* margin: 0px auto; */
-}
-
-.position_top{
-    position: fixed;
-    top: 0;
-    width:100%;
-    z-index: 1;
-}
-.position_bottom{
-    position: fixed;
-    bottom: 0;
-    width:100%;
-    z-index: 1;
-}
-.position_left{
-    position: fixed;
-    left: 0;
-    width:100%;
-    z-index: 1;
-}
-.position_right{
-    position: fixed;
-    right: 0;
-    width:100%;
-    z-index: 1;
-}
-
-    .scroll_x {
-        overflow-x: scroll;
-    }
-
-    .scroll_y {
-        overflow-y: scroll;
-        width: fit-content;
-    }
-
-    .flex_row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 1rem;
-    }
-
-    .flex_col {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .bg_blue {
-        background-color: cornflowerblue;
-    }
-
-    .bg_green {
-        background-color: darkolivegreen;
-    }
-
-    .bg_grey {
-        background-color: darkgray;
-    }
-
-    .hide {
-        display: none;
-    }
-
-    .margins {
-        margin: 1rem;
-    }
-
-    .paddings {
-    padding: 1rem;
-    }
-    
-    .inline{
-    display: inline-block;
-    }
-</style>
-`;
-  var rawHtml = _html`
-<div id="panel">
-<slot name="menu">
-<p>no slots provided</p>
-</slot>
-</div> 
-`;
-  var HTMLUiPanelView = class {
-    _shadowRoot;
-    controller;
-    _id;
-    _template;
-    height;
-    scrollable;
-    position;
-    panel_div;
-    ui_panels;
-    light_dom;
-    shadow_dom;
-    styles = [];
-    get id() {
-      return this._id;
-    }
-    set id(value) {
-      this._id = value;
-    }
-    get template() {
-      return this._template;
-    }
-    set template(value) {
-      this._template = value;
-    }
-    constructor(shadowRoot) {
-      this._shadowRoot = shadowRoot;
-    }
-    setupTemplate() {
-      const tplus = new TemplatePlus("");
-      const template = tplus.initTemplate(rawCss, rawHtml);
-      const ui_panel = document.querySelectorAll("ui-panel");
-      const template_attr = document.querySelector("ui-panel").getAttribute("template");
-      this.render(template.content.cloneNode(true));
-      console.log(`panel id =${this._id} template =  ${this._template}`);
-    }
-    render(node) {
-      if (node instanceof HTMLTemplateElement)
-        this._shadowRoot.appendChild(node.content);
-      else
-        this._shadowRoot.appendChild(node);
-    }
-    processClickEvent(event) {
-      const selectedElement = event.target;
-    }
-    processSubmitForm(evt) {
-    }
-  };
-  var HTMLUiPanelController = class {
-    view;
-    parent;
-    constructor(parent) {
-      this.parent = parent;
-      this.view = new HTMLUiPanelView(this.parent._shadowRoot);
-    }
-    get styles() {
-      return this.view.styles;
-    }
-    get id() {
-      return this.view.id;
-    }
-    get Height() {
-      return this.view.height;
-    }
-    get Scrollable() {
-      return this.view.scrollable;
-    }
-    get Position() {
-      return this.view.position;
-    }
-    set id(value) {
-      this.view.id = value;
-    }
-    set Height(value) {
-      this.view.height = value;
-    }
-    set Scrollable(value) {
-      this.view.height = value;
-    }
-    set Position(value) {
-      this.view.height = value;
-    }
-  };
-  var HTMLUiPanel = class extends HTMLElement {
-    _shadowRoot;
-    view;
-    controller;
-    // satisfies webcomponentlifecycle interface
-    observedAttributes;
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["template", "position", "height", "overflow", "id", "top", "left", "bottom", "right"];
-    constructor() {
-      super();
-      this._shadowRoot = this.attachShadow({ mode: "open" });
-      this.controller = new HTMLUiPanelController(this);
-      console.log("ui-panel registered....");
-    }
-    connectedCallback() {
-      this.controller.view.setupTemplate();
-    }
-    disconnectedCallback() {
-      console.log("disconnectedCallback Method not implemented.");
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-      this.controller.view[name] = newValue;
-      if (name == "id" || name == "template") {
-        this.controller.view[name] = newValue;
-        return;
-      }
-      if (name == "left" || name == "right") {
-        this.controller.styles.push(`display:inline-block`);
-        this.controller.styles.push(`margin-bottom: 2rem`);
-        this.controller.styles.push(`${name}: 0`);
-        return;
-      }
-      this.controller.styles.push(`${name}:${newValue}`);
-    }
-  };
-  window.customElements.define("ui-panel", HTMLUiPanel);
-
-  // ../../../l2.infrastructure/src-web-comps/ui-view.ts
-  var HTMLUiViewView = class {
-    _shadowRoot;
-    controller;
-    _url = new URL("http://localhost:3000/");
-    pathName;
-    get url() {
-      return this._url;
-    }
-    set url(pathName) {
-      this._url.pathname = pathName;
-      this.setupTemplate();
-    }
-    get width() {
-      return this.width;
-    }
-    set width(value) {
-      this.width = value;
-    }
-    get height() {
-      return this.height;
-    }
-    set height(value) {
-      this.height = value;
-    }
-    constructor(shadowRoot) {
-      this._shadowRoot = shadowRoot;
-    }
-    setupTemplate() {
-      const rawCss6 = _css`
-        <style>
-        *,
-        *::after, 
-        *::before  {
-            box-sizing: border-box;
-            margin: 0;
-            padding:0;
-        }
-            
-        :host{
-        display:block;
-        contain:paint;
-
-        border: 2px red dashed;
-        color: white;
-        background-color: orange;
-        }
-        </style>
-        `;
-      const rawHtml5 = _html`
-        <slot>
-        <p>ui-view component</p>
-        </slot>
-        <div id="output">
-        place your content here 
-        (html id is "output")
-        </div>
-        `;
-      const ui_view = document.querySelector("ui-view");
-      const tplus = new TemplatePlus("");
-<<<<<<< HEAD
-      tplus.initTemplate(rawCss3, rawHtml3);
-=======
-      tplus.initTemplate(rawCss6, rawHtml5);
->>>>>>> dev
-      this.render(tplus.element);
-      const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
-      this.fetchHtml(this._url.pathname, outputEl);
-    }
-    parseRawHtml(rawhtml) {
-      const dom = new DOMParser().parseFromString(rawhtml, "text/html");
-      const style = dom.querySelector("style");
-      const body = dom.querySelector("body");
-      return `<style>${style.innerHTML}</style> ${body.innerHTML}`;
-    }
-    fetchHtml(path, output) {
-      const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.text()).then((rawHtml5) => output.innerHTML = this.parseRawHtml(rawHtml5)).catch((e) => console.log(e));
-    }
-    render(node) {
-      if (node instanceof HTMLTemplateElement)
-        this._shadowRoot.appendChild(node.content);
-      else
-        this._shadowRoot.appendChild(node);
-    }
-    processClickEvent(event) {
-      const selectedElement = event.target;
-    }
-    processSubmitForm(evt) {
-    }
-  };
-  var HTMLUiViewController = class {
-    view;
-    parent;
-    controller;
-    constructor(parent) {
-      this.parent = parent;
-      this.view = new HTMLUiViewView(this.parent._shadowRoot);
-    }
-  };
-  var HTMLUiView = class extends HTMLElement {
-    _shadowRoot;
-    controller;
-    // satisfies webcomponentlifecycle interface
-    observedAttributes;
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["width", "height", "url"];
-    constructor() {
-      super();
-      this._shadowRoot = this.attachShadow({ mode: "open" });
-      this.controller = new HTMLUiViewController(this);
-      console.log("ui-view registered....");
-    }
-    connectedCallback() {
-      this.controller.view.setupTemplate();
-    }
-    disconnectedCallback() {
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-      this.controller.view[name] = newValue;
-    }
-  };
-  window.customElements.define("ui-view", HTMLUiView);
-
   // ../../../l2.infrastructure/src-web-comps/ui-folder.ts
-  var rawCss2 = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-img{
-display: block;
-max-width: 100%;
-height: auto;
-/* margin: 0px auto; */
-}
-
-:host{
-display:block;
-contain:paint;
-
-border: 2px red dashed;
-color: white;
-background-color:purple;
-}
-
-::slotted(label){
-color: yellow;
-flex-shrink: 0;
-}
-
-::slotted(label:hover){
-color: red;
-}
-
-::slotted(.focus){
-background-color:grey;
-}
-
-::slotted(article){
-height: 25rem;;
-overflow:auto;
-}
-
-.focus{
-border: 2px yellow solid;
-background-color:green;
-}
-
-.scroll_x{
-overflow-x: scroll;
-}
-.scroll_y{
-overflow-y: scroll;
-width: fit-content;
-}
-
-.menu_x{
-display: flex;
-list-style: none;
-gap: 2rem;
-overflow-x: auto;
-}
-.menu_x > *{
-flex-shrink: 0;
-}
-.menu_y{
-display: flex;
-flex-direction:column;
-gap: .51rem;
-text-align: center;
-list-style: none;
-width: fit-content;;
-border: 2px red solid;
-}
-.menu_y > *{
-margin:0;
-padding:0;
-}
-
-.flex_row{
-display:flex;
-flex-direction: row;
-flex-wrap: nowrap;
-gap: 1rem;
-}
-.flex_col{
-display:flex;
-flex-direction: column;
-gap: 1rem;
-}
-.center_text{
-text-align: center;
-}
-
-.space_between{
-justify-content: space-between;
-}
-.space_around{
-justify-content: space-around;
-}
-
-.wrap{
-display:flex;
-flex-wrap: wrap;
-gap: 1rem;
-}
-.hide{
-display:none;
-}
-
-.border{
-border:1px green solid;
-}
-.border2{
-border: 2px green solid;
-}
-
-.shrink_off{
-flex-shrink: 1;
-}
-.shrink_on{
-flex-shrink: 0;
-}
-
-.grow_on{
-flex-grow: 1;
-}
-.grow_off{
-flex-grow: 0;
-}
-
-
-
-</style>
-`;
-  var rawHtml2 = _html`
-<form>
-<nav id="nav" class="flex_row menu_x">
-    <slot name="tab">
-      <p>no labels provided...</p>
-    </slot>
-</nav>
-</form>
-
-<h3Article</h3>
-<slot name="details">
-<p>no details provided...</p>
-</slot>
-`;
   var HTMLUiFolderView = class {
     _shadowRoot;
     controller;
     currentTab = "tab1";
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      this.setupTemplate();
       this.showDetails(this.currentTab);
     }
     initEventHandlers() {
@@ -1601,8 +1096,158 @@ flex-grow: 0;
       this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
     }
     setupTemplate() {
+      const rawCss4 = _css`
+    <style>
+    *,
+    *::after, 
+    *::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    }
+
+    img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* margin: 0px auto; */
+    }
+
+    :host{
+    display:block;
+    contain:paint;
+
+    border: 2px red dashed;
+    color: white;
+    background-color:purple;
+    }
+
+    ::slotted(label){
+    color: yellow;
+    flex-shrink: 0;
+    }
+
+    ::slotted(label:hover){
+    color: red;
+    }
+
+    ::slotted(.focus){
+    background-color:grey;
+    }
+
+    ::slotted(article){
+    height: 25rem;;
+    overflow:auto;
+    }
+
+    .focus{
+    border: 2px yellow solid;
+    background-color:green;
+    }
+
+    .scroll_x{
+    overflow-x: scroll;
+    }
+    .scroll_y{
+    overflow-y: scroll;
+    width: fit-content;
+    }
+
+    .menu_x{
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    overflow-x: auto;
+    }
+    .menu_x > *{
+    flex-shrink: 0;
+    }
+    .menu_y{
+    display: flex;
+    flex-direction:column;
+    gap: .51rem;
+    text-align: center;
+    list-style: none;
+    width: fit-content;;
+    border: 2px red solid;
+    }
+    .menu_y > *{
+    margin:0;
+    padding:0;
+    }
+
+    .flex_row{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    }
+    .flex_col{
+    display:flex;
+    flex-direction: column;
+    gap: 1rem;
+    }
+    .center_text{
+    text-align: center;
+    }
+
+    .space_between{
+    justify-content: space-between;
+    }
+    .space_around{
+    justify-content: space-around;
+    }
+
+    .wrap{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    }
+    .hide{
+    display:none;
+    }
+
+    .border{
+    border:1px green solid;
+    }
+    .border2{
+    border: 2px green solid;
+    }
+
+    .shrink_off{
+    flex-shrink: 1;
+    }
+    .shrink_on{
+    flex-shrink: 0;
+    }
+
+    .grow_on{
+    flex-grow: 1;
+    }
+    .grow_off{
+    flex-grow: 0;
+    }
+
+
+
+    </style>
+    `;
+      const rawHtml3 = _html`
+    <form>
+    <nav id="nav" class="flex_row menu_x">
+        <slot name="tab">
+        <p>no labels provided...</p>
+        </slot>
+    </nav>
+    </form>
+
+    <h3Article</h3>
+    <slot name="details">
+    <p>no details provided...</p>
+    </slot>
+    `;
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss2, rawHtml2);
+      tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
       this.initEventHandlers();
       const slots = this._shadowRoot.querySelectorAll("slot");
@@ -1621,7 +1266,7 @@ flex-grow: 0;
       if (!article_url) return;
       console.log(`article url: ${article_url}`);
       const url = new URL(`http://localhost:3000/${article_url}`);
-      fetch(url).then((response) => response.text()).then((rawHtml5) => article.innerHTML = this.parseRawHtml(rawHtml5)).catch((e) => console.log(e));
+      fetch(url).then((response) => response.text()).then((rawHtml3) => article.innerHTML = this.parseRawHtml(rawHtml3)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1687,6 +1332,7 @@ flex-grow: 0;
       console.log("<ui-folder> registered....");
     }
     connectedCallback() {
+      this.controller.view.setupTemplate();
     }
     disconnectedCallback() {
     }
@@ -1696,8 +1342,1006 @@ flex-grow: 0;
   };
   window.customElements.define("ui-folder", HTMLUiFolder);
 
+  // ../../../l2.infrastructure/src-web-comps/ui-panel.ts
+  var HTMLUiPanelView = class {
+    _shadowRoot;
+    controller;
+    _id;
+    _template;
+    height;
+    scrollable;
+    position;
+    panel_div;
+    ui_panels;
+    light_dom;
+    shadow_dom;
+    styles = [];
+    _items;
+    get items() {
+      return this._items;
+    }
+    set items(value) {
+      this._items = value;
+    }
+    get id() {
+      return this._id;
+    }
+    set id(value) {
+      this._id = value;
+    }
+    get template() {
+      return this._template;
+    }
+    set template(value) {
+      this._template = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+    }
+    setupTemplate() {
+      const rawCss4 = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        }
+
+        :host{
+        display:block;
+        contain:paint;
+        color: white;
+        }
+
+
+        img{
+        display: block;
+        max-width: 100%;
+        height: auto;
+        /* margin: 0px auto; */
+        }
+
+        .position_top{
+        position: fixed;
+        top: 0;
+        width:100%;
+        z-index: 1;
+        }
+        .position_bottom{
+        position: fixed;
+        bottom: 0;
+        width:100%;
+        z-index: 1;
+        }
+        .position_left{
+        position: fixed;
+        left: 0;
+        width:100%;
+        z-index: 1;
+        }
+        .position_right{
+        position: fixed;
+        right: 0;
+        width:100%;
+        z-index: 1;
+        }
+
+        .scroll_x {
+        overflow-x: scroll;
+        }
+
+        .scroll_y {
+        overflow-y: scroll;
+        width: fit-content;
+        }
+
+        .flex_row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        }
+
+        .flex_col {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        }
+
+        .bg_blue {
+        background-color: cornflowerblue;
+        }
+
+        .bg_green {
+        background-color: darkolivegreen;
+        }
+
+        .bg_grey {
+        background-color: darkgray;
+        }
+
+        .hide {
+        display: none;
+        }
+
+        .margins {
+        margin: 1rem;
+        }
+
+        .paddings {
+        padding: 1rem;
+        }
+
+        .inline{
+        display: inline-block;
+        }
+        </style>
+        `;
+      const rawHtml3 = _html`
+        <div id="panel">
+        <slot name="menu">
+        <p>no slots provided</p>
+        </slot>
+        </div> 
+        `;
+      const tplus = new TemplatePlus("");
+      tplus.initTemplate(rawCss4, rawHtml3);
+      this.render(tplus.element);
+      console.log(`panel id : ${this.id} template id : ${this.template}`);
+    }
+    render(node) {
+      if (node instanceof HTMLTemplateElement)
+        this._shadowRoot.appendChild(node.content);
+      else
+        this._shadowRoot.appendChild(node);
+    }
+    processClickEvent(event) {
+      const selectedElement = event.target;
+    }
+    processSubmitForm(evt) {
+    }
+    processSlotChange(event) {
+      let slot = event.target;
+      const items = slot.assignedElements().map((el) => el.innerHTML);
+      this[slot.name] = this.items;
+    }
+  };
+  var HTMLUiPanelController = class {
+    view;
+    parent;
+    constructor(parent) {
+      this.parent = parent;
+      this.view = new HTMLUiPanelView(this.parent._shadowRoot);
+    }
+    get styles() {
+      return this.view.styles;
+    }
+    get id() {
+      return this.view.id;
+    }
+    get Height() {
+      return this.view.height;
+    }
+    get Scrollable() {
+      return this.view.scrollable;
+    }
+    get Position() {
+      return this.view.position;
+    }
+    set id(value) {
+      this.view.id = value;
+    }
+    set Height(value) {
+      this.view.height = value;
+    }
+    set Scrollable(value) {
+      this.view.height = value;
+    }
+    set Position(value) {
+      this.view.height = value;
+    }
+  };
+  var HTMLUiPanel = class extends HTMLElement {
+    _shadowRoot;
+    view;
+    controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["template", "position", "height", "overflow", "id", "top", "left", "bottom", "right"];
+    constructor() {
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this.controller = new HTMLUiPanelController(this);
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+      console.log("ui-panel registered....");
+    }
+    disconnectedCallback() {
+      console.log("disconnectedCallback Method not implemented.");
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
+      if (name == "id" || name == "template") {
+        this.controller.view[name] = newValue;
+        return;
+      }
+      if (name == "left" || name == "right") {
+        this.controller.styles.push(`display:inline-block`);
+        this.controller.styles.push(`margin-bottom: 2rem`);
+        this.controller.styles.push(`${name}: 0`);
+        return;
+      }
+      this.controller.styles.push(`${name}:${newValue}`);
+    }
+  };
+  window.customElements.define("ui-panel", HTMLUiPanel);
+
+  // ../../../l2.infrastructure/src-web-comps/ui-view.ts
+  var HTMLUiViewView = class {
+    _shadowRoot;
+    controller;
+    _url = new URL("http://localhost:3000/");
+    pathName;
+    get url() {
+      return this._url;
+    }
+    set url(pathName) {
+      this._url.pathname = pathName;
+      this.setupTemplate();
+    }
+    get width() {
+      return this.width;
+    }
+    set width(value) {
+      this.width = value;
+    }
+    get height() {
+      return this.height;
+    }
+    set height(value) {
+      this.height = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+    }
+    setupTemplate() {
+      const rawCss4 = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+            box-sizing: border-box;
+            margin: 0;
+            padding:0;
+        }
+            
+        :host{
+        display:block;
+        contain:paint;
+
+        border: 2px red dashed;
+        color: white;
+        background-color: orange;
+        }
+        </style>
+        `;
+      const rawHtml3 = _html`
+        <slot>
+        <p>ui-view component</p>
+        </slot>
+        <div id="output">
+        place your content here 
+        (html id is "output")
+        </div>
+        `;
+      const ui_view = document.querySelector("ui-view");
+      const tplus = new TemplatePlus("");
+      tplus.initTemplate(rawCss4, rawHtml3);
+      this.render(tplus.element);
+      const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+      this.fetchHtml(this._url.pathname, outputEl);
+    }
+    parseRawHtml(rawhtml) {
+      const dom = new DOMParser().parseFromString(rawhtml, "text/html");
+      const style = dom.querySelector("style");
+      const body = dom.querySelector("body");
+      return `<style>${style.innerHTML}</style> ${body.innerHTML}`;
+    }
+    fetchHtml(path, output) {
+      const url = new URL(`http://localhost:3000/${path}`);
+      fetch(url).then((response) => response.text()).then((rawHtml3) => output.innerHTML = this.parseRawHtml(rawHtml3)).catch((e) => console.log(e));
+    }
+    render(node) {
+      if (node instanceof HTMLTemplateElement)
+        this._shadowRoot.appendChild(node.content);
+      else
+        this._shadowRoot.appendChild(node);
+    }
+    processClickEvent(event) {
+      const selectedElement = event.target;
+    }
+    processSubmitForm(evt) {
+    }
+  };
+  var HTMLUiViewController = class {
+    view;
+    parent;
+    controller;
+    constructor(parent) {
+      this.parent = parent;
+      this.view = new HTMLUiViewView(this.parent._shadowRoot);
+    }
+  };
+  var HTMLUiView = class extends HTMLElement {
+    _shadowRoot;
+    controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["width", "height", "url"];
+    constructor() {
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this.controller = new HTMLUiViewController(this);
+      console.log("ui-view registered....");
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+    }
+    disconnectedCallback() {
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
+    }
+  };
+  window.customElements.define("ui-view", HTMLUiView);
+
+  // ../../../l2.infrastructure/src-web-comps/ui-action.ts
+  var HTMLUiActionView = class {
+    _shadowRoot;
+    controller;
+    tplus;
+    _slot;
+    _dialog;
+    _href;
+    _action;
+    get slot() {
+      return this._slot;
+    }
+    set slot(value) {
+      this._slot = value;
+    }
+    get dialog() {
+      return this._dialog;
+    }
+    set dialog(value) {
+      this._dialog = value;
+    }
+    get href() {
+      return this._href;
+    }
+    set href(value) {
+      this._href = value;
+    }
+    get action() {
+      return this._action;
+    }
+    set action(value) {
+      this._action = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+    }
+    initEventHandlers() {
+      this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
+    }
+    setupTemplate() {
+      const tplus = new TemplatePlus("");
+      const rawCss4 = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        }
+
+        :host{
+        display:block;
+        contain:paint;
+        color: white;
+        }
+        </style>
+        `;
+      const rawHtml3 = _html`
+        <form>
+        <input name="slot" value="${this.slot}" type="text" hidden >
+        <input name="href" value="${this.href}" type="text" hidden >
+        <input name="dialog" value="${this.dialog}" type="text" hidden >
+        <button id="nav_action" type="submit" name="action" value="${this.action}">
+        <slot>no slots provided</slot>
+        </button> 
+        </form>
+        `;
+      tplus.initTemplate(rawCss4, rawHtml3);
+      this.render(tplus.element);
+      this.initEventHandlers();
+    }
+    render(node) {
+      if (node instanceof HTMLTemplateElement)
+        this._shadowRoot.appendChild(node.content);
+      else
+        this._shadowRoot.appendChild(node);
+    }
+    processClickEvent(event) {
+      const selectedElement = event.target;
+      alert(selectedElement.tagName);
+    }
+    processSubmitForm(event) {
+      event.preventDefault();
+      const form = this._shadowRoot.querySelector("form");
+      const fdata = new FormData(form, event.submitter);
+      const action = fdata.get("action");
+      const dialog = fdata.get("dialog");
+      const slot = fdata.get("slot");
+      const href = fdata.get("href");
+      alert(`${action}   ${dialog}  ${slot}  ${href}`);
+    }
+  };
+  var HTMLUiActionController = class {
+    view;
+    parent;
+    controller;
+    constructor(parent) {
+      this.parent = parent;
+      this.view = new HTMLUiActionView(this.parent._shadowRoot);
+    }
+  };
+  var HTMLUiAction = class extends HTMLElement {
+    _shadowRoot;
+    controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["slot", "dialog", "href", "action"];
+    constructor() {
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this.controller = new HTMLUiActionController(this);
+      console.log("ui-action registered..");
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+    }
+    disconnectedCallback() {
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
+    }
+  };
+  window.customElements.define("ui-action", HTMLUiAction);
+
+  // ../../../l2.infrastructure/src-web-comps/ui-switch.ts
+  var HTMLUiSwitchView = class {
+    _shadowRoot;
+    controller;
+    tplus;
+    _forLable;
+    get forLable() {
+      return this._forLable;
+    }
+    set forLable(value) {
+      this._forLable = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+      this.tplus = new TemplatePlus("");
+    }
+    initEventHandlers() {
+      const btn = this._shadowRoot.querySelector("button");
+      this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
+    }
+    setupTemplate() {
+      const rawCss4 = _css`
+    <style>
+    *,
+    *::after, 
+    *::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    }
+
+
+    :host{
+    display:block;
+    contain:paint;
+    color: white;
+    }
+
+    ::slotted(.icon){
+        font-size: large;
+        pading: 0 4reem;
+        margin: 0 3rem;
+    }
+
+    .icon_btn{
+        background-color: yellow;
+    }
+    </style>
+    `;
+      const rawHtml3 = _html`
+    <form>
+        <button type="submit" class="icon_btn">
+            <slot name="icon">
+            <span class="icon" slot="icon">&</span>
+            </slot>
+        </button>
+    </form>
+    `;
+      const tplus = new TemplatePlus("");
+      tplus.initTemplate(rawCss4, rawHtml3);
+      this.render(tplus.element);
+      this.initEventHandlers();
+    }
+    render(node) {
+      if (node instanceof HTMLTemplateElement)
+        this._shadowRoot.appendChild(node.content);
+      else
+        this._shadowRoot.appendChild(node);
+    }
+    processClickEvent(event) {
+      const selectedElement = event.target;
+      const ui_switch = selectedElement.parentElement;
+      const for_attr = ui_switch.getAttribute("for");
+      if (ui_switch && for_attr) {
+        const aside = document.getElementById(for_attr);
+        aside?.classList.toggle("hide");
+      }
+    }
+    processSubmitForm(event) {
+      event.preventDefault();
+      const form = this._shadowRoot.querySelector("form");
+      const fdata = new FormData(form, event.submitter);
+      const form_input = fdata.get("action");
+      const aside = document.getElementById(this.forLable);
+      if (!aside) alert(`aside element ${this.forLable} does not exist`);
+      aside?.classList.toggle("hide");
+    }
+  };
+  var HTMLUiSwitchController = class {
+    view;
+    parent;
+    controller;
+    constructor(parent) {
+      this.parent = parent;
+      this.view = new HTMLUiSwitchView(this.parent._shadowRoot);
+    }
+  };
+  var HTMLUiSwitch = class extends HTMLElement {
+    _shadowRoot;
+    view;
+    controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["for"];
+    constructor() {
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this.controller = new HTMLUiSwitchController(this);
+      console.log("ui-switch registered...");
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+    }
+    disconnectedCallback() {
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name == "for") this.controller.view.forLable = newValue;
+    }
+  };
+  window.customElements.define("ui-switch", HTMLUiSwitch);
+
+  // ../../../l2.infrastructure/src-web-comps/ui-logo.ts
+  var bg_url = `url("images/jmc2.png")`;
+  var HTMLUiLogoView = class {
+    _shadowRoot;
+    controller;
+    _id;
+    _src;
+    _href;
+    get id() {
+      return this._id;
+    }
+    set id(value) {
+      this._id = value;
+    }
+    get src() {
+      return this._src;
+    }
+    set src(value) {
+      this._src = value;
+    }
+    get href() {
+      return this._href;
+    }
+    set href(value) {
+      this._href = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+    }
+    initEventHandlers() {
+      this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
+    }
+    setupTemplate() {
+      const rawCss4 = _css`
+            <style>
+                *,
+                *::after, 
+                *::before  {
+                box-sizing: border-box;
+                margin: 0;
+                padding:0;
+                }
+                :host{
+                display:block;
+                contain:paint;
+                color: white;
+                }
+                
+                img{
+                    width: 3rem;
+                    height: 3rem;
+                }
+
+                .hide{
+                    display:none;
+                }
+
+                .bg_image_cover{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-position: center center;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .bg_image_contain{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center center;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .bg_image{
+                    background-image: ${bg_url};
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                }
+
+                .full_screen{
+                    height:99vh;
+                    width: 99vw;
+                }
+
+            </style>
+        `;
+      const rawHtml3 = _html`
+        <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
+        </button>
+        `;
+      const tplus = new TemplatePlus("");
+      tplus.initTemplate(rawCss4, rawHtml3);
+      this.render(tplus.element);
+      this.initEventHandlers();
+    }
+    render(node) {
+      if (node instanceof HTMLTemplateElement)
+        this._shadowRoot.appendChild(node.content);
+      else
+        this._shadowRoot.appendChild(node);
+    }
+    processClickEvent(event) {
+      const selectedElement = event.target;
+    }
+    processSubmitForm(evt) {
+    }
+  };
+  var HTMLUiLogoController = class {
+    view;
+    parent;
+    controller;
+    constructor(parent) {
+      this.parent = parent;
+      this.view = new HTMLUiLogoView(this.parent._shadowRoot);
+    }
+  };
+  var HTMLUiLogo = class extends HTMLElement {
+    _shadowRoot;
+    controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["id", "src", "href"];
+    constructor() {
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this.controller = new HTMLUiLogoController(this);
+      console.log("ui-logo registered....");
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+    }
+    disconnectedCallback() {
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
+    }
+  };
+  window.customElements.define("ui-logo", HTMLUiLogo);
+
+  // ../../../l2.infrastructure/src-web-comps/ui-menu.ts
+  var HTMLUiMenuView = class {
+    _shadowRoot;
+    controller;
+    _title;
+    _width;
+    _height;
+    _axis;
+    _items;
+    get items() {
+      return this._items;
+    }
+    set items(value) {
+      this._items = value;
+    }
+    get title() {
+      return this._title;
+    }
+    set title(value) {
+      this._title = value;
+    }
+    get width() {
+      return this._width;
+    }
+    set width(value) {
+      this._width = value;
+    }
+    get height() {
+      return this._height;
+    }
+    set height(value) {
+      this._height = value;
+    }
+    get axis() {
+      return this._axis;
+    }
+    set axis(value) {
+      this._axis = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+      console.log("### menu constructor");
+    }
+    initEventHandlers() {
+      this._shadowRoot.addEventListener("slotchange", this.processSlotChange.bind(this));
+      this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
+      this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
+    }
+    setupTemplate() {
+      const rawCss4 = _css`
+    <style>
+    *,
+    *::after, 
+    *::before  {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    }
+
+    :host{
+    display:block;
+    contain:paint;
+    color: white;
+    }
+
+    .scroll_x {
+    overflow-x: auto;
+    }
+
+    .scroll_y {
+    overflow-y: auto;
+    width: fit-content;
+    }
+
+    .menu_x{
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    color:white;
+    }
+
+    .menu_x > * {
+    display: inline-block;
+    flex-shrink: 1;
+    margin: 0;
+    padding: 0;
+    }
+
+    ::slotted(li){
+    display: block;
+    margin: 0;
+    padding: 0;
+    }
+
+    .menu_y {
+    display: flex;
+    flex-direction: column;
+    gap: 2;
+    text-align: center;
+    width: fit-content;
+    }
+
+    .menu_y > * {
+    display: block;
+    flex-shrink: 1;
+    margin: 0;
+    padding: 0;
+    }
+
+    .flex_row{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    }
+
+    .flex_col{
+    display:flex;
+    flex-direction: column;
+    gap: 1rem;
+    }
+
+    .flex_center{
+    display:flex;
+    align-items: center ;
+    justify-content: center;
+    }
+
+    .basis_equal{
+    flex-basis: 1;
+    }
+
+    .space_between{
+    justify-content: space-between;
+    }
+    .space_around{
+    justify-content: space-around;
+    }
+
+    .shrink_off{
+    flex-shrink: 1;
+    }
+
+    .shrink_on{
+    flex-shrink: 0;
+    }
+
+    .grow_on{
+    flex-grow: 1;
+    }
+    .grow_off{
+    flex-grow: 0;
+    }
+
+    .border{ border: 1px red dashed;}
+
+    .bg_blue{background-color: blue;}
+    .bg_yellow{background-color: yellow;}
+    .bg_purple{background-color: purple;}
+    .bg_pink{background-color: pink;}
+    .bg_green{background-color: green;}
+    </style>
+    `;
+      const rawHtml3 = _html`
+    <slot name="title">No Totle</slot>
+
+    <nav class="flex_row space_between bg_blue">
+    <section class="grow_off shrink_on bg_yellow border">
+    <slot name="left_icon">
+    <ui-icon>#</ui-icon>
+    </slot>
+    </section>
+
+    <section class="grow_off shrink_on bg_green">
+    <ul class="menu_x scroll_x">
+    <slot name="item">
+    <li>No Menu Item</li>
+    </slot>
+    </ul>
+    </section>
+
+    <section class="grow_off shrink_on border bg_yellow">
+    <slot name="right_icon">
+    <ui-icon>#</ui-icon>
+    </slot>
+    </section>
+    </nav>
+    `;
+      const tplus = new TemplatePlus("ui_menu");
+      console.log(`rendering template ui-menu: `, tplus.id);
+      this.render(tplus.element);
+      this.initEventHandlers();
+    }
+    render(node) {
+      if (node instanceof HTMLTemplateElement)
+        this._shadowRoot.appendChild(node.content);
+      else
+        this._shadowRoot.appendChild(node);
+    }
+    processClickEvent(event) {
+      const selectedElement = event.target;
+      alert(selectedElement.tagName);
+    }
+    processSubmitForm(event) {
+      event.preventDefault();
+      const form = this._shadowRoot.querySelector("form");
+      const fdata = new FormData(form, event.submitter);
+      const form_input = fdata.get("action");
+      alert(form_input);
+    }
+    processSlotChange(event) {
+      let slot = event.target;
+      this.items = slot.assignedElements().map((el) => el.innerHTML);
+      this[slot.name] = this.items;
+    }
+  };
+  var HTMLUiMenuController = class {
+    view;
+    parent;
+    controller;
+    constructor(parent) {
+      this.parent = parent;
+      this.view = new HTMLUiMenuView(this.parent._shadowRoot);
+    }
+  };
+  var HTMLUiMenu = class extends HTMLElement {
+    _shadowRoot;
+    controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["slot", "width", "height", "axis"];
+    constructor() {
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this.controller = new HTMLUiMenuController(this);
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+      console.log("ui-Menu registered....");
+    }
+    disconnectedCallback() {
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
+    }
+  };
+  window.customElements.define("ui-menu", HTMLUiMenu);
+
   // ../../../l2.infrastructure/src-web-comps/ui-nav.ts
-  var rawCss3 = _css`
+  var rawCss = _css`
     <style>
         *,
         *::after, 
@@ -1897,7 +2541,7 @@ flex-grow: 0;
 
     </style>
 `;
-  var rawHtml3 = _html`
+  var rawHtml = _html`
   <nav class="bg_blue flex_row">
     <form id="nav_form"  action="">
             <select> 
@@ -1933,7 +2577,7 @@ flex-grow: 0;
     setupTemplate() {
       const tplus = new TemplatePlus("");
       const slots = document.querySelectorAll(`[slot="nav-action"]`);
-      const template = tplus.initTemplate(rawCss3, rawHtml3);
+      const template = tplus.initTemplate(rawCss, rawHtml);
       const ul = template.content.querySelector(`ul`);
       const select = template.content.querySelector(`select`);
       let li = "";
@@ -1998,7 +2642,7 @@ flex-grow: 0;
   window.customElements.define("ui-nav", HTMLUiNav);
 
   // ../../../l2.infrastructure/src-web-comps/ui-nav-action.ts
-  var rawCss4 = _css`
+  var rawCss2 = _css`
 <style>
 *,
 *::after, 
@@ -2018,7 +2662,7 @@ color: white;
 
 </style>
 `;
-  var rawHtml4 = _html`
+  var rawHtml2 = _html`
 <div id="nav_action">
 <button>no slots provided</button>
 </div> 
@@ -2054,47 +2698,37 @@ color: white;
   window.customElements.define("ui-route", HTMLUiRoute);
 
   // ../../../l2.infrastructure/src-web-comps/ui-icon.ts
-  var HTMLUiIcon = class extends HTMLElement {
-    // satisfies webcomponentlifecycle interface
-    observedAttributes;
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["width", "height", "url"];
-    constructor() {
-      super();
-      console.log("ui-icon registered..");
-    }
-    connectedCallback() {
-      throw new Error("Method not implemented.");
-    }
-    disconnectedCallback() {
-      throw new Error("Method not implemented.");
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-      throw new Error("Method not implemented.");
-    }
-  };
-  window.customElements.define("ui-icon", HTMLUiIcon);
-
-  // ../../../l2.infrastructure/src-web-comps/ui-action.ts
-  var HTMLUiActionView = class {
+  var HTMLUiIconView = class {
     _shadowRoot;
     controller;
-    tplus;
     _slot;
-    _dialog;
+    _width;
+    _height;
     _href;
-    _action;
+    _items;
+    get items() {
+      return this._items;
+    }
+    set items(value) {
+      this._items = value;
+    }
     get slot() {
       return this._slot;
     }
     set slot(value) {
       this._slot = value;
     }
-    get dialog() {
-      return this._dialog;
+    get width() {
+      return this._width;
     }
-    set dialog(value) {
-      this._dialog = value;
+    set width(value) {
+      this._width = value;
+    }
+    get height() {
+      return this._height;
+    }
+    set height(value) {
+      this._height = value;
     }
     get href() {
       return this._href;
@@ -2102,28 +2736,16 @@ color: white;
     set href(value) {
       this._href = value;
     }
-    get action() {
-      return this._action;
-    }
-    set action(value) {
-      this._action = value;
-    }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-<<<<<<< HEAD
-      this.setupTemplate();
-=======
->>>>>>> dev
     }
     initEventHandlers() {
+      this._shadowRoot.addEventListener("slotchange", this.processSlotChange.bind(this));
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
+      this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("");
-<<<<<<< HEAD
-      tplus.initTemplate(rawCss7, rawHtml7);
-=======
-      const rawCss6 = _css`
+      const rawCss4 = _css`
         <style>
         *,
         *::after, 
@@ -2138,20 +2760,16 @@ color: white;
         contain:paint;
         color: white;
         }
+
         </style>
         `;
-      const rawHtml5 = _html`
-        <form>
-        <input name="slot" value="${this.slot}" type="text" hidden >
-        <input name="href" value="${this.href}" type="text" hidden >
-        <input name="dialog" value="${this.dialog}" type="text" hidden >
-        <button id="nav_action" type="submit" name="action" value="${this.action}">
-        <slot>no slots provided</slot>
-        </button> 
-        </form>
+      const rawHtml3 = _html`
+        <slot>
+         <span>@</span>
+        </slot>
         `;
-      tplus.initTemplate(rawCss6, rawHtml5);
->>>>>>> dev
+      const tplus = new TemplatePlus("");
+      tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
       this.initEventHandlers();
     }
@@ -2169,358 +2787,39 @@ color: white;
       event.preventDefault();
       const form = this._shadowRoot.querySelector("form");
       const fdata = new FormData(form, event.submitter);
-      const action = fdata.get("action");
-      const dialog = fdata.get("dialog");
-      const slot = fdata.get("slot");
-      const href = fdata.get("href");
-      alert(`${action}   ${dialog}  ${slot}  ${href}`);
-    }
-  };
-  var HTMLUiActionController = class {
-    view;
-    parent;
-    controller;
-    constructor(parent) {
-      this.parent = parent;
-      this.view = new HTMLUiActionView(this.parent._shadowRoot);
-    }
-  };
-  var HTMLUiAction = class extends HTMLElement {
-    _shadowRoot;
-    controller;
-    // satisfies webcomponentlifecycle interface
-    observedAttributes;
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["slot", "dialog", "href", "action"];
-    constructor() {
-      super();
-      this._shadowRoot = this.attachShadow({ mode: "open" });
-      this.controller = new HTMLUiActionController(this);
-      console.log("ui-action registered..");
-    }
-    connectedCallback() {
-      this.controller.view.setupTemplate();
-    }
-    disconnectedCallback() {
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-      this.controller.view[name] = newValue;
-    }
-  };
-  window.customElements.define("ui-action", HTMLUiAction);
-
-  // ../../../l2.infrastructure/src-web-comps/ui-switch.ts
-<<<<<<< HEAD
-  var rawCss8 = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-
-::slotted(.icon){
-    font-size: large;
-    pading: 0 4reem;
-    margin: 0 3rem;
-}
-
-.icon_btn{
-    background-color: yellow;
-}
-</style>
-`;
-  var rawHtml8 = _html`
-<form>
-    <button type="submit" class="icon_btn">
-        <slot name="icon">
-        <span class="icon" slot="icon">&</span>
-        </slot>
-    </button>
-</form>
-`;
-=======
->>>>>>> dev
-  var HTMLUiSwitchView = class {
-    _shadowRoot;
-    controller;
-    tplus;
-    _forLable;
-    get forLable() {
-      return this._forLable;
-    }
-    set forLable(value) {
-      this._forLable = value;
-    }
-    constructor(shadowRoot) {
-      this._shadowRoot = shadowRoot;
-      this.tplus = new TemplatePlus("");
-<<<<<<< HEAD
-      this.setupTemplate();
-=======
->>>>>>> dev
-    }
-    initEventHandlers() {
-      const btn = this._shadowRoot.querySelector("button");
-      this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
-    }
-    setupTemplate() {
-<<<<<<< HEAD
-      const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss8, rawHtml8);
-=======
-      const rawCss6 = _css`
-    <style>
-    *,
-    *::after, 
-    *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    }
-
-    :host{
-    display:block;
-    contain:paint;
-    color: white;
-    }
-
-    ::slotted(.icon){
-        font-size: large;
-        pading: 0 4reem;
-        margin: 0 3rem;
-    }
-
-    .icon_btn{
-        background-color: yellow;
-    }
-    </style>
-    `;
-      const rawHtml5 = _html`
-    <form>
-        <button type="submit" class="icon_btn">
-            <slot name="icon">
-            <span class="icon" slot="icon">&</span>
-            </slot>
-        </button>
-    </form>
-    `;
-      const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss6, rawHtml5);
->>>>>>> dev
-      this.render(tplus.element);
-      this.initEventHandlers();
-    }
-    render(node) {
-      if (node instanceof HTMLTemplateElement)
-        this._shadowRoot.appendChild(node.content);
-      else
-        this._shadowRoot.appendChild(node);
-    }
-    processClickEvent(event) {
-      const selectedElement = event.target;
-      const ui_switch = selectedElement.parentElement;
-      const for_attr = ui_switch.getAttribute("for");
-      if (ui_switch && for_attr) {
-        const aside = document.getElementById(for_attr);
-        aside?.classList.toggle("hide");
-      }
-    }
-    processSubmitForm(event) {
-      event.preventDefault();
-      const form = this._shadowRoot.querySelector("form");
-      const fdata = new FormData(form, event.submitter);
       const form_input = fdata.get("action");
-      const aside = document.getElementById(this.forLable);
-<<<<<<< HEAD
-=======
-      if (!aside) alert(`aside element ${this.forLable} does not exist`);
->>>>>>> dev
-      aside?.classList.toggle("hide");
+      alert(form_input);
+    }
+    processSlotChange(event) {
+      let slot = event.target;
+      const items = slot.assignedElements().map((el) => el.innerHTML);
+      this[slot.name] = this.items;
     }
   };
-  var HTMLUiSwitchController = class {
+  var HTMLUiIconController = class {
     view;
     parent;
     controller;
     constructor(parent) {
       this.parent = parent;
-      this.view = new HTMLUiSwitchView(this.parent._shadowRoot);
+      this.view = new HTMLUiIconView(this.parent._shadowRoot);
     }
   };
-  var HTMLUiSwitch = class extends HTMLElement {
-    _shadowRoot;
-    view;
-    controller;
-    // satisfies webcomponentlifecycle interface
-    observedAttributes;
-    // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["for"];
-    constructor() {
-      super();
-      this._shadowRoot = this.attachShadow({ mode: "open" });
-      this.controller = new HTMLUiSwitchController(this);
-      console.log("ui-switch registered...");
-    }
-    connectedCallback() {
-      this.controller.view.setupTemplate();
-    }
-    disconnectedCallback() {
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-      if (name == "for") this.controller.view.forLable = newValue;
-    }
-  };
-  window.customElements.define("ui-switch", HTMLUiSwitch);
-
-  // ../../../l2.infrastructure/src-web-comps/ui-logo.ts
-  var bg_url = `url("images/jmc2.png")`;
-  var HTMLUiLogoView = class {
-    _shadowRoot;
-    controller;
-    _id;
-    _src;
-    _href;
-    get id() {
-      return this._id;
-    }
-    set id(value) {
-      this._id = value;
-    }
-    get src() {
-      return this._src;
-    }
-    set src(value) {
-      this._src = value;
-    }
-    get href() {
-      return this._href;
-    }
-    set href(value) {
-      this._href = value;
-    }
-    constructor(shadowRoot) {
-      this._shadowRoot = shadowRoot;
-    }
-    initEventHandlers() {
-      this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
-    }
-    setupTemplate() {
-<<<<<<< HEAD
-      const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss9, rawHtml9);
-=======
-      const rawCss6 = _css`
-            <style>
-                *,
-                *::after, 
-                *::before  {
-                box-sizing: border-box;
-                margin: 0;
-                padding:0;
-                }
-
-                :host{
-                display:block;
-                contain:paint;
-                color: white;
-                }
-                
-                img{
-                    width: 3rem;
-                    height: 3rem;
-                }
-
-                .hide{
-                    display:none;
-                }
-
-                .bg_image_cover{
-                    background-image: ${bg_url};
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                    background-position: center center;
-                    background-size: 100% 100%;
-                    background-position: 0% 0%;
-                }
-
-                .bg_image_contain{
-                    background-image: ${bg_url};
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                    background-position: center center;
-                    background-size: 100% 100%;
-                    background-position: 0% 0%;
-                }
-
-                .bg_image{
-                    background-image: ${bg_url};
-                    background-repeat: no-repeat;
-                    background-size: 100% 100%;
-                    background-position: 0% 0%;
-                }
-
-                .full_screen{
-                    height:99vh;
-                    width: 99vw;
-                }
-
-            </style>
-        `;
-      const rawHtml5 = _html`
-        <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
-        </button>
-        `;
-      const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss6, rawHtml5);
->>>>>>> dev
-      this.render(tplus.element);
-      this.initEventHandlers();
-    }
-    render(node) {
-      if (node instanceof HTMLTemplateElement)
-        this._shadowRoot.appendChild(node.content);
-      else
-        this._shadowRoot.appendChild(node);
-    }
-    processClickEvent(event) {
-      const selectedElement = event.target;
-    }
-    processSubmitForm(evt) {
-    }
-  };
-  var HTMLUiLogoController = class {
-    view;
-    parent;
-    controller;
-    constructor(parent) {
-      this.parent = parent;
-      this.view = new HTMLUiLogoView(this.parent._shadowRoot);
-    }
-  };
-  var HTMLUiLogo = class extends HTMLElement {
+  var HTMLUiIcon = class extends HTMLElement {
     _shadowRoot;
     controller;
     // satisfies webcomponentlifecycle interface
     observedAttributes;
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["id", "src", "href"];
+    static observedAttributes = ["slot", "width", "height", "href"];
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
-      this.controller = new HTMLUiLogoController(this);
-      console.log("ui-logo registered....");
+      this.controller = new HTMLUiIconController(this);
     }
     connectedCallback() {
       this.controller.view.setupTemplate();
+      console.log("ui-icon registered....");
     }
     disconnectedCallback() {
     }
@@ -2528,10 +2827,10 @@ color: white;
       this.controller.view[name] = newValue;
     }
   };
-  window.customElements.define("ui-logo", HTMLUiLogo);
+  window.customElements.define("ui-icon", HTMLUiIcon);
 
   // ../../../l2.infrastructure/src-web-comps/ui-option.ts
-  var rawCss5 = _css`
+  var rawCss3 = _css`
     <style>
         img{
             width: 3rem;
@@ -2736,7 +3035,7 @@ color: white;
       this.setupTemplate();
     }
     setupTemplate() {
-      const rawCss6 = _css`
+      const rawCss4 = _css`
         <style>
             img{
                 width: 3rem;
@@ -2904,10 +3203,10 @@ color: white;
 
         </style>
     `;
-      const rawHtml5 = _html`
+      const rawHtml3 = _html`
     <slot></slot>`;
       const tplus = new TemplatePlus("");
-      tplus.initTemplate(rawCss6, rawHtml5);
+      tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
     }
     render(node) {

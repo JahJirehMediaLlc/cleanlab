@@ -1,7 +1,7 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
 class HTMLUiActionView{
-    _shadowRoot: ShadowRoot;
+        _shadowRoot: ShadowRoot;
     controller:HTMLUiActionController;
     tplus:TemplatePlus;
 
@@ -21,22 +21,11 @@ class HTMLUiActionView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-<<<<<<< HEAD
-        this.setupTemplate();
-=======
-
-       // this.setupTemplate();
->>>>>>> dev
     }
     private initEventHandlers(){
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-     //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
-    setupTemplate(){
-<<<<<<< HEAD
-       const tplus = new TemplatePlus("");
-      
-=======
+setupTemplate(){
         const tplus = new TemplatePlus("");
         const rawCss  = _css`
         <style>
@@ -67,7 +56,6 @@ class HTMLUiActionView{
         </form>
         `;
 
->>>>>>> dev
         tplus.initTemplate( rawCss, rawHtml );
     
         this.render( tplus.element );
