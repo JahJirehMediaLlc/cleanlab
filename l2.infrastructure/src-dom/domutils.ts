@@ -513,23 +513,23 @@ export class TemplatePlus{
     this._url = url;
     this._templatesMap = new Map<string,HTMLTemplateElement>();
 
-    this.createBlankTemplate();
-
-    if(templateId !== ""){
-       throw new Error(`templateId ${templateId }.`);
-    }
-      
+     this.template = this.localTemplate(templateId);
+   
   }
   // creation logic
   public localTemplate(id:string):HTMLTemplateElement{
     let temp = document.getElementById(id) as HTMLTemplateElement;
 
-    if(temp)
+    if(temp && id.trim()){
       this.template = temp;
+      this.templateId = id;
+    }
     else
-      this.template = this.createBlankTemplate();
+    {
+     // console.log(`templateid ${id} not found creating blank one.`);
 
-    this.templateId = id;
+      this.template = this.createBlankTemplate();
+    }
 
     return this.template;
   }

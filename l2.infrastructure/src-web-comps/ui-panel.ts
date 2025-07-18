@@ -1,113 +1,5 @@
 import {_html, Html, _css, Css, WebComponentLifeCycle, insertElement, TemplatePlus} from '../src-dom/domutils.ts';
 
-const rawCss  = _css`
-<style>
-*,
-*::after, 
-*::before  {
-box-sizing: border-box;
-margin: 0;
-padding:0;
-}
-
-:host{
-display:block;
-contain:paint;
-color: white;
-}
-
-
-img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* margin: 0px auto; */
-}
-
-.position_top{
-    position: fixed;
-    top: 0;
-    width:100%;
-    z-index: 1;
-}
-.position_bottom{
-    position: fixed;
-    bottom: 0;
-    width:100%;
-    z-index: 1;
-}
-.position_left{
-    position: fixed;
-    left: 0;
-    width:100%;
-    z-index: 1;
-}
-.position_right{
-    position: fixed;
-    right: 0;
-    width:100%;
-    z-index: 1;
-}
-
-    .scroll_x {
-        overflow-x: scroll;
-    }
-
-    .scroll_y {
-        overflow-y: scroll;
-        width: fit-content;
-    }
-
-    .flex_row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 1rem;
-    }
-
-    .flex_col {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .bg_blue {
-        background-color: cornflowerblue;
-    }
-
-    .bg_green {
-        background-color: darkolivegreen;
-    }
-
-    .bg_grey {
-        background-color: darkgray;
-    }
-
-    .hide {
-        display: none;
-    }
-
-    .margins {
-        margin: 1rem;
-    }
-
-    .paddings {
-    padding: 1rem;
-    }
-    
-    .inline{
-    display: inline-block;
-    }
-</style>
-`;
-
-const rawHtml  = _html`
-<div id="panel">
-<slot name="menu">
-<p>no slots provided</p>
-</slot>
-</div> 
-`;
 
 class HTMLUiPanelView{;
     _shadowRoot: ShadowRoot;
@@ -122,33 +14,135 @@ class HTMLUiPanelView{;
     light_dom:Element;
     shadow_dom:Element;
     styles:string[] = [];
+     _items: string[];
 
-    get id():string{
-        return this._id;
-    }
-    set id(value:string){
-    this._id = value;
-}
-    get template():string{
-        return this._template;
-    }
-    set template(value:string){
-    this._template = value;
-}
+    get items():string[]{return this._items};
+    set items(value:string[]){this._items=value};
+    get id():string{return this._id;}
+    set id(value:string){this._id = value;}
+    get template():string{return this._template;}
+    set template(value:string){this._template = value;}
+
     constructor(shadowRoot: ShadowRoot){
         this._shadowRoot = shadowRoot;
     }
     setupTemplate() {
+
+        const rawCss  = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        }
+
+        :host{
+        display:block;
+        contain:paint;
+        color: white;
+        }
+
+
+        img{
+        display: block;
+        max-width: 100%;
+        height: auto;
+        /* margin: 0px auto; */
+        }
+
+        .position_top{
+        position: fixed;
+        top: 0;
+        width:100%;
+        z-index: 1;
+        }
+        .position_bottom{
+        position: fixed;
+        bottom: 0;
+        width:100%;
+        z-index: 1;
+        }
+        .position_left{
+        position: fixed;
+        left: 0;
+        width:100%;
+        z-index: 1;
+        }
+        .position_right{
+        position: fixed;
+        right: 0;
+        width:100%;
+        z-index: 1;
+        }
+
+        .scroll_x {
+        overflow-x: scroll;
+        }
+
+        .scroll_y {
+        overflow-y: scroll;
+        width: fit-content;
+        }
+
+        .flex_row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        }
+
+        .flex_col {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        }
+
+        .bg_blue {
+        background-color: cornflowerblue;
+        }
+
+        .bg_green {
+        background-color: darkolivegreen;
+        }
+
+        .bg_grey {
+        background-color: darkgray;
+        }
+
+        .hide {
+        display: none;
+        }
+
+        .margins {
+        margin: 1rem;
+        }
+
+        .paddings {
+        padding: 1rem;
+        }
+
+        .inline{
+        display: inline-block;
+        }
+        </style>
+        `;
+
+        const rawHtml  = _html`
+        <div id="panel">
+        <slot name="menu">
+        <p>no slots provided</p>
+        </slot>
+        </div> 
+        `;
         const tplus = new TemplatePlus("");
-        const template = tplus.initTemplate( rawCss, rawHtml );
 
-        const ui_panel =  document.querySelectorAll("ui-panel");
-        const template_attr =  document.querySelector("ui-panel")!.getAttribute("template");
+        tplus.initTemplate( rawCss, rawHtml );
 
-        this.render( template.content.cloneNode(true) as DocumentFragment );
+        this.render( tplus.element );
 
-         console.log(`panel id =${this._id} template =  ${this._template}`);
-
+        console.log(`panel id : ${this.id} template id : ${this.template}`);
      }
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
@@ -160,6 +154,13 @@ class HTMLUiPanelView{;
         const selectedElement = event.target as HTMLElement;
     }
     processSubmitForm(evt:SubmitEvent){}
+    processSlotChange(event:Event){
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const items = slot.assignedElements().map(el => el.innerHTML );
+        
+        this[slot.name] = this.items;
+    }
 }
 
 class HTMLUiPanelController{
@@ -199,12 +200,11 @@ export class HTMLUiPanel extends HTMLElement implements WebComponentLifeCycle{
 
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this.controller = new HTMLUiPanelController(this);
-
-        console.log("ui-panel registered....");
     }
 
     connectedCallback(): void {
         this.controller.view.setupTemplate();
+         console.log("ui-panel registered....");
     }
     disconnectedCallback(): void {
         console.log('disconnectedCallback Method not implemented.');

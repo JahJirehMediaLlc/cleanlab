@@ -68,7 +68,7 @@
             <li><a href="/cls.html">Cls</a></li>
             <li><a href="/markup.html">Markup Project</a></li>
             <li><a href="/appshell.html">App Shell</a></li>
-               <li><a href="/flex.html">Flex Project</a></li>
+            <li><a href="/flex.html">Flex Project</a></li>
         </ul>
     </ui-panel>
     <ui-switch for="aside_right"><span class="icon" slot="icon">[]</span></ui-switch>
@@ -92,10 +92,22 @@
         </aside>
 
         <section id="output" class="container_item  width100">
-            <h1>Flexx Project</h1>
-            <div id="log">
-
-            </div>
+            <h1>Flex Project</h1>
+            <ui-menu>
+                <span slot="title">Title</span>
+                <span slot="left_icon">#</span>
+                <li slot="item">Item 1</li>
+                <li slot="item">Item 2</li>
+                <li slot="item">Item 3</li>
+                <li slot="item">Item 4</li>
+                <li slot="item">Item 5</li>
+                <li slot="item">Item 6</li>
+                <li slot="item">Item 7</li>
+                <li slot="item">Item 8</li>
+                <li slot="item">Item 9</li>
+                <span slot="right_icon">[]</span>
+            </ui-menu>
+            <div id="log"></div>
         </section>
 
         <aside id="aside_right" class="hide  bg_green container_item" style="position:absolute;right:0;">
@@ -133,6 +145,131 @@
         </ul>
     </ui-panel>
 </footer>
+
+<template id="ui_menu">
+<style id="rawcss">
+    *,
+    *::after, 
+    *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+    }
+
+    :host{
+        display:block;
+        contain:paint;
+        color: white;
+    }
+
+    .scroll_x {
+    overflow-x: auto;
+    }
+
+    .scroll_y {
+        overflow-y: auto;
+        width: fit-content;
+    }
+
+    .menu_x{
+        display: flex;
+        gap: 1rem;
+    }
+
+
+    ::slotted(li){
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .menu_y {
+        display: flex;
+        flex-direction: column;
+        gap: 2;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .flex_row{
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+    }
+
+    .flex_col{
+        display:flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .flex_center{
+        display:flex;
+        align-items: center ;
+        justify-content: center;
+    }
+
+    .basis_equal{
+        flex-basis: 1;
+    }
+
+    .space_between{
+        justify-content: space-between;
+    }
+    
+    .space_around{
+        justify-content: space-around;
+    }
+
+    .shrink_off{
+        flex-shrink: 1;
+    }
+
+    .shrink_on{
+        flex-shrink: 0;
+    }
+
+    .grow_on{
+        flex-grow: 1;
+    }
+    .grow_off{
+        flex-grow: 0;
+    }
+
+    .border{ border: 1px red dashed;}
+
+    .bg_blue{background-color: blue;}
+    .bg_yellow{background-color: yellow;}
+    .bg_purple{background-color: purple;}
+    .bg_pink{background-color: pink;}
+    .bg_green{background-color: green;}
+</style>
+
+<nav id="rawhtml" class="flex_row space-around">
+<!-- left-icon -->
+<section class="">
+    <slot name="left_icon">
+    <ui-icon>#</ui-icon>
+    </slot>
+</section>
+<!-- menu list -->
+<section class="">
+    <ul class="menu_x bg_grey">
+        <slot name="item">
+            <li>no items</li>
+        </slot>
+    </ul>
+</section>
+<!-- right-icon -->
+<section class="">
+    <slot name="right_icon">
+    <ui-icon>#</ui-icon>
+    </slot>
+</section>
+</nav>
+
+</template>
 
 <!-- Templates -->
 <div>
@@ -435,79 +572,80 @@
 
     <template id="ui_table_template">
         <style>
-            section{
-                background-color: slategrey;
-            }
-            table *{
-                border: 1px solid green;
-            }
-            .flex_column{
-                display: flex;
-                flex-direction: column;
-            }
-            .flex_row{
-                display: flex;
-                flex-direction: row;
-            }
-            .tab_item{
-                background-color: green;
-                border: none;
-                opacity: .30;
-                overflow: hidden;
-                transform: translateY(-105%);
-            }
-            .transition_width{
-                width: 100%;
-                transition: width 1000ms ease-in;
-            }
-            .transition_bg{
-                background-color: red;
-                transition: background-color 1000ms ease-in;
-            }
-            .transition_opacity{
-                opacity: 1;
-                transition: opacity 1000ms ease-in 1000ms;
-            }
-            .transition_up{
-                transform: translateY(-105%);
-                transition: transform 1000ms ease-in;
-            }
-            .transition_down{
-                transform: translateY(1%);
-                transition: transform 1000ms ease-in;
-            }
+        section{
+        background-color: slategrey;
+        }
+        table *{
+        border: 1px solid green;
+        }
+        .flex_column{
+        display: flex;
+        flex-direction: column;
+        }
+        .flex_row{
+        display: flex;
+        flex-direction: row;
+        }
+        .tab_item{
+        background-color: green;
+        border: none;
+        opacity: .30;
+        overflow: hidden;
+        transform: translateY(-105%);
+        }
+        .transition_width{
+        width: 100%;
+        transition: width 1000ms ease-in;
+        }
+        .transition_bg{
+        background-color: red;
+        transition: background-color 1000ms ease-in;
+        }
+        .transition_opacity{
+        opacity: 1;
+        transition: opacity 1000ms ease-in 1000ms;
+        }
+        .transition_up{
+        transform: translateY(-105%);
+        transition: transform 1000ms ease-in;
+        }
+        .transition_down{
+        transform: translateY(1%);
+        transition: transform 1000ms ease-in;
+        }
         </style>
         <section>
-            <table>
-                <thead>
-                <tr>
-                    <td>header col 1</td>
-                    <td>Header col 2</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>soap</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>tooth paste</td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="flex_row">
-                <details>
-                    <summary>Legend one</summary>
-                </details>
-                <details>
-                    <summary>Legend two</summary>
-                </details>
-            </div>
+        <table>
+        <thead>
+        <tr>
+        <td>header col 1</td>
+        <td>Header col 2</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1</td>
+        <td>soap</td>
+        </tr>
+        <tr>
+        <td>2</td>
+        <td>tooth paste</td>
+        </tr>
+        </tbody>
+        </table>
+        <div class="flex_row">
+        <details>
+        <summary>Legend one</summary>
+        </details>
+        <details>
+        <summary>Legend two</summary>
+        </details>
+        </div>
         </section>
-
     </template>
 </div>
+
+
 <!-- Scripts -->
 <script src="/bundles/l2.infrastructure/src-page-mvc/flex/flex.js"></script>
 

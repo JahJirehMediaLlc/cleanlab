@@ -24,7 +24,7 @@ wwwrootDir:string
 //
 const _aConfig:config = {
 port: Deno.env.get("APP_PORT") || 3000,
-version :'v19.90',
+version :'v1.90',
 serverDir: Deno.cwd(),
 clientDir: Deno.cwd().replace("server","client"),
 viewsDir : path.join(Deno.cwd(), 'views'),
