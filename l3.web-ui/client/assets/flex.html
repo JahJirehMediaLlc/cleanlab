@@ -60,24 +60,25 @@
 </head>
 <body>
 
-<header id="header" class="bg_green position_top flex_row space_between">
-    <ui-switch for="aside_left"><span class="icon" slot="icon">#</span></ui-switch>
-    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="header_template">
-        <ul slot="menu" class="menu_x scroll_x">
-            <li><a href="/welcome.html">Welcome</a></li>
-            <li><a href="/cls.html">Cls</a></li>
-            <li><a href="/markup.html">Markup Project</a></li>
-            <li><a href="/appshell.html">App Shell</a></li>
-            <li><a href="/flex.html">Flex Project</a></li>
-        </ul>
-    </ui-panel>
-    <ui-switch for="aside_right"><span class="icon" slot="icon">[]</span></ui-switch>
+<header id="header" class="position_top width100">
+    <ui-menu id="ui_menu_header">
+        <span slot="title">Title</span>
+        <span slot="left_icon">#</span>
+
+        <li slot="item"><a href="/welcome.html">Welcome</a></li>
+        <li slot="item"><a href="/cls.html">Cls</a></li>
+        <li slot="item"><a href="/markup.html">Markup Project</a></li>
+        <li slot="item"><a href="/appshell.html">App Shell</a></li>
+        <li slot="item"><a href="/flex.html">Flex Project</a></li>
+
+        <span slot="right_icon">[]</span>
+    </ui-menu>
 </header>
 
-<main id="main" class="bg_grey" style="position:relative">
+<main id="main" class="bg_grey" style1="position:relative">
     <div class="main_container bg_blue flex_row space_between" style="margin:2rem 0;">
    
-        <aside id="aside_left" class="hide bg_green container_item" style="position:absolute">
+        <aside id="aside_left" class="hide bg_green container_item" style="position:absolute;left:0;z-index: 3;">
             <ui-panel id="panel_left" height1="14rem" template="aside_left_template">
             <ul slot="menu" class="menu_y">
                 <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoPrint">Print</ui-action></li>
@@ -89,24 +90,11 @@
 
         <section id="output" class="container_item  width100">
             <h1>Flex Project</h1>
-            <ui-menu>
-                <span slot="title">Title</span>
-                <span slot="left_icon">#</span>
-                <li slot="item">Item 1</li>
-                <li slot="item">Item 2</li>
-                <li slot="item">Item 3</li>
-                <li slot="item">Item 4</li>
-                <li slot="item">Item 5</li>
-                <li slot="item">Item 6</li>
-                <li slot="item">Item 7</li>
-                <li slot="item">Item 8</li>
-                <li slot="item">Item 9</li>
-                <span slot="right_icon">[]</span>
-            </ui-menu>
+
             <div id="log"></div>
         </section>
 
-        <aside id="aside_right" class="hide  bg_green container_item" style="position:absolute;right:0;">
+        <aside id="aside_right" class="hide  bg_green container_item" style="position:absolute;right:0;z-index: 3;">
             <ui-panel id="panel_right"   height2="14rem"  template="aside_left_template" >
             <ul slot="menu" class="menu_y">
                  <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoHelp">Help</ui-action></li>
@@ -121,18 +109,19 @@
 
 
 <footer id="footer" class="bg_green  position_bottom">
-    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
-        <ul slot="menu" class="menu_x scroll_x">
+  <ui-menu id="ui_menu_footer">
+        <span slot="title">Title</span>
+        <span slot="left_icon">#</span>
 
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
-
-        </ul>
-    </ui-panel>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
+        
+        <span slot="right_icon">[]</span>
+  </ui-menu> 
 </footer>
 
 <template id="ui_menu">
@@ -151,8 +140,12 @@
         color: white;
     }
 
+    ::slotted(span){
+     font-size: larger;
+    }
+
     .scroll_x {
-    overflow-x: auto;
+     overflow-x: auto;
     }
 
     .scroll_y {
@@ -170,6 +163,7 @@
         margin: 0;
         padding: 0;
         list-style: none;
+        flex-shrink: 0;
     }
 
     .menu_y {
@@ -211,11 +205,11 @@
         justify-content: space-around;
     }
 
-    .shrink_off{
+    .shrink_yes{
         flex-shrink: 1;
     }
 
-    .shrink_on{
+    .shrink_no{
         flex-shrink: 0;
     }
 
@@ -227,6 +221,11 @@
     }
 
     .border{ border: 1px red dashed;}
+    .border2{ border: 2px green dashed;}
+
+    .width33{width: 33%;}
+    .width50{width: 50%;}
+    .width100{width: 100%;}
 
     .bg_blue{background-color: blue;}
     .bg_yellow{background-color: yellow;}
@@ -235,15 +234,19 @@
     .bg_green{background-color: green;}
 </style>
 
-<nav id="rawhtml" class="flex_row space-around">
+<nav id="rawhtml" style="position:relative;" class="bg_green flex_row space_between">
 <!-- left-icon -->
 <section class="">
-    <slot name="left_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
+    
+    <ui-switch for="aside_left">
+         <slot name="left_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+  
 </section>
 <!-- menu list -->
-<section class="">
+<section class="width75 border2 scroll_x">
     <ul class="menu_x bg_grey">
         <slot name="item">
             <li>no items</li>
@@ -251,10 +254,12 @@
     </ul>
 </section>
 <!-- right-icon -->
-<section class="">
-    <slot name="right_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
+<section class=""> 
+    <ui-switch for="aside_right">
+         <slot name="right_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
 </section>
 </nav>
 

@@ -4,16 +4,16 @@ class HTMLUiIconView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiIconController;
 
-    _slot:string;
+    _font_size:string;
     _width:string;
     _height:string;
     _href:string;
-     _items: string[];
+    _items: string[];
 
     get items():string[]{return this._items};
     set items(value:string[]){this._items=value};
-    get slot():string{return this._slot};
-    set slot(value:string){this._slot=value};
+    get font_size():string{return this._font_size};
+    set font_size(value:string){this._font_size=value};
     get width():string{return this._width};
     set width(value:string){this._width=value};
     get height():string{return this._height};
@@ -30,7 +30,7 @@ class HTMLUiIconView{
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate() {
-        const rawCss = _css`
+    const rawCss = _css`
         <style>
         *,
         *::after, 
@@ -46,9 +46,13 @@ class HTMLUiIconView{
         color: white;
         }
 
+        :slotted(span){
+         font_size: ${this.font_size};
+        }
+
         </style>
         `;
-        const rawHtml  = _html`
+    const rawHtml  = _html`
         <slot>
          <span>@</span>
         </slot>
@@ -60,7 +64,7 @@ class HTMLUiIconView{
 
         this.render( tplus.element );
 
-        this.initEventHandlers();
+     //   this.initEventHandlers();
     }
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
@@ -107,7 +111,7 @@ export class HTMLUiIcon extends HTMLElement implements WebComponentLifeCycle{
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[]; 
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["slot","width", "height", "href"];
+    static observedAttributes = ["font_size","width", "height", "href"];
 
     constructor(){
         super();

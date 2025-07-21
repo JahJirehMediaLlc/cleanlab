@@ -65,18 +65,19 @@
 
 <body>
 
-<header id="header" class="bg_green position_top flex_row space_between">
-    <ui-switch for="aside_left"><span class="icon" slot="icon">#</span></ui-switch>
-    <ui-panel id="panel_top"   top="0"    position="relative"  height="4rem"  template="header_template">
-        <ul slot="menu" class="menu_x scroll_x">
-            <li><a href="/welcome.html">Welcome</a></li>
-            <li><a href="/cls.html">Cls</a></li>
-            <li><a href="/markup.html">Markup Project</a></li>
-            <li><a href="/appshell.html">App Shell</a></li>
-               <li><a href="/flex.html">Flex Project</a></li>
-        </ul>
-    </ui-panel>
-    <ui-switch for="aside_right"><span class="icon" slot="icon">[]</span></ui-switch>
+<header id="header" class="position_top width100">
+    <ui-menu>
+    <span slot="title">Title</span>
+    <span slot="left_icon">#</span>
+
+    <li slot="item"><a href="/welcome.html">Welcome</a></li>
+    <li slot="item"><a href="/cls.html">Cls</a></li>
+    <li slot="item"><a href="/markup.html">Markup Project</a></li>
+    <li slot="item"><a href="/appshell.html">App Shell</a></li>
+    <li slot="item"><a href="/flex.html">Flex Project</a></li>
+
+    <span slot="right_icon">[]</span>
+    </ui-menu>
 </header>
 
 <main id="main" class="bg_grey" style="position:relative">
@@ -113,17 +114,161 @@
 </main>
 
 <footer id="footer" class="bg_green  position_bottom">
-    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
-        <ul slot="menu" class="menu_x scroll_x">
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
-        </ul>
-    </ui-panel>
+  <ui-menu id="ui_menu_footer">
+        <span slot="title">Title</span>
+        <span slot="left_icon">#</span>
+
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
+        
+        <span slot="right_icon">[]</span>
+  </ui-menu> 
 </footer>
+
+<template id="ui_menu">
+<style id="rawcss">
+    *,
+    *::after, 
+    *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+    }
+
+    :host{
+        display:block;
+        contain:paint;
+        color: white;
+    }
+
+    ::slotted(span){
+     font-size: larger;
+    }
+
+    .scroll_x {
+     overflow-x: auto;
+    }
+
+    .scroll_y {
+        overflow-y: auto;
+        width: fit-content;
+    }
+
+    .menu_x{
+        display: flex;
+        gap: 1rem;
+    }
+
+
+    ::slotted(li){
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-shrink: 0;
+    }
+
+    .menu_y {
+        display: flex;
+        flex-direction: column;
+        gap: 2;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .flex_row{
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+    }
+
+    .flex_col{
+        display:flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .flex_center{
+        display:flex;
+        align-items: center ;
+        justify-content: center;
+    }
+
+    .basis_equal{
+        flex-basis: 1;
+    }
+
+    .space_between{
+        justify-content: space-between;
+    }
+    
+    .space_around{
+        justify-content: space-around;
+    }
+
+    .shrink_yes{
+        flex-shrink: 1;
+    }
+
+    .shrink_no{
+        flex-shrink: 0;
+    }
+
+    .grow_on{
+        flex-grow: 1;
+    }
+    .grow_off{
+        flex-grow: 0;
+    }
+
+    .border{ border: 1px red dashed;}
+    .border2{ border: 2px green dashed;}
+
+    .width33{width: 33%;}
+    .width50{width: 50%;}
+    .width100{width: 100%;}
+
+    .bg_blue{background-color: blue;}
+    .bg_yellow{background-color: yellow;}
+    .bg_purple{background-color: purple;}
+    .bg_pink{background-color: pink;}
+    .bg_green{background-color: green;}
+</style>
+
+<nav id="rawhtml" style="position:relative;" class="bg_green flex_row space_between">
+<!-- left-icon -->
+<section class="">
+    
+    <ui-switch for="aside_left">
+         <slot name="left_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+  
+</section>
+<!-- menu list -->
+<section class="width75 border2 scroll_x">
+    <ul class="menu_x bg_grey">
+        <slot name="item">
+            <li>no items</li>
+        </slot>
+    </ul>
+</section>
+<!-- right-icon -->
+<section class=""> 
+    <ui-switch for="aside_right">
+         <slot name="right_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+</section>
+</nav>
+
+</template>
 
 </body>
 

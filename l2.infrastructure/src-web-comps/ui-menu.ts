@@ -4,12 +4,16 @@ class HTMLUiMenuView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiMenuController;
 
+     _id:string;
+
     _title:string[];
     _width:string;
     _height:string;
     _axis:string;
     _items: string[];
 
+     get id():string{return this._id};
+    set id(value:string){this._id=value};
     get items():string[]{return this._items};
     set items(value:string[]){this._items=value};
     get title():string[]{return this._title};
@@ -32,155 +36,166 @@ class HTMLUiMenuView{
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate() {
-    const rawCss = _css`
-    <style>
+      const tplus = new TemplatePlus("");
+
+      const rawCss = _css`
+    <style id="rawcss">
     *,
     *::after, 
     *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
     }
 
     :host{
-    display:block;
-    contain:paint;
-    color: white;
+        display:block;
+        contain:paint;
+        color: white;
+    }
+
+    ::slotted(span){
+     font-size: larger;
     }
 
     .scroll_x {
-    overflow-x: auto;
+     overflow-x: auto;
     }
 
     .scroll_y {
-    overflow-y: auto;
-    width: fit-content;
+        overflow-y: auto;
+        width: fit-content;
     }
 
     .menu_x{
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    color:white;
+        display: flex;
+        gap: 1rem;
     }
 
-    .menu_x > * {
-    display: inline-block;
-    flex-shrink: 1;
-    margin: 0;
-    padding: 0;
-    }
 
     ::slotted(li){
-    display: block;
-    margin: 0;
-    padding: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-shrink: 0;
     }
 
     .menu_y {
-    display: flex;
-    flex-direction: column;
-    gap: 2;
-    text-align: center;
-    width: fit-content;
-    }
-
-    .menu_y > * {
-    display: block;
-    flex-shrink: 1;
-    margin: 0;
-    padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2;
+        text-align: center;
+        width: fit-content;
     }
 
     .flex_row{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 1rem;
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
     }
 
     .flex_col{
-    display:flex;
-    flex-direction: column;
-    gap: 1rem;
+        display:flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .flex_center{
-    display:flex;
-    align-items: center ;
-    justify-content: center;
+        display:flex;
+        align-items: center ;
+        justify-content: center;
     }
 
     .basis_equal{
-    flex-basis: 1;
+        flex-basis: 1;
     }
 
     .space_between{
-    justify-content: space-between;
+        justify-content: space-between;
     }
+    
     .space_around{
-    justify-content: space-around;
+        justify-content: space-around;
     }
 
-    .shrink_off{
-    flex-shrink: 1;
+    .shrink_yes{
+        flex-shrink: 1;
     }
 
-    .shrink_on{
-    flex-shrink: 0;
+    .shrink_no{
+        flex-shrink: 0;
     }
 
     .grow_on{
-    flex-grow: 1;
+        flex-grow: 1;
     }
     .grow_off{
-    flex-grow: 0;
+        flex-grow: 0;
     }
 
     .border{ border: 1px red dashed;}
+    .border2{ border: 2px green dashed;}
+
+    .width33{width: 33%;}
+    .width50{width: 50%;}
+    .width100{width: 100%;}
 
     .bg_blue{background-color: blue;}
     .bg_yellow{background-color: yellow;}
     .bg_purple{background-color: purple;}
     .bg_pink{background-color: pink;}
     .bg_green{background-color: green;}
-    </style>
-    `;
-    const rawHtml  = _html`
-    <slot name="title">No Totle</slot>
 
-    <nav class="flex_row space_between bg_blue">
-    <section class="grow_off shrink_on bg_yellow border">
-    <slot name="left_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
-    </section>
+    .reset{
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+    }
+</style>
+      `;
+    
+      const rawHtml  = _html`
+<nav id="rawhtml" class="bg_green flex_row space_between">
 
-    <section class="grow_off shrink_on bg_green">
-    <ul class="menu_x scroll_x">
-    <slot name="item">
-    <li>No Menu Item</li>
-    </slot>
+<!-- left-icon -->
+
+<section class="">    
+    <ui-switch for="aside_left">
+         <slot name="left_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+</section>
+
+<!-- menu list -->
+
+<section class="width75 border2 scroll_x">
+    <ul class="menu_x bg_grey reset">
+        <slot name="item">
+            <li>no items</li>
+        </slot>
     </ul>
-    </section>
+</section>
 
-    <section class="grow_off shrink_on border bg_yellow">
-    <slot name="right_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
-    </section>
-    </nav>
-    `;
+<!-- right-icon -->
 
-    const tplus = new TemplatePlus("ui_menu");
+<section class=""> 
+    <ui-switch for="aside_right">
+         <slot name="right_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+</section>
 
-    console.log(`rendering template ui-menu: `, tplus.id);
-
-    // tplus.initTemplate( rawCss, rawHtml );
+</nav>
+     `;
+    
+     tplus.initTemplate( rawCss, rawHtml );
 
     this.render( tplus.element );
 
-    this.initEventHandlers();
+   // this.initEventHandlers();
 
     }
     render(node: HTMLTemplateElement|DocumentFragment){
@@ -228,7 +243,7 @@ export class HTMLUiMenu extends HTMLElement implements WebComponentLifeCycle{
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[]; 
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["slot","width", "height", "axis"];
+    static observedAttributes = ["id","slot","width", "height", "axis"];
 
     constructor(){
         super();
@@ -237,9 +252,9 @@ export class HTMLUiMenu extends HTMLElement implements WebComponentLifeCycle{
         this.controller = new HTMLUiMenuController(this);
     }
     connectedCallback(): void {
-      this.controller.view.setupTemplate();
+       this.controller.view.setupTemplate();
       
-       console.log("ui-Menu registered....");
+       console.log("ui-menu registered....");
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');

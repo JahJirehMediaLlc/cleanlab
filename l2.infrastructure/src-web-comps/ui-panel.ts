@@ -1,6 +1,5 @@
 import {_html, Html, _css, Css, WebComponentLifeCycle, insertElement, TemplatePlus} from '../src-dom/domutils.ts';
 
-
 class HTMLUiPanelView{;
     _shadowRoot: ShadowRoot;
     controller:HTMLUiPanelController;
@@ -142,7 +141,7 @@ class HTMLUiPanelView{;
 
         this.render( tplus.element );
 
-        console.log(`panel id : ${this.id} template id : ${this.template}`);
+     //   console.log(`panel id : ${this.id} template id : ${this.template}`);
      }
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
