@@ -36,7 +36,7 @@ class HTMLUiMenuView{
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("");
+      const tplus = new TemplatePlus("ui_menu");
 
       const rawCss = _css`
     <style id="rawcss">
@@ -191,11 +191,12 @@ class HTMLUiMenuView{
 </nav>
      `;
     
-     tplus.initTemplate( rawCss, rawHtml );
+    // tplus.initTemplate( rawCss, rawHtml );
 
     this.render( tplus.element );
 
    // this.initEventHandlers();
+
 
     }
     render(node: HTMLTemplateElement|DocumentFragment){

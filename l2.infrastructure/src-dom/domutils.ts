@@ -521,7 +521,7 @@ export class TemplatePlus{
     let temp = document.getElementById(id) as HTMLTemplateElement;
 
     if(temp && id.trim()){
-      this.template = temp;
+      this.template = temp.cloneNode(true)  as HTMLTemplateElement;
       this.templateId = id;
     }
     else

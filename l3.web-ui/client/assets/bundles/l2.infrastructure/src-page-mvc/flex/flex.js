@@ -323,7 +323,7 @@
     localTemplate(id) {
       let temp = document.getElementById(id);
       if (temp && id.trim()) {
-        this.template = temp;
+        this.template = temp.cloneNode(true);
         this.templateId = id;
       } else {
         this.template = this.createBlankTemplate();
@@ -1489,7 +1489,6 @@ flex-grow: 0;
       const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
-      console.log(`panel id : ${this.id} template id : ${this.template}`);
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1848,42 +1847,74 @@ flex-grow: 0;
     }
     setupTemplate() {
       const rawCss4 = _css`
-    <style>
-    *,
-    *::after, 
-    *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    }
+<style>
+*,
+*::after, 
+*::before  {
+box-sizing: border-box;
+margin: 0;
+padding:0;
+}
 
+:host{
+display:block;
+contain:paint;
+color: white;
+}
 
-    :host{
-    display:block;
-    contain:paint;
-    color: white;
-    }
+::slotted(.icon){
+font-size: large;
+pading: 0 4reem;
+margin: 0 3rem;
+}
 
-    ::slotted(.icon){
-        font-size: large;
-        pading: 0 4reem;
-        margin: 0 3rem;
-    }
+.icon_btn{
+background-color: yellow;
+}
 
-    .icon_btn{
-        background-color: yellow;
-    }
-    </style>
-    `;
+.menu_x {
+display: flex;
+list-style: none;
+gap: 2rem;
+overflow-x: auto;
+color:white;
+}
+
+.menu_x > * {
+flex-shrink: 0;
+}
+
+.menu_y {
+display: flex;
+flex-direction: column;
+gap: 0.51rem;
+text-align: center;
+list-style: none;
+width: fit-content;
+margin: 0;
+padding:0;
+background-color: grey;
+}
+
+.border1{ border: 1px red dashed;} 
+
+#switch_output{
+position: fixed;
+top: 3rem;
+visibility: visible;
+z-index: 8;
+}
+</style>
+`;
       const rawHtml3 = _html`
     <form>
-        <button type="submit" class="icon_btn">
-            <slot name="icon">
-            <span class="icon" slot="icon">&</span>
-            </slot>
-        </button>
+    <button type="submit" class="icon_btn">
+    <slot name="icon">
+    <span class="icon" slot="icon">&</span>
+    </slot>
+    </button>
     </form>
-    `;
+    <div id="switch_output" class="border1"></div>`;
       const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
@@ -1907,8 +1938,10 @@ flex-grow: 0;
     processSubmitForm(event) {
       event.preventDefault();
       const form = this._shadowRoot.querySelector("form");
+      const output = this._shadowRoot.getElementById("switch_output");
       const fdata = new FormData(form, event.submitter);
       const form_input = fdata.get("action");
+      const tplus = new TemplatePlus("");
       const aside = document.getElementById(this.forLable);
       if (!aside) alert(`aside element ${this.forLable} does not exist`);
       aside?.classList.toggle("hide");
@@ -2095,11 +2128,18 @@ flex-grow: 0;
   var HTMLUiMenuView = class {
     _shadowRoot;
     controller;
+    _id;
     _title;
     _width;
     _height;
     _axis;
     _items;
+    get id() {
+      return this._id;
+    }
+    set id(value) {
+      this._id = value;
+    }
     get items() {
       return this._items;
     }
@@ -2140,149 +2180,159 @@ flex-grow: 0;
       this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
     }
     setupTemplate() {
+      const tplus = new TemplatePlus("ui_menu");
       const rawCss4 = _css`
-    <style>
+    <style id="rawcss">
     *,
     *::after, 
     *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
     }
 
     :host{
-    display:block;
-    contain:paint;
-    color: white;
+        display:block;
+        contain:paint;
+        color: white;
+    }
+
+    ::slotted(span){
+     font-size: larger;
     }
 
     .scroll_x {
-    overflow-x: auto;
+     overflow-x: auto;
     }
 
     .scroll_y {
-    overflow-y: auto;
-    width: fit-content;
+        overflow-y: auto;
+        width: fit-content;
     }
 
     .menu_x{
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    color:white;
+        display: flex;
+        gap: 1rem;
     }
 
-    .menu_x > * {
-    display: inline-block;
-    flex-shrink: 1;
-    margin: 0;
-    padding: 0;
-    }
 
     ::slotted(li){
-    display: block;
-    margin: 0;
-    padding: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-shrink: 0;
     }
 
     .menu_y {
-    display: flex;
-    flex-direction: column;
-    gap: 2;
-    text-align: center;
-    width: fit-content;
-    }
-
-    .menu_y > * {
-    display: block;
-    flex-shrink: 1;
-    margin: 0;
-    padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2;
+        text-align: center;
+        width: fit-content;
     }
 
     .flex_row{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 1rem;
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
     }
 
     .flex_col{
-    display:flex;
-    flex-direction: column;
-    gap: 1rem;
+        display:flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .flex_center{
-    display:flex;
-    align-items: center ;
-    justify-content: center;
+        display:flex;
+        align-items: center ;
+        justify-content: center;
     }
 
     .basis_equal{
-    flex-basis: 1;
+        flex-basis: 1;
     }
 
     .space_between{
-    justify-content: space-between;
+        justify-content: space-between;
     }
+    
     .space_around{
-    justify-content: space-around;
+        justify-content: space-around;
     }
 
-    .shrink_off{
-    flex-shrink: 1;
+    .shrink_yes{
+        flex-shrink: 1;
     }
 
-    .shrink_on{
-    flex-shrink: 0;
+    .shrink_no{
+        flex-shrink: 0;
     }
 
     .grow_on{
-    flex-grow: 1;
+        flex-grow: 1;
     }
     .grow_off{
-    flex-grow: 0;
+        flex-grow: 0;
     }
 
     .border{ border: 1px red dashed;}
+    .border2{ border: 2px green dashed;}
+
+    .width33{width: 33%;}
+    .width50{width: 50%;}
+    .width100{width: 100%;}
 
     .bg_blue{background-color: blue;}
     .bg_yellow{background-color: yellow;}
     .bg_purple{background-color: purple;}
     .bg_pink{background-color: pink;}
     .bg_green{background-color: green;}
-    </style>
-    `;
+
+    .reset{
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+    }
+</style>
+      `;
       const rawHtml3 = _html`
-    <slot name="title">No Totle</slot>
+<nav id="rawhtml" class="bg_green flex_row space_between">
 
-    <nav class="flex_row space_between bg_blue">
-    <section class="grow_off shrink_on bg_yellow border">
-    <slot name="left_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
-    </section>
+<!-- left-icon -->
 
-    <section class="grow_off shrink_on bg_green">
-    <ul class="menu_x scroll_x">
-    <slot name="item">
-    <li>No Menu Item</li>
-    </slot>
+<section class="">    
+    <ui-switch for="aside_left">
+         <slot name="left_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+</section>
+
+<!-- menu list -->
+
+<section class="width75 border2 scroll_x">
+    <ul class="menu_x bg_grey reset">
+        <slot name="item">
+            <li>no items</li>
+        </slot>
     </ul>
-    </section>
+</section>
 
-    <section class="grow_off shrink_on border bg_yellow">
-    <slot name="right_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
-    </section>
-    </nav>
-    `;
-      const tplus = new TemplatePlus("ui_menu");
-      console.log(`rendering template ui-menu: `, tplus.id);
+<!-- right-icon -->
+
+<section class=""> 
+    <ui-switch for="aside_right">
+         <slot name="right_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+</section>
+
+</nav>
+     `;
       this.render(tplus.element);
-      this.initEventHandlers();
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -2322,7 +2372,7 @@ flex-grow: 0;
     // satisfies webcomponentlifecycle interface
     observedAttributes;
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["slot", "width", "height", "axis"];
+    static observedAttributes = ["id", "slot", "width", "height", "axis"];
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
@@ -2330,7 +2380,7 @@ flex-grow: 0;
     }
     connectedCallback() {
       this.controller.view.setupTemplate();
-      console.log("ui-Menu registered....");
+      console.log("ui-menu registered....");
     }
     disconnectedCallback() {
     }
@@ -2701,7 +2751,7 @@ color: white;
   var HTMLUiIconView = class {
     _shadowRoot;
     controller;
-    _slot;
+    _font_size;
     _width;
     _height;
     _href;
@@ -2712,11 +2762,11 @@ color: white;
     set items(value) {
       this._items = value;
     }
-    get slot() {
-      return this._slot;
+    get font_size() {
+      return this._font_size;
     }
-    set slot(value) {
-      this._slot = value;
+    set font_size(value) {
+      this._font_size = value;
     }
     get width() {
       return this._width;
@@ -2761,6 +2811,10 @@ color: white;
         color: white;
         }
 
+        :slotted(span){
+         font_size: ${this.font_size};
+        }
+
         </style>
         `;
       const rawHtml3 = _html`
@@ -2771,7 +2825,6 @@ color: white;
       const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
-      this.initEventHandlers();
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -2811,7 +2864,7 @@ color: white;
     // satisfies webcomponentlifecycle interface
     observedAttributes;
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["slot", "width", "height", "href"];
+    static observedAttributes = ["font_size", "width", "height", "href"];
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
