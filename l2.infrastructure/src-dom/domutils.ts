@@ -502,6 +502,7 @@ export class TemplatePlus{
   private templateId: string = "";
   private template: HTMLTemplateElement | null;
   private _templatesMap: Map<string,HTMLTemplateElement>;
+  private _remoteTemplates:HTMLTemplateElement[] = [];
   // acessors
   get id():string{return this.templateId};
   get map(): Map<string,HTMLTemplateElement>{return this._templatesMap};
@@ -514,9 +515,30 @@ export class TemplatePlus{
     this._templatesMap = new Map<string,HTMLTemplateElement>();
 
      this.template = this.localTemplate(templateId);
-   
   }
   // creation logic
+  public remoteTemplate(id:string):HTMLTemplateElement{
+    let temp = this.getTemplateElement(id);
+    let rct:HTMLTemplateElement; 
+    
+    if(id.trim()){
+
+      temp.then( t => {
+        console.log("remoteTemplate() rct = ", t);
+
+        // rct = t.cloneNode(true) as HTMLTemplateElement;
+
+        rct = t;
+
+        this.templateId = id;
+
+        return rct!;
+      })
+      
+    }
+ 
+    return this.createBlankTemplate();
+  }
   public localTemplate(id:string):HTMLTemplateElement{
     let temp = document.getElementById(id) as HTMLTemplateElement;
 
@@ -668,6 +690,7 @@ export class TemplatePlus{
 
     templateElements.forEach(el =>{
       this._templatesMap.set(el.id,el as HTMLTemplateElement);
+      this._remoteTemplates.push(el.cloneNode(true) as HTMLTemplateElement);
     });
 
     this.template = this._templatesMap.get(tempid)!;

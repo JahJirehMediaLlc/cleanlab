@@ -302,6 +302,7 @@
     templateId = "";
     template;
     _templatesMap;
+    _remoteTemplates = [];
     // acessors
     get id() {
       return this.templateId;
@@ -320,6 +321,19 @@
       this.template = this.localTemplate(templateId);
     }
     // creation logic
+    remoteTemplate(id) {
+      let temp = this.getTemplateElement(id);
+      let rct;
+      if (id.trim()) {
+        temp.then((t) => {
+          console.log("remoteTemplate() rct = ", t);
+          rct = t;
+          this.templateId = id;
+          return rct;
+        });
+      }
+      return this.createBlankTemplate();
+    }
     localTemplate(id) {
       let temp = document.getElementById(id);
       if (temp && id.trim()) {
@@ -441,6 +455,7 @@
       const templateElements = doc.querySelectorAll(`template`);
       templateElements.forEach((el) => {
         this._templatesMap.set(el.id, el);
+        this._remoteTemplates.push(el.cloneNode(true));
       });
       this.template = this._templatesMap.get(tempid);
       if (!this.template) this.template = createElement("template", {}, "");
@@ -1358,6 +1373,222 @@ flex-grow: 0;
   };
   window.customElements.define("ui-folder", HTMLUiFolder);
 
+  // ../../../l2.infrastructure/src-dom/fetchmgr.ts
+  var Fetch = class {
+    baseUrl = "http://localhost:3000";
+    pathName;
+    url;
+    constructor(context, pathName = "/data/screens.html") {
+      this.pathName = pathName;
+      this.url = new URL(this.baseUrl + this.pathName);
+      console.log("fetchgr....");
+    }
+    getJson() {
+      return [];
+    }
+    getHtml() {
+      let rc;
+      this.fetchHtml(this.pathName, rc);
+      return rc;
+    }
+    fetchHtml(path, output) {
+      const url = new URL(`http://localhost:3000/${path}`);
+      fetch(url).then((response) => response.text()).then((rawHtml3) => this.parseRawHtml(rawHtml3)).catch((e) => console.log(e));
+    }
+    parseRawHtml(rawhtml, elementName = "template") {
+      const dom = new DOMParser().parseFromString(rawhtml, "text/html");
+      const style = dom.querySelector("style");
+      const body = dom.querySelector("body");
+      const elements = dom.querySelectorAll(`${elementName}`);
+      console.log(`element type = ${elementName} :`, elements);
+      return elements;
+    }
+    fetchJson(path, output) {
+      const url = new URL(`http://localhost:3000/${path}`);
+      fetch(url).then((response) => response.json()).then((rawHJson) => output.innerHTML = JSON.stringify(this.parseRawJson(rawHJson))).catch((e) => console.log(e));
+    }
+    parseRawJson(rawjson) {
+      return {};
+    }
+  };
+
+  // ../../../l2.infrastructure/src-web-comps/ui-dialog.ts
+  var HTMLUIDialogView = class {
+    _shadowRoot;
+    controller;
+    _url = new URL("http://localhost:3000/");
+    _templates;
+    _tid;
+    _width;
+    _height;
+    pathName;
+    get url() {
+      return this._url;
+    }
+    set url(pathName) {
+      this._url.pathname = pathName;
+      this.setupTemplate();
+    }
+    get width() {
+      return this._width;
+    }
+    set width(value) {
+      this._width = value;
+    }
+    get height() {
+      return this._height;
+    }
+    set height(value) {
+      this._height = value;
+    }
+    get templates() {
+      return this._templates;
+    }
+    set templates(value) {
+      this._templates = value;
+    }
+    get tid() {
+      return this._tid;
+    }
+    set tid(value) {
+      this._tid = value;
+    }
+    constructor(shadowRoot) {
+      this._shadowRoot = shadowRoot;
+    }
+    setupTemplate() {
+      const rawCss4 = _css`
+        <style>
+        *,
+        *::after, 
+        *::before  {
+            box-sizing: border-box;
+            margin: 0;
+            padding:0;
+        }
+            
+        :host{
+            display:block;
+            contain:paint;
+            border: 3px green solid;
+            color: black;
+            background-color: cyan;
+        }
+
+        .border3{
+            border: 3px green solid;
+        }
+
+    .flex_row{
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        }
+
+    .flex_col{
+        display:flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .flex_center{
+        display:flex;
+        align-items: center ;
+        justify-content: center;
+    }
+
+
+    .space_between{
+        justify-content: space-between;
+    }
+    .space_around{
+        justify-content: space-around;
+    }
+
+        </style>
+        `;
+      const rawHtml3 = _html`
+        <header class="flex_row space_between">
+            <slot name="title"> </slot> 
+            <slot name="close"> </slot>
+        </header>
+
+       <p> ${this.tid} </p>
+       <p>${this.templates}</p>
+
+        <div id="output" class="border1">
+        <slot> </slot>
+        </div>
+
+        <button>Prev</button>
+        <button>Next</button>
+        `;
+      const tplus = new TemplatePlus("");
+      const myFetch = new Fetch("html");
+      console.log(myFetch.getHtml());
+      const rct = tplus.remoteTemplate(this.tid);
+      console.log("dialog rct :", rct);
+      tplus.initTemplate(rawCss4, rawHtml3);
+      this.render(tplus.element);
+      const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+    }
+    fetchHtml(path, output) {
+      const url = new URL(`http://localhost:3000/${path}`);
+      fetch(url).then((response) => response.text()).then((rawHtml3) => this.parseRawHtml(rawHtml3)).catch((e) => console.log(e));
+    }
+    parseRawHtml(rawhtml) {
+      const dom = new DOMParser().parseFromString(rawhtml, "text/html");
+      const style = dom.querySelector("style");
+      const body = dom.querySelector("body");
+      const templates = dom.querySelectorAll(`template`);
+      return templates;
+    }
+    render(node) {
+      if (node instanceof HTMLTemplateElement)
+        this._shadowRoot.appendChild(node.content);
+      else
+        this._shadowRoot.appendChild(node);
+    }
+    processClickEvent(event) {
+      const selectedElement = event.target;
+    }
+    processSubmitForm(evt) {
+    }
+  };
+  var HTMLUIDialogController = class {
+    view;
+    parent;
+    controller;
+    constructor(parent) {
+      this.parent = parent;
+      this.view = new HTMLUIDialogView(this.parent._shadowRoot);
+    }
+  };
+  var HTMLUIDialog = class extends HTMLElement {
+    _shadowRoot;
+    controller;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes;
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+    static observedAttributes = ["width", "height", "url", "templates", "tid"];
+    constructor() {
+      super();
+      this._shadowRoot = this.attachShadow({ mode: "open" });
+      this.controller = new HTMLUIDialogController(this);
+    }
+    connectedCallback() {
+      this.controller.view.setupTemplate();
+      console.log("ui-dialog registered....");
+    }
+    disconnectedCallback() {
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.controller.view[name] = newValue;
+    }
+  };
+  window.customElements.define("ui-dialog", HTMLUIDialog);
+
   // ../../../l2.infrastructure/src-web-comps/ui-panel.ts
   var HTMLUiPanelView = class {
     _shadowRoot;
@@ -1635,40 +1866,33 @@ flex-grow: 0;
         }
             
         :host{
-        display:block;
-        contain:paint;
+            display:block;
+            contain:paint;
 
-        border: 2px red dashed;
-        color: white;
-        background-color: orange;
+            color: white;
+            background-color: green;
         }
         </style>
         `;
       const rawHtml3 = _html`
-        <slot>
-        <p>ui-view component</p>
-        </slot>
         <div id="output">
-        place your content here 
-        (html id is "output")
         </div>
         `;
-      const ui_view = document.querySelector("ui-view");
       const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
       const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
       this.fetchHtml(this._url.pathname, outputEl);
     }
+    fetchHtml(path, output) {
+      const url = new URL(`http://localhost:3000/${path}`);
+      fetch(url).then((response) => response.text()).then((rawHtml3) => output.innerHTML = this.parseRawHtml(rawHtml3)).catch((e) => console.log(e));
+    }
     parseRawHtml(rawhtml) {
       const dom = new DOMParser().parseFromString(rawhtml, "text/html");
       const style = dom.querySelector("style");
       const body = dom.querySelector("body");
       return `<style>${style.innerHTML}</style> ${body.innerHTML}`;
-    }
-    fetchHtml(path, output) {
-      const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.text()).then((rawHtml3) => output.innerHTML = this.parseRawHtml(rawHtml3)).catch((e) => console.log(e));
     }
     render(node) {
       if (node instanceof HTMLTemplateElement)
@@ -1702,10 +1926,10 @@ flex-grow: 0;
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });
       this.controller = new HTMLUiViewController(this);
-      console.log("ui-view registered....");
     }
     connectedCallback() {
       this.controller.view.setupTemplate();
+      console.log("ui-view registered....");
     }
     disconnectedCallback() {
     }

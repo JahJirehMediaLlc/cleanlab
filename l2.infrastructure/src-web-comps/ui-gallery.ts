@@ -10,6 +10,7 @@ class HTMLUiGalleryView{
     galleryBtnForm:HTMLElement | null = null;
     selectedImageIndex:number = 0;
     gallerySize:number = 0;
+
     set SelectedImageIndex(index:number) {
 
         if(index < 0)index = this.gallerySize-1;
@@ -80,7 +81,7 @@ class HTMLUiGalleryView{
 
         });
     }
-       render(node:DocumentFragment | HTMLTemplateElement){
+    render(node:DocumentFragment | HTMLTemplateElement){
 
      if(!node){
         console.log("node is null");
@@ -125,7 +126,6 @@ class HTMLUiGalleryView{
     //    alert(`processSubmitFor ${<string>fdata.get("action")}   ${this.SelectedImageIndex}`);
     }
     //
- 
     setFocus(index:number){
         let newSelectedImage = this.galleryImagesList!.getElementsByTagName("img")[index];
         let oldSelectedImage = this.galleryImagesList!.getElementsByClassName("border")[0] as HTMLElement;

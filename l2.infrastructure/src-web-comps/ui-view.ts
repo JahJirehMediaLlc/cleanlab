@@ -28,26 +28,20 @@ class HTMLUiViewView{
         }
             
         :host{
-        display:block;
-        contain:paint;
+            display:block;
+            contain:paint;
 
-        border: 2px red dashed;
-        color: white;
-        background-color: orange;
+            color: white;
+            background-color: green;
         }
         </style>
         `;
 
         const rawHtml  = _html`
-        <slot>
-        <p>ui-view component</p>
-        </slot>
         <div id="output">
-        place your content here 
-        (html id is "output")
         </div>
         `;
-        const ui_view = document.querySelector("ui-view");
+    //    const ui_view = document.querySelector("ui-view");
         const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );
@@ -58,6 +52,15 @@ class HTMLUiViewView{
 
         this.fetchHtml(this._url.pathname, outputEl as HTMLElement);
     }
+
+    fetchHtml(path:string, output:HTMLElement){
+           const url = new  URL( `http://localhost:3000/${path}` );
+            fetch(url)
+            .then( response => response.text() )
+            .then( rawHtml => output.innerHTML = this.parseRawHtml(rawHtml) )
+            .catch( e => console.log(e) )
+    }
+
     parseRawHtml(rawhtml:string):string{
     const dom = new DOMParser().parseFromString(rawhtml,"text/html");
     const style = dom.querySelector("style");
@@ -68,23 +71,17 @@ class HTMLUiViewView{
     return `<style>${style!.innerHTML}</style> ${body!.innerHTML}`;
     }
 
-    fetchHtml(path:string, output:HTMLElement){
-           const url = new  URL( `http://localhost:3000/${path}` );
-            fetch(url)
-            .then( response => response.text() )
-            .then( rawHtml => output.innerHTML = this.parseRawHtml(rawHtml) )
-            .catch( e => console.log(e) )
-    }
-
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
         else
             this._shadowRoot.appendChild(node);
     }
+
     processClickEvent(event: Event){
         const selectedElement = event.target as HTMLElement;
     }
+
     processSubmitForm(evt:SubmitEvent){
         
     }
@@ -114,12 +111,11 @@ export class HTMLUiView extends HTMLElement implements WebComponentLifeCycle{
 
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this.controller = new HTMLUiViewController(this);
-
-        console.log("ui-view registered....");
     }
     connectedCallback(): void {
       this.controller.view.setupTemplate() ;
-     
+      
+      console.log("ui-view registered....");
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');

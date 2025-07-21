@@ -7,6 +7,7 @@ export *  from './ui-table.ts';
 export *  from './ui-gallery.ts';
 export *  from './ui-folder.ts';
 
+export *  from './ui-dialog.ts';
 export *  from './ui-panel.ts';
 export *  from './ui-view.ts';
 export *  from './ui-action.ts';

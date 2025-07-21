@@ -146,11 +146,11 @@ padding: 0;
    margin: 1rem;
 }
 
-.fullscreen{
+.fullscreen, .full_screen{
     position: fixed;
     display: block;
     width:100%;
-    z-index: 0;
+    z-index: 5;
     /* height: 99vh; */
     top:0;
     bottom:0;

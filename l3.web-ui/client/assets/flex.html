@@ -91,6 +91,9 @@
         <section id="output" class="container_item  width100">
             <h1>Flex Project</h1>
 
+            <ui-view url="/html/es6-ts-this.html">
+            </ui-view>
+
             <div id="log"></div>
         </section>
 
@@ -105,7 +108,12 @@
         </aside>
 
     </div>
+</main>
 
+<ui-dialog class="full_screen" templates="/html/screens.html" tid="table_template">
+    <h1 slot="title">dialog</h1>
+    <button slot="close">X</button>
+</ui-dialog>
 
 <footer id="footer" class="bg_green  position_bottom">
   <ui-menu id="ui_menu_footer">
@@ -637,7 +645,6 @@
         </section>
     </template>
 </div>
-
 
 <!-- Scripts -->
 <script src="/bundles/l2.infrastructure/src-page-mvc/flex/flex.js"></script>
