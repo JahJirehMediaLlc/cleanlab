@@ -4,12 +4,16 @@ class HTMLUiMenuView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiMenuController;
 
+     _id:string;
+
     _title:string[];
     _width:string;
     _height:string;
     _axis:string;
     _items: string[];
 
+       get id():string{return this._id};
+    set id(value:string){this._id=value};
     get items():string[]{return this._items};
     set items(value:string[]){this._items=value};
     get title():string[]{return this._title};
@@ -32,155 +36,21 @@ class HTMLUiMenuView{
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate() {
-    const rawCss = _css`
-    <style>
-    *,
-    *::after, 
-    *::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-    }
+      const tplus = new TemplatePlus("ui_menu");
 
-    :host{
-    display:block;
-    contain:paint;
-    color: white;
-    }
-
-    .scroll_x {
-    overflow-x: auto;
-    }
-
-    .scroll_y {
-    overflow-y: auto;
-    width: fit-content;
-    }
-
-    .menu_x{
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    color:white;
-    }
-
-    .menu_x > * {
-    display: inline-block;
-    flex-shrink: 1;
-    margin: 0;
-    padding: 0;
-    }
-
-    ::slotted(li){
-    display: block;
-    margin: 0;
-    padding: 0;
-    }
-
-    .menu_y {
-    display: flex;
-    flex-direction: column;
-    gap: 2;
-    text-align: center;
-    width: fit-content;
-    }
-
-    .menu_y > * {
-    display: block;
-    flex-shrink: 1;
-    margin: 0;
-    padding: 0;
-    }
-
-    .flex_row{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 1rem;
-    }
-
-    .flex_col{
-    display:flex;
-    flex-direction: column;
-    gap: 1rem;
-    }
-
-    .flex_center{
-    display:flex;
-    align-items: center ;
-    justify-content: center;
-    }
-
-    .basis_equal{
-    flex-basis: 1;
-    }
-
-    .space_between{
-    justify-content: space-between;
-    }
-    .space_around{
-    justify-content: space-around;
-    }
-
-    .shrink_off{
-    flex-shrink: 1;
-    }
-
-    .shrink_on{
-    flex-shrink: 0;
-    }
-
-    .grow_on{
-    flex-grow: 1;
-    }
-    .grow_off{
-    flex-grow: 0;
-    }
-
-    .border{ border: 1px red dashed;}
-
-    .bg_blue{background-color: blue;}
-    .bg_yellow{background-color: yellow;}
-    .bg_purple{background-color: purple;}
-    .bg_pink{background-color: pink;}
-    .bg_green{background-color: green;}
-    </style>
-    `;
-    const rawHtml  = _html`
-    <slot name="title">No Totle</slot>
-
-    <nav class="flex_row space_between bg_blue">
-    <section class="grow_off shrink_on bg_yellow border">
-    <slot name="left_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
-    </section>
-
-    <section class="grow_off shrink_on bg_green">
-    <ul class="menu_x scroll_x">
-    <slot name="item">
-    <li>No Menu Item</li>
-    </slot>
-    </ul>
-    </section>
-
-    <section class="grow_off shrink_on border bg_yellow">
-    <slot name="right_icon">
-    <ui-icon>#</ui-icon>
-    </slot>
-    </section>
-    </nav>
-    `;
-
-    const tplus = new TemplatePlus("ui_menu");
-
-    console.log(`rendering template ui-menu: `, tplus.id);
-
-    // tplus.initTemplate( rawCss, rawHtml );
+      const rawCss = _css`
+      <style>
+      </style>`;
+    
+      const rawHtml  = _html`
+     <nav class="flex_row space_between bg_blue"></nav>
+     `;
+    
+     // tplus.initTemplate( rawCss, rawHtml );
 
     this.render( tplus.element );
 
-    this.initEventHandlers();
+   // this.initEventHandlers();
 
     }
     render(node: HTMLTemplateElement|DocumentFragment){
@@ -228,7 +98,7 @@ export class HTMLUiMenu extends HTMLElement implements WebComponentLifeCycle{
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[]; 
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["slot","width", "height", "axis"];
+    static observedAttributes = ["id","slot","width", "height", "axis"];
 
     constructor(){
         super();
@@ -237,9 +107,9 @@ export class HTMLUiMenu extends HTMLElement implements WebComponentLifeCycle{
         this.controller = new HTMLUiMenuController(this);
     }
     connectedCallback(): void {
-      this.controller.view.setupTemplate();
+       this.controller.view.setupTemplate();
       
-       console.log("ui-Menu registered....");
+       console.log("ui-menu registered....");
     }
     disconnectedCallback(): void {
      //   console.log('disconnectedCallback Method not implemented.');
