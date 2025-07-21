@@ -126,17 +126,21 @@
 
     </div>
 </main>
+
 <footer id="footer" class="bg_green  position_bottom">
-    <ui-panel  id="panel_bottom"  bottom="0" position="relative"  height="4rem" template="footer_template" >
-        <ul slot="menu" class="menu_x scroll_x">
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
-            <li><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
-        </ul>
-    </ui-panel>
+  <ui-menu id="ui_menu_footer">
+        <span slot="title">Title</span>
+        <span slot="left_icon">#</span>
+
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
+        
+        <span slot="right_icon">[]</span>
+  </ui-menu> 
 </footer>
 
 <template id="ui_menu">

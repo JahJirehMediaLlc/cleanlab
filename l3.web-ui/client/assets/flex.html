@@ -61,17 +61,17 @@
 <body>
 
 <header id="header" class="position_top width100">
-    <ui-menu>
-    <span slot="title">Title</span>
-    <span slot="left_icon">#</span>
+    <ui-menu id="ui_menu_header">
+        <span slot="title">Title</span>
+        <span slot="left_icon">#</span>
 
-    <li slot="item"><a href="/welcome.html">Welcome</a></li>
-    <li slot="item"><a href="/cls.html">Cls</a></li>
-    <li slot="item"><a href="/markup.html">Markup Project</a></li>
-    <li slot="item"><a href="/appshell.html">App Shell</a></li>
-    <li slot="item"><a href="/flex.html">Flex Project</a></li>
+        <li slot="item"><a href="/welcome.html">Welcome</a></li>
+        <li slot="item"><a href="/cls.html">Cls</a></li>
+        <li slot="item"><a href="/markup.html">Markup Project</a></li>
+        <li slot="item"><a href="/appshell.html">App Shell</a></li>
+        <li slot="item"><a href="/flex.html">Flex Project</a></li>
 
-    <span slot="right_icon">[]</span>
+        <span slot="right_icon">[]</span>
     </ui-menu>
 </header>
 
@@ -106,6 +106,22 @@
 
     </div>
 </main>
+
+<footer id="footer" class="bg_green  position_bottom">
+  <ui-menu id="ui_menu_footer">
+        <span slot="title">Title</span>
+        <span slot="left_icon">#</span>
+
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Maps">Maps</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action=">Outline">Outline</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Commentary">Commentary</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="References">References</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="History">History</ui-action></li>
+        <li slot="item"><ui-action href="hef" dialog="dialog" slot="slot" action="Conclusion">Conclusion</ui-action></li>
+        
+        <span slot="right_icon">[]</span>
+  </ui-menu> 
+</footer>
 
 <template id="ui_menu">
 <style id="rawcss">

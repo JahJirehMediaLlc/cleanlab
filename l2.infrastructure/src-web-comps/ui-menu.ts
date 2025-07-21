@@ -12,7 +12,7 @@ class HTMLUiMenuView{
     _axis:string;
     _items: string[];
 
-       get id():string{return this._id};
+     get id():string{return this._id};
     set id(value:string){this._id=value};
     get items():string[]{return this._items};
     set items(value:string[]){this._items=value};
@@ -36,17 +36,162 @@ class HTMLUiMenuView{
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
     setupTemplate() {
-      const tplus = new TemplatePlus("ui_menu");
+      const tplus = new TemplatePlus("");
 
       const rawCss = _css`
-      <style>
-      </style>`;
+    <style id="rawcss">
+    *,
+    *::after, 
+    *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+    }
+
+    :host{
+        display:block;
+        contain:paint;
+        color: white;
+    }
+
+    ::slotted(span){
+     font-size: larger;
+    }
+
+    .scroll_x {
+     overflow-x: auto;
+    }
+
+    .scroll_y {
+        overflow-y: auto;
+        width: fit-content;
+    }
+
+    .menu_x{
+        display: flex;
+        gap: 1rem;
+    }
+
+
+    ::slotted(li){
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-shrink: 0;
+    }
+
+    .menu_y {
+        display: flex;
+        flex-direction: column;
+        gap: 2;
+        text-align: center;
+        width: fit-content;
+    }
+
+    .flex_row{
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+    }
+
+    .flex_col{
+        display:flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .flex_center{
+        display:flex;
+        align-items: center ;
+        justify-content: center;
+    }
+
+    .basis_equal{
+        flex-basis: 1;
+    }
+
+    .space_between{
+        justify-content: space-between;
+    }
+    
+    .space_around{
+        justify-content: space-around;
+    }
+
+    .shrink_yes{
+        flex-shrink: 1;
+    }
+
+    .shrink_no{
+        flex-shrink: 0;
+    }
+
+    .grow_on{
+        flex-grow: 1;
+    }
+    .grow_off{
+        flex-grow: 0;
+    }
+
+    .border{ border: 1px red dashed;}
+    .border2{ border: 2px green dashed;}
+
+    .width33{width: 33%;}
+    .width50{width: 50%;}
+    .width100{width: 100%;}
+
+    .bg_blue{background-color: blue;}
+    .bg_yellow{background-color: yellow;}
+    .bg_purple{background-color: purple;}
+    .bg_pink{background-color: pink;}
+    .bg_green{background-color: green;}
+
+    .reset{
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+    }
+</style>
+      `;
     
       const rawHtml  = _html`
-     <nav class="flex_row space_between bg_blue"></nav>
+<nav id="rawhtml" class="bg_green flex_row space_between">
+
+<!-- left-icon -->
+
+<section class="">    
+    <ui-switch for="aside_left">
+         <slot name="left_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+</section>
+
+<!-- menu list -->
+
+<section class="width75 border2 scroll_x">
+    <ul class="menu_x bg_grey reset">
+        <slot name="item">
+            <li>no items</li>
+        </slot>
+    </ul>
+</section>
+
+<!-- right-icon -->
+
+<section class=""> 
+    <ui-switch for="aside_right">
+         <slot name="right_icon">
+            <ui-icon>#</ui-icon>   
+        </slot>
+    </ui-switch>
+</section>
+
+</nav>
      `;
     
-     // tplus.initTemplate( rawCss, rawHtml );
+     tplus.initTemplate( rawCss, rawHtml );
 
     this.render( tplus.element );
 
