@@ -1441,6 +1441,11 @@ flex-grow: 0;
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
     }
+    initEventHandlers() {
+      this._shadowRoot.addEventListener("slotchange", this.processSlotChange.bind(this));
+      this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
+      this._shadowRoot.addEventListener("click", this.processClickEvent.bind(this));
+    }
     setupTemplate() {
       const rawCss4 = _css`
         <style>
@@ -1518,6 +1523,7 @@ flex-grow: 0;
       const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
+      this.initEventHandlers();
       const myFetch = new Fetch("html");
       myFetch.getTemplate("table_template").then((t) => {
         const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
@@ -1544,7 +1550,16 @@ flex-grow: 0;
     processClickEvent(event) {
       const selectedElement = event.target;
     }
-    processSubmitForm(evt) {
+    processSubmitForm(event) {
+      event.preventDefault();
+      const form = this._shadowRoot.querySelector("form");
+      const fdata = new FormData(form, event.submitter);
+      const form_input = fdata.get("action");
+      alert(form_input);
+    }
+    processSlotChange(event) {
+      let slot = event.target;
+      const items = slot.assignedElements().map((el) => el.innerHTML);
     }
   };
   var HTMLUIDialogController = class {

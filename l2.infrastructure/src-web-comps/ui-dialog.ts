@@ -25,6 +25,13 @@ class HTMLUIDialogView{
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
     }
+
+    private initEventHandlers(){
+        this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
+        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+        this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+    }
+
     setupTemplate() {
         const rawCss = _css`
         <style>
@@ -106,6 +113,8 @@ class HTMLUIDialogView{
         tplus.initTemplate( rawCss, rawHtml );
         this.render( tplus.element );
         
+         this.initEventHandlers();
+
         // show template in dialog
         const myFetch = new Fetch("html");
         myFetch.getTemplate("table_template").then( t => {
@@ -145,9 +154,24 @@ class HTMLUIDialogView{
         const selectedElement = event.target as HTMLElement;
     }
 
-    processSubmitForm(evt:SubmitEvent){
-        
+    processSubmitForm(event:SubmitEvent){
+        event.preventDefault();
+
+        const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
+        const fdata = new FormData(form, event.submitter);
+        const form_input = fdata.get("action") as string;
+
+        alert(form_input);
     }
+
+    processSlotChange(event:Event){
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const items = slot.assignedElements().map(el => el.innerHTML );
+        
+     //   this[slot.name] = this.items;
+    }
+
 }
 
 class HTMLUIDialogController{
