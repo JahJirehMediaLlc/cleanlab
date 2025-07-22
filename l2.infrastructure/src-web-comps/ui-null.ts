@@ -30,13 +30,9 @@ class HTMLUiNullView{
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
         this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
-<<<<<<< HEAD
-   setupTemplate() {
-<<<<<<< HEAD
-=======
-=======
+
     setupTemplate() {
->>>>>>> dev
+
         const rawCss = _css`
         <style>
         *,
@@ -61,7 +57,6 @@ class HTMLUiNullView{
         </slot>
         `;
 
->>>>>>> dev
         const tplus = new TemplatePlus("");
         
         tplus.initTemplate( rawCss, rawHtml );
