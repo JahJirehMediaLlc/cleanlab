@@ -27,7 +27,7 @@ class HTMLUiMenuView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        console.log("### menu constructor");
+      //  console.log("### menu constructor");
       //  this.setupTemplate();
     }
     private initEventHandlers(){
@@ -196,7 +196,6 @@ class HTMLUiMenuView{
     this.render( tplus.element );
 
    // this.initEventHandlers();
-
 
     }
     render(node: HTMLTemplateElement|DocumentFragment){

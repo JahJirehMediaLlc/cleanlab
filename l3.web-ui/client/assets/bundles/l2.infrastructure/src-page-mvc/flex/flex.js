@@ -1365,7 +1365,6 @@ flex-grow: 0;
     constructor(context, pathName = "/data/screens.html") {
       this.pathName = pathName;
       this.url = new URL(this.baseUrl + this.pathName);
-      console.log("fetchgr....");
     }
     getJson() {
       return [];
@@ -2404,7 +2403,6 @@ z-index: 8;
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
-      console.log("### menu constructor");
     }
     initEventHandlers() {
       this._shadowRoot.addEventListener("slotchange", this.processSlotChange.bind(this));

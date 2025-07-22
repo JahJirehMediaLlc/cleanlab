@@ -25,7 +25,7 @@ class HTMLUiActionView{
     private initEventHandlers(){
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
     }
-setupTemplate(){
+    setupTemplate(){
         const tplus = new TemplatePlus("");
         const rawCss  = _css`
         <style>

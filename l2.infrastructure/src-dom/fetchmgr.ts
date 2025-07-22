@@ -6,8 +6,6 @@ export class Fetch{
     constructor(context:"json" | "html", pathName:string = "/data/screens.html" ){
     this.pathName = pathName;
     this.url = new URL(this.baseUrl+this.pathName);
-
-    console.log("fetchgr....");
     }
 
     getJson():object[]{

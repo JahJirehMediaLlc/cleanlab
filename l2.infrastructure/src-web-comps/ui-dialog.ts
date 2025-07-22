@@ -140,8 +140,7 @@ class HTMLUIDialogView{
         else
             this._shadowRoot.appendChild(node);
     }
-
-    
+   
     processClickEvent(event: Event){
         const selectedElement = event.target as HTMLElement;
     }
