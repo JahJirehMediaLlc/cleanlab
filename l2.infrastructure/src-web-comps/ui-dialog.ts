@@ -79,38 +79,42 @@ class HTMLUIDialogView{
         `;
 
         const rawHtml  = _html`
+        <form>
         <header class="flex_row space_between">
             <slot name="title"> </slot> 
-            <slot name="close"> </slot>
+            
+        <button type="submit" name=="action" value="close">
+        <slot name="close"> </slot>
+        </button>
+            
         </header>
-
-       <p> ${this.tid} </p>
-       <p>${this.templates}</p>
 
         <div id="output" class="border1">
         <slot> </slot>
         </div>
 
-        <button>Prev</button>
-        <button>Next</button>
-        `;
+        <button type="submit" name=="action" value="prev">Prev</button>
+        <button type="submit" name=="action" value="next" >Next</button>
+        <select>
+        <option>template...</option>
+        </select>
+        </form>
+        `; 
     
+        // show dialog
         const tplus = new TemplatePlus("");
-        const myFetch = new Fetch("html");
-
-        console.log(myFetch.getHtml());
-
-        const rct = tplus.remoteTemplate(this.tid);
-
-        console.log("dialog rct :",rct);
-        
         tplus.initTemplate( rawCss, rawHtml );
-
         this.render( tplus.element );
+        
+        // show template in dialog
+        const myFetch = new Fetch("html");
+        myFetch.getTemplate("table_template").then( t => {
+            const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
 
-        const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+            outputEl!.appendChild(t.content);
+     });
 
-       // this.fetchHtml(this._url.pathname, outputEl as HTMLElement);
+     
     }
 
      fetchHtml(path:string, output:HTMLElement[]){
@@ -137,6 +141,7 @@ class HTMLUIDialogView{
             this._shadowRoot.appendChild(node);
     }
 
+    
     processClickEvent(event: Event){
         const selectedElement = event.target as HTMLElement;
     }

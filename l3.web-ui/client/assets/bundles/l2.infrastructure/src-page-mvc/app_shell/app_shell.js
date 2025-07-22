@@ -1370,22 +1370,24 @@ flex-grow: 0;
     getJson() {
       return [];
     }
-    getHtml() {
-      let rc;
-      this.fetchHtml(this.pathName, rc);
-      return rc;
+    async getTemplate(tid) {
+      const tlist = await this.fetchHtml("template");
+      return tlist.find((e) => e.id == tid);
     }
-    fetchHtml(path, output) {
-      const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.text()).then((rawHtml3) => this.parseRawHtml(rawHtml3)).catch((e) => console.log(e));
+    async fetchHtml(etype) {
+      const url = new URL(`http://localhost:3000/${this.pathName}`);
+      const response = await fetch(url);
+      const rawHtml3 = await response.text();
+      const htmlList = this.parseRawHtml(rawHtml3, etype);
+      return htmlList;
     }
     parseRawHtml(rawhtml, elementName = "template") {
       const dom = new DOMParser().parseFromString(rawhtml, "text/html");
       const style = dom.querySelector("style");
       const body = dom.querySelector("body");
       const elements = dom.querySelectorAll(`${elementName}`);
-      console.log(`element type = ${elementName} :`, elements);
-      return elements;
+      const aElements = Array.from(elements);
+      return aElements;
     }
     fetchJson(path, output) {
       const url = new URL(`http://localhost:3000/${path}`);
@@ -1493,29 +1495,35 @@ flex-grow: 0;
         </style>
         `;
       const rawHtml3 = _html`
+        <form>
         <header class="flex_row space_between">
             <slot name="title"> </slot> 
-            <slot name="close"> </slot>
+            
+        <button type="submit" name=="action" value="close">
+        <slot name="close"> </slot>
+        </button>
+            
         </header>
-
-       <p> ${this.tid} </p>
-       <p>${this.templates}</p>
 
         <div id="output" class="border1">
         <slot> </slot>
         </div>
 
-        <button>Prev</button>
-        <button>Next</button>
+        <button type="submit" name=="action" value="prev">Prev</button>
+        <button type="submit" name=="action" value="next" >Next</button>
+        <select>
+        <option>template...</option>
+        </select>
+        </form>
         `;
       const tplus = new TemplatePlus("");
-      const myFetch = new Fetch("html");
-      console.log(myFetch.getHtml());
-      const rct = tplus.remoteTemplate(this.tid);
-      console.log("dialog rct :", rct);
       tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
-      const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+      const myFetch = new Fetch("html");
+      myFetch.getTemplate("table_template").then((t) => {
+        const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+        outputEl.appendChild(t.content);
+      });
     }
     fetchHtml(path, output) {
       const url = new URL(`http://localhost:3000/${path}`);

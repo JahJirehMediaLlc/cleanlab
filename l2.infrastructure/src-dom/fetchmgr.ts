@@ -14,20 +14,21 @@ export class Fetch{
     return [];
     }
 
-    getHtml():string[]{
-        let rc;
+    async getTemplate(tid:string):Promise<HTMLTemplateElement>{
+        
+       const tlist =  await this.fetchHtml("template");
 
-        this.fetchHtml(this.pathName, rc);
-
-        return rc;
+        return tlist.find(e => e.id == tid) as HTMLTemplateElement;
     }
 
-    fetchHtml(path:string, output:string[]){
-    const url = new  URL( `http://localhost:3000/${path}` );
-        fetch(url)
-        .then( response => response.text() )
-        .then( rawHtml => this.parseRawHtml(rawHtml)  )
-        .catch( e => console.log(e) )
+    async fetchHtml(etype:string):Promise<HTMLElement[]>{
+        const url = new  URL( `http://localhost:3000/${this.pathName}` );
+        
+       const response = await fetch(url);
+       const rawHtml = await response.text();
+       const htmlList = this.parseRawHtml(rawHtml,etype);
+       
+       return htmlList;
     }
 
     parseRawHtml(rawhtml:string, elementName:string = "template"):HTMLElement[]{
@@ -36,9 +37,12 @@ export class Fetch{
     const body = dom.querySelector("body");
     const elements = dom.querySelectorAll(`${elementName}`);
 
-    console.log(`element type = ${elementName} :`,elements);
+    const aElements = Array.from(elements);
 
-    return elements as unknown as HTMLElement[];
+    // console.log(`element type = ${elementName} :`, elements);
+    // console.log(`element type = ${elementName} :`, aElements);
+
+    return aElements as HTMLElement[];
     }
 
     fetchJson(path:string, output:HTMLElement){
