@@ -40,7 +40,7 @@ export class Fetch{
     const aElements = Array.from(elements);
 
     // console.log(`element type = ${elementName} :`, elements);
-     console.log(`element type = ${elementName} :`, aElements);
+    //  console.log(`element type = ${elementName} :`, aElements);
 
     return aElements as HTMLElement[];
     }
