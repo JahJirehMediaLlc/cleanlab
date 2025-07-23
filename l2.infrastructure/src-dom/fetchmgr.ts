@@ -10,7 +10,8 @@ export class Fetch{
 
     async getJson(id:string):Promise<object>{
 
-    return {};
+        return {};
+
     }
 
     async getTemplate(tid:string):Promise<HTMLTemplateElement>{
@@ -34,12 +35,12 @@ export class Fetch{
     const dom = new DOMParser().parseFromString(rawhtml,"text/html");
     const style = dom.querySelector("style");
     const body = dom.querySelector("body");
-    const elements = dom.querySelectorAll(`${elementName}`);
+    const elements = dom.querySelectorAll(`${elementName}` );
 
     const aElements = Array.from(elements);
 
     // console.log(`element type = ${elementName} :`, elements);
-    // console.log(`element type = ${elementName} :`, aElements);
+     console.log(`element type = ${elementName} :`, aElements);
 
     return aElements as HTMLElement[];
     }
