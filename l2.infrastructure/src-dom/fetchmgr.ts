@@ -32,17 +32,17 @@ export class Fetch{
     }
 
     parseRawHtml(rawhtml:string, elementName:string = "template"):HTMLElement[]{
-    const dom = new DOMParser().parseFromString(rawhtml,"text/html");
-    const style = dom.querySelector("style");
-    const body = dom.querySelector("body");
-    const elements = dom.querySelectorAll(`${elementName}` );
+        const dom = new DOMParser().parseFromString(rawhtml,"text/html");
+        const style = dom.querySelector("style");
+        const body = dom.querySelector("body");
+        const elements = dom.querySelectorAll(`${elementName}` );
 
-    const aElements = Array.from(elements);
+        const aElements = Array.from(elements);
 
-    // console.log(`element type = ${elementName} :`, elements);
-    //  console.log(`element type = ${elementName} :`, aElements);
+        // console.log(`element type = ${elementName} :`, elements);
+        //  console.log(`element type = ${elementName} :`, aElements);
 
-    return aElements as HTMLElement[];
+        return aElements as HTMLElement[];
     }
 
     async fetchJson(id:string):Promise<object[]>{
