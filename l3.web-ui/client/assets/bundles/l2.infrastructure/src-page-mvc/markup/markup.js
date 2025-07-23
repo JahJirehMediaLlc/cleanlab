@@ -1521,7 +1521,7 @@ flex-grow: 0;
                 <header class="flex_row space_between">
                     <slot name="title"> </slot> 
 
-                    <button type="submit" name=="action" value="close">
+                    <button type="submit" name="action" value="close">
                     <slot name="close"> </slot>
                     </button>
                 </header>
@@ -1530,11 +1530,11 @@ flex-grow: 0;
                     <slot> </slot>
                 </div>
 
-                <button type="submit" name=="action" value="prev">Prev</button>
+                <button type="submit" name="action" value="prev">Prev</button>
 
-                <button type="submit" name=="action" value="next" >Next</button>
+                <button type="submit" name="action" value="next">Next</button>
 
-                <select name="templateID">
+                <select name="tid">
                     <option value="" >template...</option>
                 </select>
             </form>`;
@@ -1549,7 +1549,7 @@ flex-grow: 0;
       });
       myFetch.fetchHtml("template").then((alist) => {
         const select = this._shadowRoot.querySelector(`select`);
-        const opts = alist.map((item) => `<option>${item.id}</option>`);
+        const opts = alist.map((item) => `<option value="${item.id}">${item.id}</option>`);
         select.replaceChildren();
         select.insertAdjacentHTML("afterbegin", opts.join(" "));
       });

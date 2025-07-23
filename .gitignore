@@ -2,5 +2,3 @@ CleanLab.code-workspace
 bundler/
 *.js
 *.map
-client/assets/bundles/
-wwwroot/
