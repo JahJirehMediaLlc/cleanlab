@@ -34,99 +34,112 @@ class HTMLUIDialogView{
 
     setupTemplate() {
         const rawCss = _css`
-        <style>
-        *,
-        *::after, 
-        *::before  {
-            box-sizing: border-box;
-            margin: 0;
-            padding:0;
-        }
-            
-        :host{
-            display:block;
-            contain:paint;
-            border: 3px green solid;
-            color: black;
-            background-color: cyan;
-        }
+            <style>
+                *,
+                *::after, 
+                *::before  {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding:0;
+                }
 
-        .border3{
-            border: 3px green solid;
-        }
+                :host{
+                    display:block;
+                    contain:paint;
+                    border: 3px green solid;
+                    color: black;
+                    background-color: cyan;
+                }
 
-    .flex_row{
-        display:flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 1rem;
-        }
+                .border3{
+                    border: 3px green solid;
+                }
 
-    .flex_col{
-        display:flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+                .flex_row{
+                    display:flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    gap: 1rem;
+                }
 
-    .flex_center{
-        display:flex;
-        align-items: center ;
-        justify-content: center;
-    }
+                .flex_col{
+                    display:flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
 
+                .flex_center{
+                    display:flex;
+                    align-items: center ;
+                    justify-content: center;
+                }
 
-    .space_between{
-        justify-content: space-between;
-    }
-    .space_around{
-        justify-content: space-around;
-    }
+                .space_between{
+                    justify-content: space-between;
+                }
 
-        </style>
-        `;
+                .space_around{
+                    justify-content: space-around;
+                }
 
+            </style>`;
+
+        
         const rawHtml  = _html`
-        <form>
-        <header class="flex_row space_between">
-            <slot name="title"> </slot> 
-            
-        <button type="submit" name=="action" value="close">
-        <slot name="close"> </slot>
-        </button>
-            
-        </header>
+            <form>
+                <header class="flex_row space_between">
+                    <slot name="title"> </slot> 
 
-        <div id="output" class="border1">
-        <slot> </slot>
-        </div>
+                    <button type="submit" name=="action" value="close">
+                    <slot name="close"> </slot>
+                    </button>
+                </header>
 
-        <button type="submit" name=="action" value="prev">Prev</button>
-        <button type="submit" name=="action" value="next" >Next</button>
-        <select>
-        <option>template...</option>
-        </select>
-        </form>
-        `; 
-    
+                <div id="output" class="border1">
+                    <slot> </slot>
+                </div>
+
+                <button type="submit" name=="action" value="prev">Prev</button>
+
+                <button type="submit" name=="action" value="next" >Next</button>
+
+                <select name="templateID">
+                    <option value="" >template...</option>
+                </select>
+            </form>`; 
+
         // show dialog
+        
         const tplus = new TemplatePlus("");
+
         tplus.initTemplate( rawCss, rawHtml );
         this.render( tplus.element );
         
-         this.initEventHandlers();
+        this.initEventHandlers();
 
         // show template in dialog
         const myFetch = new Fetch("html");
+
         myFetch.getTemplate("table_template").then( t => {
             const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
 
             outputEl!.appendChild(t.content);
-     });
+        });
 
+        myFetch.fetchHtml("template").then( alist => {
+            const select = this._shadowRoot.querySelector(`select`);
+
+            const opts = alist.map(item => `<option>${item.id}</option>`);
+
+            select!.replaceChildren(); 
+
+            select!.insertAdjacentHTML("afterbegin", opts.join(" "));
+
+        });
      
     }
 
-     fetchHtml(path:string, output:HTMLElement[]){
+    fetchHtml(path:string, output:HTMLElement[]){
            const url = new  URL( `http://localhost:3000/${path}` );
             fetch(url)
             .then( response => response.text() )
@@ -159,9 +172,10 @@ class HTMLUIDialogView{
 
         const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
         const fdata = new FormData(form, event.submitter);
-        const form_input = fdata.get("action") as string;
+        const action = fdata.get("action") as string;
+        const tid = fdata.get("tid") as string;
 
-        alert(form_input);
+        alert(`${action}   ${tid}`);
     }
 
     processSlotChange(event:Event){

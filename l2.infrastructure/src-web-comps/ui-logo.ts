@@ -1,15 +1,15 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
 
-let bg_url:string = `url("images/jmc2.png")`;
-
-
 class HTMLUiLogoView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiLogoController;
     _id:string;
     _src:string;
     _href:string;
+    _bg_color:string;
 
+    get bg_color():string{ return this._bg_color}
+    set bg_color(value:string){this._bg_color = value}
     get id():string{ return this._id}
     set id(value:string){this._id = value}
     get src():string{ return this._src}
@@ -19,6 +19,7 @@ class HTMLUiLogoView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
+        this.bg_color = "black";
     }
     private initEventHandlers(){
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
@@ -50,7 +51,7 @@ class HTMLUiLogoView{
                 }
 
                 .bg_image_cover{
-                    background-image: ${bg_url};
+                    background-image: url("${this.src}");
                     background-repeat: no-repeat;
                     background-size: cover;
                     background-position: center center;
@@ -59,7 +60,7 @@ class HTMLUiLogoView{
                 }
 
                 .bg_image_contain{
-                    background-image: ${bg_url};
+                    background-image: url("${this.src}");
                     background-repeat: no-repeat;
                     background-size: contain;
                     background-position: center center;
@@ -68,10 +69,11 @@ class HTMLUiLogoView{
                 }
 
                 .bg_image{
-                    background-image: ${bg_url};
+                    background-image: url("${this.src}");
                     background-repeat: no-repeat;
                     background-size: 100% 100%;
                     background-position: 0% 0%;
+                    background-color: ${this.bg_color};
                 }
 
                 .full_screen{
@@ -82,7 +84,7 @@ class HTMLUiLogoView{
             </style>
         `;
         const rawHtml  = _html`
-        <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
+        <button id="logo" title="${this.src}" class="bg_image full_screen">
         </button>
         `;
         const tplus = new TemplatePlus("");
@@ -122,7 +124,7 @@ export class HTMLUiLogo extends HTMLElement implements WebComponentLifeCycle{
     // satisfies webcomponentlifecycle interface
    observedAttributes: string[]; 
    // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["id", "src", "href"];
+   static observedAttributes = ["id", "src", "bg_color"];
 
     constructor(){
         super();

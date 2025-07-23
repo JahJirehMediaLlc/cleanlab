@@ -1366,8 +1366,8 @@ flex-grow: 0;
       this.pathName = pathName;
       this.url = new URL(this.baseUrl + this.pathName);
     }
-    getJson() {
-      return [];
+    async getJson(id) {
+      return {};
     }
     async getTemplate(tid) {
       const tlist = await this.fetchHtml("template");
@@ -1388,12 +1388,15 @@ flex-grow: 0;
       const aElements = Array.from(elements);
       return aElements;
     }
-    fetchJson(path, output) {
-      const url = new URL(`http://localhost:3000/${path}`);
-      fetch(url).then((response) => response.json()).then((rawHJson) => output.innerHTML = JSON.stringify(this.parseRawJson(rawHJson))).catch((e) => console.log(e));
+    async fetchJson(id) {
+      const url = new URL(`http://localhost:3000/${this.pathName}`);
+      const response = await fetch(url);
+      const rawJson = JSON.parse(await response.json());
+      const jsonString = this.parseRawJson(rawJson);
+      return rawJson;
     }
     parseRawJson(rawjson) {
-      return {};
+      return JSON.stringify(rawjson);
     }
   };
 
@@ -1448,78 +1451,77 @@ flex-grow: 0;
     }
     setupTemplate() {
       const rawCss4 = _css`
-        <style>
-        *,
-        *::after, 
-        *::before  {
-            box-sizing: border-box;
-            margin: 0;
-            padding:0;
-        }
-            
-        :host{
-            display:block;
-            contain:paint;
-            border: 3px green solid;
-            color: black;
-            background-color: cyan;
-        }
+            <style>
+                *,
+                *::after, 
+                *::before  {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding:0;
+                }
 
-        .border3{
-            border: 3px green solid;
-        }
+                :host{
+                    display:block;
+                    contain:paint;
+                    border: 3px green solid;
+                    color: black;
+                    background-color: cyan;
+                }
 
-    .flex_row{
-        display:flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        gap: 1rem;
-        }
+                .border3{
+                    border: 3px green solid;
+                }
 
-    .flex_col{
-        display:flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
+                .flex_row{
+                    display:flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    gap: 1rem;
+                }
 
-    .flex_center{
-        display:flex;
-        align-items: center ;
-        justify-content: center;
-    }
+                .flex_col{
+                    display:flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
 
+                .flex_center{
+                    display:flex;
+                    align-items: center ;
+                    justify-content: center;
+                }
 
-    .space_between{
-        justify-content: space-between;
-    }
-    .space_around{
-        justify-content: space-around;
-    }
+                .space_between{
+                    justify-content: space-between;
+                }
 
-        </style>
-        `;
+                .space_around{
+                    justify-content: space-around;
+                }
+
+            </style>`;
       const rawHtml3 = _html`
-        <form>
-        <header class="flex_row space_between">
-            <slot name="title"> </slot> 
-            
-        <button type="submit" name=="action" value="close">
-        <slot name="close"> </slot>
-        </button>
-            
-        </header>
+            <form>
+                <header class="flex_row space_between">
+                    <slot name="title"> </slot> 
 
-        <div id="output" class="border1">
-        <slot> </slot>
-        </div>
+                    <button type="submit" name=="action" value="close">
+                    <slot name="close"> </slot>
+                    </button>
+                </header>
 
-        <button type="submit" name=="action" value="prev">Prev</button>
-        <button type="submit" name=="action" value="next" >Next</button>
-        <select>
-        <option>template...</option>
-        </select>
-        </form>
-        `;
+                <div id="output" class="border1">
+                    <slot> </slot>
+                </div>
+
+                <button type="submit" name=="action" value="prev">Prev</button>
+
+                <button type="submit" name=="action" value="next" >Next</button>
+
+                <select name="templateID">
+                    <option value="" >template...</option>
+                </select>
+            </form>`;
       const tplus = new TemplatePlus("");
       tplus.initTemplate(rawCss4, rawHtml3);
       this.render(tplus.element);
@@ -1528,6 +1530,12 @@ flex-grow: 0;
       myFetch.getTemplate("table_template").then((t) => {
         const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
         outputEl.appendChild(t.content);
+      });
+      myFetch.fetchHtml("template").then((alist) => {
+        const select = this._shadowRoot.querySelector(`select`);
+        const opts = alist.map((item) => `<option>${item.id}</option>`);
+        select.replaceChildren();
+        select.insertAdjacentHTML("afterbegin", opts.join(" "));
       });
     }
     fetchHtml(path, output) {
@@ -1554,8 +1562,9 @@ flex-grow: 0;
       event.preventDefault();
       const form = this._shadowRoot.querySelector("form");
       const fdata = new FormData(form, event.submitter);
-      const form_input = fdata.get("action");
-      alert(form_input);
+      const action = fdata.get("action");
+      const tid = fdata.get("tid");
+      alert(`${action}   ${tid}`);
     }
     processSlotChange(event) {
       let slot = event.target;
@@ -2228,13 +2237,19 @@ z-index: 8;
   window.customElements.define("ui-switch", HTMLUiSwitch);
 
   // ../../../l2.infrastructure/src-web-comps/ui-logo.ts
-  var bg_url = `url("images/jmc2.png")`;
   var HTMLUiLogoView = class {
     _shadowRoot;
     controller;
     _id;
     _src;
     _href;
+    _bg_color;
+    get bg_color() {
+      return this._bg_color;
+    }
+    set bg_color(value) {
+      this._bg_color = value;
+    }
     get id() {
       return this._id;
     }
@@ -2255,6 +2270,7 @@ z-index: 8;
     }
     constructor(shadowRoot) {
       this._shadowRoot = shadowRoot;
+      this.bg_color = "black";
     }
     initEventHandlers() {
       this._shadowRoot.addEventListener("submit", this.processSubmitForm.bind(this));
@@ -2285,7 +2301,7 @@ z-index: 8;
                 }
 
                 .bg_image_cover{
-                    background-image: ${bg_url};
+                    background-image: url("${this.src}");
                     background-repeat: no-repeat;
                     background-size: cover;
                     background-position: center center;
@@ -2294,7 +2310,7 @@ z-index: 8;
                 }
 
                 .bg_image_contain{
-                    background-image: ${bg_url};
+                    background-image: url("${this.src}");
                     background-repeat: no-repeat;
                     background-size: contain;
                     background-position: center center;
@@ -2303,10 +2319,11 @@ z-index: 8;
                 }
 
                 .bg_image{
-                    background-image: ${bg_url};
+                    background-image: url("${this.src}");
                     background-repeat: no-repeat;
                     background-size: 100% 100%;
                     background-position: 0% 0%;
+                    background-color: ${this.bg_color};
                 }
 
                 .full_screen{
@@ -2317,7 +2334,7 @@ z-index: 8;
             </style>
         `;
       const rawHtml3 = _html`
-        <button id="logo" title="images/jmc2.png" class="bg_image full_screen">
+        <button id="logo" title="${this.src}" class="bg_image full_screen">
         </button>
         `;
       const tplus = new TemplatePlus("");
@@ -2352,7 +2369,7 @@ z-index: 8;
     // satisfies webcomponentlifecycle interface
     observedAttributes;
     // this property must be static inorder to receive attributechangedcallback allsbe 
-    static observedAttributes = ["id", "src", "href"];
+    static observedAttributes = ["id", "src", "bg_color"];
     constructor() {
       super();
       this._shadowRoot = this.attachShadow({ mode: "open" });

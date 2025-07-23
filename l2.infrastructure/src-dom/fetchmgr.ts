@@ -8,8 +8,9 @@ export class Fetch{
     this.url = new URL(this.baseUrl+this.pathName);
     }
 
-    getJson():object[]{
-    return [];
+    async getJson(id:string):Promise<object>{
+
+    return {};
     }
 
     async getTemplate(tid:string):Promise<HTMLTemplateElement>{
@@ -43,15 +44,17 @@ export class Fetch{
     return aElements as HTMLElement[];
     }
 
-    fetchJson(path:string, output:HTMLElement){
-        const url = new  URL( `http://localhost:3000/${path}` );
-        fetch(url)
-        .then( response => response.json() )
-        .then( rawHJson => output.innerHTML = JSON.stringify(this.parseRawJson(rawHJson)) )
-        .catch( e => console.log(e) )
+    async fetchJson(id:string):Promise<object[]>{
+       const url = new  URL( `http://localhost:3000/${this.pathName}` );
+       const response = await fetch(url);
+       const rawJson = JSON.parse(await response.json());
+       const jsonString = this.parseRawJson(rawJson);
+       
+       return rawJson;
     }
 
-    parseRawJson(rawjson:string):object{
-        return {}
+    parseRawJson(rawjson:object):string{
+        return JSON.stringify(rawjson);
     }
+
 }

@@ -24,7 +24,7 @@ class HTMLUiTableView{
 
             fetch("http://localhost:3000/data/persons.json")
                 .then(resp=> resp.json())
-                .then(data=> {
+                .then(data => {
 
                     const obj = data[0];
                     const rows = [];
@@ -50,7 +50,7 @@ class HTMLUiTableView{
 
     }
     //
-     render(node: HTMLTemplateElement|DocumentFragment){
+    render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
         else
