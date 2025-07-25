@@ -1,5 +1,6 @@
 CleanLab.code-workspace
-client/assets/bundles
-bundler/
+l3.web-ui/client/assets/bundles
+l3.web-ui/client/wwwroot/data
+l3.web-ui/bundler
 *.js
 *.map

@@ -110,6 +110,8 @@ class HTMLUiGalleryView{
                 .menu_y > * {
                     margin: 0;
                     padding: 0;
+                    align-items: center ;
+                    justify-content: left;
                 }
 
                 .flex_row{
