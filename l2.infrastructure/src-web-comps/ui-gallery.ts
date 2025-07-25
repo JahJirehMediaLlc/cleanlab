@@ -281,7 +281,6 @@ class HTMLUiGalleryView{
         console.log(`items2    :`, items2);
         console.log(`items count : ${items.length}`);
     }
-
     //
     setFocus(index:number){
 
@@ -298,7 +297,6 @@ class HTMLUiGalleryView{
 
         Css.border(newSelectedImage,true);
     } 
-    
     //
     startSlide(){
 
