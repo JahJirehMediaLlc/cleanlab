@@ -466,158 +466,170 @@ img{
 
     <template id="ui_gallery_template">
         <style>
-*,
-*::after, 
-*::before  {
-    box-sizing: border-box;
-    margin: 0;
-    padding:0;
-}
+        *,
+        *::after, 
+        *::before  {
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        }
 
-img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    /* margin: 0px auto; */
-}
+        :host{
+            display:block;
+            contain:paint;
+            color: black;
+            background-color: cyan;
+        }
 
-            .flex_row{
-                display:flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                gap: 1rem;
-            }
-            .flex_col{
-                display:flex;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .flex_col > *{
-                /*width:100%;*/
-                background-color: #605d8a;
-            }
+        ::slotted(.gallery_item){
+            width: 2rem;
+            height: 2rem;
+        }
 
-            .padding2{padding:2rem;}
-            img{
-                display: block;
-                max-width: 100%;
-                margin: 0 auto;
-            }
-            .img_current{
-                text-align: center;
-                width: auto;
-                height: 100%;
-                margin: 0 auto;
-            }
-            .img_thumbnail{
-                width: 3rem;
-                height: 3rem;
-                margin: .31rem;
-            }
+        img{
+        display: block;
+        max-width: 100%;
+        height: auto;
+        /* margin: 0px auto; */
+        }
 
-            .menu_x{
-                display: flex;
-                list-style: none;
-                gap: 2rem;
-                overflow-x: scroll;
-            }
-            .menu_x > *{
-                flex-shrink: 0;
-            }
-            .menu_y{
-                display: flex;
-                flex-direction:column;
-                gap: .51rem;
-                text-align: center;
-                list-style: none;
-                width: fit-content;;
-                border: none;
-            }
-            .menu_y > *{
-                margin:0;
-                padding:0;
-            }
+        .flex_row{
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        }
+        .flex_col{
+        display:flex;
+        flex-direction: column;
+        gap: 1rem;
+        }
+        .flex_col > *{
+        /*width:100%;*/
+        background-color: #605d8a;
+        }
 
-            .grow_on{
-                flex-grow: 1;
-            }
-            .grow_off{
-                flex-grow: 0;
-            }
+        .padding2{padding:2rem;}
+        img{
+        display: block;
+        max-width: 100%;
+        margin: 0 auto;
+        }
+        .img_current{
+        text-align: center;
+        width: auto;
+        height: 100%;
+        margin: 0 auto;
+        }
+        .img_thumbnail{
+        width: 3rem;
+        height: 3rem;
+        margin: .31rem;
+        }
 
-            .shrink_on{
-                flex-shrink: 1;
-            }
-            .shrink_off{
-                flex-shrink: 0;
-            }
+        .menu_x{
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        overflow-x: scroll;
+        }
+        .menu_x > *{
+        flex-shrink: 0;
+        }
+        .menu_y{
+        display: flex;
+        flex-direction:column;
+        gap: .51rem;
+        text-align: center;
+        list-style: none;
+        width: fit-content;;
+        border: none;
+        }
+        .menu_y > *{
+        margin:0;
+        padding:0;
+        }
 
-            figure{
-                background-color: mediumpurple;
-                width: 90%;
-                height:90%;
-                margin: 0 auto;
-                /*overflow: clip;*/
-            }
-            figcaption{
-                text-align: center;
-                margin: .0rem;
-            }
-            ul figcaption{
-                display: none;
-            }
+        .grow_on{
+        flex-grow: 1;
+        }
+        .grow_off{
+        flex-grow: 0;
+        }
 
-            .fullscreen{
-                position: relative;
-                top: 2rem;
-                height: 80vh;
-                /*width: 100%;*/
-                background-color: darkcyan;
-            }
+        .shrink_on{
+        flex-shrink: 1;
+        }
+        .shrink_off{
+        flex-shrink: 0;
+        }
 
-            .width100{width:100%;}
-            .width75{width:75%;}
-            .width50{width:50%;}
-            .width50{width:25%;}
+        figure{
+        background-color: mediumpurple;
+        width: 90%;
+        height:90%;
+        margin: 0 auto;
+        /*overflow: clip;*/
+        }
+        figcaption{
+        text-align: center;
+        margin: .0rem;
+        }
+        ul figcaption{
+        display: none;
+        }
 
-            .fullwidth{
-                width: 100%;
-            }
+        .fullscreen{
+        position: relative;
+        top: 2rem;
+        height: 80vh;
+        /*width: 100%;*/
+        background-color: darkcyan;
+        }
 
-            .bg_blue{
-                background-color: cornflowerblue;
-            }
+        .width100{width:100%;}
+        .width75{width:75%;}
+        .width50{width:50%;}
+        .width50{width:25%;}
 
-            .bg_green{
-                background-color: darkolivegreen;
-            }
+        .fullwidth{
+        width: 100%;
+        }
 
-            .bg_grey{
-                background-color: darkgray;
-            }
+        .bg_blue{
+        background-color: cornflowerblue;
+        }
 
-            .gallery_btns_container{
-                text-align: center;
-            }
-            .gallery_btns_container button{
-                margin: 1rem;
-            }
+        .bg_green{
+        background-color: darkolivegreen;
+        }
 
-            .gallery_container{
-                display: flex;
-                flex-direction: row;
-                gap: 1rem;
-            }
-            .gallery_container_item{
-                height: 15rem;
-                /*min-height: 15rem;*/
-                display: block;
-            }
+        .bg_grey{
+        background-color: darkgray;
+        }
 
-            .gallery_item{
-                height: 4rem;
-                width:  4rem;
-            }
+        .gallery_btns_container{
+        text-align: center;
+        }
+        .gallery_btns_container button{
+        margin: 1rem;
+        }
+
+        .gallery_container{
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        }
+        .gallery_container_item{
+        height: 15rem;
+        /*min-height: 15rem;*/
+        display: block;
+        }
+
+        .gallery_item{
+        height: 1rem;
+        width:  1rem;
+        }
         </style>
         <section>
             <!-- Thumbnails and Current Image -->
@@ -625,21 +637,16 @@ img{
             <!--  Thumbnails -->
                 <div class="gallery_container_item border grow_off shrink_off scroll_y">
                         <ul id="gallery_images_list" class="menu_y">
-                            <li>
-                                <figure class="border">
-                                    <img class="img_thumbnail" src="images/ArchitecuralDiagrams.jpg" alt="Alt">
-                                    <figcaption>ArchitecuralDiagrams.jpg</figcaption>
-                                </figure>
-                            </li>
+                            <slot class="image" name="image"></slot>
                         </ul>
-                    </div>
+                </div>
                 <!--  Current Image -->
                 <div class="gallery_container_item border grow_on1 shrink_on1 bg_blue width75">
                         <figure>
                             <img id="current_image" class="img_current" src="" alt="">
                             <figcaption>current figure</figcaption>
                         </figure>
-                    </div>
+                 </div>
             </div>
             <br>
             <!--   Gallery Form Controls and Buttons -->

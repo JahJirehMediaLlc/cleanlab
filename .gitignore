@@ -1,4 +1,5 @@
 CleanLab.code-workspace
+client/assets/bundles
 bundler/
 *.js
 *.map

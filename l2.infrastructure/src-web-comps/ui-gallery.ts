@@ -1,4 +1,5 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
+import {Fetch} from  '../src-dom/fetchmgr.ts';
 
 class HTMLUiGalleryView{
     _shadowRoot: ShadowRoot;
@@ -10,6 +11,21 @@ class HTMLUiGalleryView{
     galleryBtnForm:HTMLElement | null = null;
     selectedImageIndex:number = 0;
     gallerySize:number = 0;
+
+    _imageid:string;
+    _width:string;
+    _id:string;
+    _height:string;
+    _path:string;
+
+    get id():string{return this._id}
+    set id(value:string){this._id = value}
+    get path():string{return this._path}
+    set path(value:string){this._path = value}
+    get width():string{return this._width}
+    set width(value:string){this._width = value}
+    get height():string{return this._height}
+    set height(value:string){this._height = value}
 
     set SelectedImageIndex(index:number) {
 
@@ -26,67 +42,184 @@ class HTMLUiGalleryView{
     //
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.template = new TemplatePlus("ui_gallery_template", new URL("http://localhost:3000/data/web_components.html"));
-
+        this.initEventHandlers();
     }
+
+    private initEventHandlers(){
+        this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
+        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+        this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+    }
+
     //
     setupTemplate(){
-        this.template.content().then( frag => {
+        const rawCss = _css`
+            <style>
+                *,
+                *::after, 
+                *::before  {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding:0;
+                }
 
-            // init user controls
-            this.currentImage = frag.getElementById("current_image") as HTMLImageElement;
-            this.galleryImagesList = frag.getElementById("gallery_images_list") as HTMLUListElement;
-            this.galleryBtnForm = frag.getElementById("gallery_btn_form") as HTMLFormElement;
+                :host{
+                    display:block;
+                    contain:paint;
+                    color: black;
+                    background-color: cyan;
+                }
 
-           let images_li = document.querySelectorAll("ui-gallery li");
-       
-            this.gallerySize = images_li.length;
+                ::slotted(li){
+                   color: red;
+                    margin: 0 auto;
+                    padding: 0;
+                    text-align: center;
+                    border: 1px red solid;
+                    align-items: center ;
+                    justify-content: center;
+                }
 
-         //   console.log("Gallery size",this.gallerySize );
+                 ::slotted(.fig){
+                   color: red;
+                    margin: 0;
+                    padding: 0;
+                }
 
-            const tn_img = document.createElement("li");
-            tn_img.insertAdjacentHTML("afterbegin",`<img class="img_thumbnai" src="images/icons/icon72.png">`);
+                .menu_x {
+                    display: flex;
+                    list-style: none;
+                    gap: 2rem;
+                    overflow-x: auto;
+                    color:white;
+                }
+
+                .menu_x > * {
+                    flex-shrink: 0;
+                }
+
+                .menu_y {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.51rem;
+                    text-align: center;
+                    list-style: none;
+                    width: fit-content;
+                }
+
+                .menu_y > * {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .flex_row{
+                    display:flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    gap: 1rem;
+                }
+
+                .flex_col{
+                    display:flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+
+                .flex_center{
+                    display:flex;
+                    align-items: center ;
+                    justify-content: center;
+                }
+
+                .space_between{justify-content: space-between;}
+
+                .space_around{justify-content: space-around;}
+
+                .shrink_off{flex-shrink: 1;}
+                .shrink_on{ flex-shrink: 0;}
+
+                .grow_on{flex-grow: 1;}
+                .grow_off{flex-grow: 0;}
+
+                .hide{display:none;}
+
+                .border{border: 1px red solid;}
+                .border2{border: 2px green solid;}
+                .border3{border: 3px blue solid;}
+
+                figcaption0{
+                display:none;
+                }
+
+            </style>`;
+
+        const rawHtml  = _html`
+            <section>
+                    <!-- Thumbnails and Current Image -->
+                    <div class="flex_row space_around">
+                    <!--  Thumbnails -->
+                        <div class="border grow_off shrink_off scroll_y">
+                                <ul id="gallery_images_list" class="menu_y">
+                                    <slot class="image" name="image"></slot>
+                                </ul>
+                        </div>
+                        <!--  Current Image -->
+                        <div class="border grow_on1 shrink_on1 bg_blue width75">
+                                <figure>
+                                    <img id="current_image" class="img_current" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
+                                    <figcaption>current figure.</figcaption>
+                                </figure>
+                        </div>
+                    </div>
+                    <br>
+                    <!--   Gallery Form Controls and Buttons -->
+                    <div  class="gallery_btns_container">
+                        <form id="gallery_btn_form"  action="">
+                            <button name="action" value="prev">prev.</button>
+                            <button name="action" value="next">next.</button>
+
+                            <label for="slide_show">AutoScroll</label>
+                            <input id="slide_show"  name="auto_scroll" type="checkbox">
+
+                            <label for="slider">Hide Slider</label>
+                            <input id="slider" name="slider" type="checkbox">
+                        </form>
+                    </div>
+             </section>`; 
+
+        const tplus = new TemplatePlus("");
+
+        tplus.initTemplate( rawCss, rawHtml );
+
+        this.render(tplus.element);
+
+       const myFetch = new Fetch("html","/html/web_components.html");
+       const myFetch2 = new Fetch("html","/html/screens.html");
+
+        myFetch2.getTemplate("gallery_template").then( t => console.log(t));
+
+        myFetch.getTemplate("ui_gallery_template").then( frag => {
+
+           // init user controls
+           this.currentImage = frag.content.getElementById("current_image") as HTMLImageElement;
+           this.galleryImagesList = frag.content.getElementById("gallery_images_list") as HTMLUListElement;
+           this.galleryBtnForm = frag.content.getElementById("gallery_btn_form") as HTMLFormElement;
            
-            // add a thumbnail for each gallery image
-            //add user specified thumb nails into ul
+           let ui_gallery = document.getElementById("gallery1") as HTMLElement;
 
-            this.galleryImagesList.replaceChildren();
+           console.log("gallery ",ui_gallery);
+           console.log(this.currentImage);
+           console.log(this.galleryImagesList);
+           console.log(this.galleryBtnForm);
 
-            images_li.forEach( li => this.galleryImagesList!.appendChild(li) );
-
-            // register event listners
-            if(this.galleryImagesList && this.galleryBtnForm){
-                this.galleryImagesList.addEventListener("click", this.processClickEvent.bind(this));
-                this.galleryBtnForm.addEventListener("submit", this.processSubmitForm.bind(this));
-
-                console.log("event handlers sucessfully registered..");
-            }
-            else{
-                console.log("event handlers not registered..");
-            }
-
-            // feych data to be used in template
-            fetch("http://localhost:3000/data/gallery.json")
-                .then(resp=> resp.json())
-                .then(data=>{
-                    // process image list for shadow dom display
-                   // console.log("gallry data fetched...",data);
-                })
-
-            this.SelectedImageIndex = 2;
-
-            this.render(frag);
-
-            this.setFocus(this.SelectedImageIndex);
+           console.log("Gallery size",this.gallerySize );
 
         });
-    }
-    render(node:DocumentFragment | HTMLTemplateElement){
 
-     if(!node){
-        console.log("node is null");
-        return;
     }
+ 
+    //
+    render(node:DocumentFragment | HTMLTemplateElement){
 
         if(node  instanceof DocumentFragment) 
             this._shadowRoot.appendChild(node);
@@ -125,8 +258,24 @@ class HTMLUiGalleryView{
 
     //    alert(`processSubmitFor ${<string>fdata.get("action")}   ${this.SelectedImageIndex}`);
     }
+    processSlotChange(event:Event){
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const items = slot.assignedElements().map(el => el );
+        const items2 = slot.assignedNodes().map(el => el );
+
+        console.log(`slot :`, slot);
+        console.log(`slot name: ${this[slot.name]}`);
+        console.log(`items :`, items[0].children[0].children[0]);
+        console.log(`items2 :`, items2);
+        console.log(`items count : ${items.length}`);
+    }
+
     //
     setFocus(index:number){
+
+        return; 
+
         let newSelectedImage = this.galleryImagesList!.getElementsByTagName("img")[index];
         let oldSelectedImage = this.galleryImagesList!.getElementsByClassName("border")[0] as HTMLElement;
 
@@ -138,7 +287,12 @@ class HTMLUiGalleryView{
 
         Css.border(newSelectedImage,true);
     } 
-    startSlide(){}
+    
+    //
+    startSlide(){
+
+    }
+
 }
 //
 class HTMLUiGalleryController{
@@ -157,7 +311,7 @@ export class HTMLUiGallery extends HTMLElement implements WebComponentLifeCycle{
     // satisfies webcomponentlifecycle interface
    observedAttributes: string[]; 
    // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["width", "height", "url"];
+   static observedAttributes = ["width", "height", "path", "imageid"];
 
     constructor(){
         super();

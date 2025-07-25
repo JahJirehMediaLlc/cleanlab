@@ -508,7 +508,7 @@ export class TemplatePlus{
   get map(): Map<string,HTMLTemplateElement>{return this._templatesMap};
   get element():HTMLTemplateElement{return this.template!}
 
-  constructor(templateId: string , url:URL = new URL("http://localhost:3000/data/screens.html")) {
+  constructor(templateId: string , url:URL = new URL("http://localhost:3000/html/screens.html")) {
     this.templateId = templateId;
     this.template = this.createTemplate();
     this._url = url;

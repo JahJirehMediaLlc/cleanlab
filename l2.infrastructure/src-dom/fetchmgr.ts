@@ -3,9 +3,12 @@ export class Fetch{
     private pathName:string;
     private url:URL;
 
-    constructor(context:"json" | "html", pathName:string = "/data/screens.html" ){
-    this.pathName = pathName;
-    this.url = new URL(this.baseUrl+this.pathName);
+    get path():string{return this.pathName};
+    set path(value:string){ this.pathName = value};
+
+    constructor(context:"json" | "html", pathName:string = "/html/screens.html" ){
+    this.path = pathName;
+    this.url = new URL(this.baseUrl+this.path);
     }
 
     async getJson(id:string):Promise<object>{

@@ -47,6 +47,16 @@
             color: yellow;
         }
 
+        img{
+            width: 2rem;
+            height: 2rem;
+        }
+
+        figure{
+            margin: 0;
+            padding: 0;
+            border: 2px black solid;
+        }
         .button_shift {
             width: 100px;
             height: 50px;
@@ -91,8 +101,75 @@
         <section id="output" class="container_item  width100">
             <h1>Flex Project</h1>
 
-            <ui-view url="/html/es6-ts-this.html">
-            </ui-view>
+            <!-- <ui-view url="/html/es6-ts-this.html">
+            </ui-view> -->
+
+            <ui-gallery id="gallery1"y>
+         
+                <li slot="image">
+                    <figure class="fig">
+                        <img class="gallery_item" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
+                        <figcaption>Architecural</figcaption>
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/a-devtools-savesettings-function.png" alt="">
+                        <!-- <figcaption>a-devtools-savesettings-function</figcaption> -->
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/a-depiction-breaking-long-running-tasks-up.png" alt="">
+                        <!-- <figcaption>a-depiction-breaking-long-running-tasks-up.pngn</figcaption> -->
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/a-task-event-function-call.png" alt="">
+                        <!-- <figcaption>a-task-event-function-call.png</figcaption> -->
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/AtmState.jpg" alt="">
+                        <!-- <figcaption>AtmState.jpg</figcaption> -->
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/browser-dom-tree.gif" alt="">
+                        <!-- <figcaption>browser-dom-tree.gif</figcaption> -->
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/a-long-task-function-calls.png" alt="">
+                        <!-- <figcaption>a-long-task-function-calls.png</figcaption> -->
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/browser-dns-lookup-latency.jpg" alt="">
+                        <!-- <figcaption>browser-dns-lookup-latency.jpg</figcaption> -->
+                    </figure>
+                </li>
+
+                <li slot="image">
+                    <figure>
+                        <img class="gallery_item" src="images/browser-rendering-css-rule.png" alt="">
+                        <!-- <figcaption>browser-rendering-css-rule.png</figcaption> -->
+                    </figure>
+                </li>
+         
+            </ui-gallery>
 
             <div id="log"></div>
         </section>
@@ -110,10 +187,10 @@
     </div>
 </main>
 
-<ui-dialog class="full_screen" templates="/html/screens.html" tid="table_template">
-    <h1 slot="title">dialog</h1>
+<!-- <ui-dialog id="dlg1" class="full_screen" templates="/html/screens.html" tid="gallery_template">
+    <b slot="title">dialog</b>
     <span slot="close">X</span>
-</ui-dialog>
+</ui-dialog> -->
 
 <footer id="footer" class="bg_green  position_bottom">
   <ui-menu id="ui_menu_footer">
