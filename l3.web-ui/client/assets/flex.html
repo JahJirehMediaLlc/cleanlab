@@ -17,7 +17,21 @@
     <link rel="stylesheet" href="/css/flex.css"> 
 
     <style>
-      
+                *,
+        *::after, 
+        *::before  {
+            box-sizing: border-box;
+            margin: 0;
+            padding:0;
+        }
+
+        img{
+            display: inline-block;
+            max-width: 100%;
+            height: auto;
+            /* margin: 0px auto; */
+        }
+
         .bg_image_cover{
             background-image: url("images/jmc2.png");
             background-repeat: no-repeat;
@@ -47,16 +61,6 @@
             color: yellow;
         }
 
-        img{
-            width: 2rem;
-            height: 2rem;
-        }
-
-        figure{
-            margin: 0;
-            padding: 0;
-            border: 2px black solid;
-        }
         .button_shift {
             width: 100px;
             height: 50px;

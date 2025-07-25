@@ -67,28 +67,18 @@ class HTMLUiGalleryView{
                     display:block;
                     contain:paint;
                     color: black;
-                    background-color: cyan;
+                    background-color: grey;
                 }
 
                 ::slotted(li){
-                   color: red;
-                    margin: 0 auto;
-                    padding: 0;
-                    text-align: center;
-                    border: 1px red solid;
-                    align-items: center ;
-                    justify-content: center;
-                }
-
-                 ::slotted(.fig){
-                   color: red;
-                    margin: 0;
-                    padding: 0;
+                    color:red;
+                    list-style: none;
+                    width: 100%;
+                    border: 3px blue solid;
                 }
 
                 .menu_x {
                     display: flex;
-                    list-style: none;
                     gap: 2rem;
                     overflow-x: auto;
                     color:white;
@@ -101,18 +91,19 @@ class HTMLUiGalleryView{
                 .menu_y {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.51rem;
-                    text-align: center;
+                    gap: 1rem;
                     list-style: none;
-                    width: fit-content;
+                    width: 10rem;
+                    overflow-y: auto;
+                    padding: 0;
+                    margin: 0;
+                }
+                
+                .menu_y > * {
+                    padding: 0px;
+                    margin: 0px;
                 }
 
-                .menu_y > * {
-                    margin: 0;
-                    padding: 0;
-                    align-items: center ;
-                    justify-content: left;
-                }
 
                 .flex_row{
                     display:flex;
@@ -133,6 +124,11 @@ class HTMLUiGalleryView{
                     justify-content: center;
                 }
 
+                .text_center{
+                    text-align:center;
+                    margin: 0 auto;
+                }
+
                 .space_between{justify-content: space-between;}
 
                 .space_around{justify-content: space-around;}
@@ -145,36 +141,27 @@ class HTMLUiGalleryView{
 
                 .hide{display:none;}
 
-                .border{border: 1px red solid;}
+                .border{border: 5px red solid;}
                 .border2{border: 2px green solid;}
                 .border3{border: 3px blue solid;}
 
                 figcaption0{
                 display:none;
                 }
+                
+               .height20{height:20rem;}
+               .height23{height:23rem;}
 
+               .img_current{
+                  border: 4px black dashed;
+                  height:15rem;
+               }
             </style>`;
 
         const rawHtml  = _html`
             <section>
-                    <!-- Thumbnails and Current Image -->
-                    <div class="flex_row space_around">
-                    <!--  Thumbnails -->
-                        <div class="border grow_off shrink_off scroll_y">
-                                <ul id="gallery_images_list" class="menu_y">
-                                    <slot class="image" name="image"></slot>
-                                </ul>
-                        </div>
-                        <!--  Current Image -->
-                        <div class="border grow_on1 shrink_on1 bg_blue width75">
-                                <figure>
-                                    <img id="current_image" class="img_current" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
-                                    <figcaption>current figure.</figcaption>
-                                </figure>
-                        </div>
-                    </div>
-                    <br>
-                    <!--   Gallery Form Controls and Buttons -->
+                     <!--   Gallery Form Controls and Buttons -->
+
                     <div  class="gallery_btns_container">
                         <form id="gallery_btn_form"  action="">
                             <button name="action" value="prev">prev.</button>
@@ -187,6 +174,28 @@ class HTMLUiGalleryView{
                             <input id="slider" name="slider" type="checkbox">
                         </form>
                     </div>
+
+                    <!-- Thumbnails -->
+
+                    <div class="flex_row space_around">
+
+                        <div class="border text_center height20" >
+                            <ul id="gallery_images_list" class="menu_y scroll_y height20" >
+                                <slot class="image" name="image"></slot>
+                            </ul>
+                        </div>
+
+                        <!--  Current Image -->
+
+                        <div class="border bg_blue height20">
+                                <figure>
+                                    <img id="current_image" class="img_current height23" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
+                                    <figcaption>current figure.</figcaption>
+                                </figure>
+                        </div>
+                    </div>
+                    <br>
+
              </section>`; 
 
         const tplus = new TemplatePlus("");
@@ -266,10 +275,10 @@ class HTMLUiGalleryView{
         const items = slot.assignedElements().map(el => el );
         const items2 = slot.assignedNodes().map(el => el );
 
-        console.log(`slot :`, slot);
-        console.log(`slot name: ${this[slot.name]}`);
-        console.log(`items :`, items[0].children[0].children[0]);
-        console.log(`items2 :`, items2);
+        console.log(`slot      :`, slot);
+        console.log(`slot name : ${this[slot.name]}`);
+        console.log(`items     :`, items[0].children[0].children[0]);
+        console.log(`items2    :`, items2);
         console.log(`items count : ${items.length}`);
     }
 
