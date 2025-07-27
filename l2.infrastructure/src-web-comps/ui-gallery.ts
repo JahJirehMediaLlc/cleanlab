@@ -6,6 +6,7 @@ class HTMLUiGalleryView{
     controller:HTMLUiGalleryController;
     template:TemplatePlus;
     galleryImagesList:HTMLElement | null = null;
+    li_items:string[] | null = null;
     currentImage:HTMLImageElement | null = null;
     selectedElement:HTMLElement| null = null;
     galleryBtnForm:HTMLElement | null = null;
@@ -48,7 +49,7 @@ class HTMLUiGalleryView{
     private initEventHandlers(){
         this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-        this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+     //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
     }
 
     //
@@ -73,8 +74,16 @@ class HTMLUiGalleryView{
                 ::slotted(li){
                     color:red;
                     list-style: none;
-                    width: 100%;
+                    margin: 0 2rem;
+                    width: fit-content;
                     border: 3px blue solid;
+                }
+
+                img{
+                    display: inline-block;
+                    max-width: 100%;
+                    height: auto;
+                    /* margin: 0px auto; */
                 }
 
                 .menu_x {
@@ -93,17 +102,9 @@ class HTMLUiGalleryView{
                     flex-direction: column;
                     gap: 1rem;
                     list-style: none;
-                    width: 10rem;
                     overflow-y: auto;
                     padding: 0;
-                    margin: 0;
                 }
-                
-                .menu_y > * {
-                    padding: 0px;
-                    margin: 0px;
-                }
-
 
                 .flex_row{
                     display:flex;
@@ -145,17 +146,31 @@ class HTMLUiGalleryView{
                 .border2{border: 2px green solid;}
                 .border3{border: 3px blue solid;}
 
-                figcaption0{
-                display:none;
-                }
+                figcaption0{display:none;}
                 
-               .height20{height:20rem;}
-               .height23{height:23rem;}
+                .height15{height:15rem;}
+                .height20{height:20rem;}
+                .height23{height:23rem;}
+
+                 .width{width:fit-content;}
+                 .width25{width:25%;}
+                 .width50{width:50%;}
+                 .width75{width:75%;}
+                 .width100{width:100%;}
+               
 
                .img_current{
                   border: 4px black dashed;
-                  height:15rem;
                }
+
+               .bg_image{
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                    background-position: 0% 0%;
+                    background-color: red};
+                }
+
+
             </style>`;
 
         const rawHtml  = _html`
@@ -175,79 +190,65 @@ class HTMLUiGalleryView{
                         </form>
                     </div>
 
-                    <!-- Thumbnails -->
+                    <!-- Thumbnails and current image container-->
 
-                    <div class="flex_row space_around">
+                    <div id="flex_container" class="flex_row">
 
-                        <div class="border text_center height20" >
-                            <ul id="gallery_images_list" class="menu_y scroll_y height20" >
-                                <slot class="image" name="image"></slot>
+                     <!--  Thumbnails List-->
+
+                        <div class="border text_center height20 grow_off width25" >
+                      
+                            <ul id="gallery_images_list" class="menu_y scroll_y height15">
+                              <slot name="image"></slot>
                             </ul>
+                        
                         </div>
 
                         <!--  Current Image -->
 
-                        <div class="border bg_blue height20">
+                        <div id="current_image" class="border bg_blue height20 width100 bg_image" style="background-image: url(images/a-task-event-function-call.png);">
+                          <!--
                                 <figure>
-                                    <img id="current_image" class="img_current height23" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
-                                    <figcaption>current figure.</figcaption>
+                                    <img  class="img_current height15" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
+                                    <figcaption class="text_center">current figure.</figcaption>
                                 </figure>
+
+                                -->
                         </div>
                     </div>
                     <br>
 
              </section>`; 
-
+  
         const tplus = new TemplatePlus("");
 
         tplus.initTemplate( rawCss, rawHtml );
+    
+        console.log(this.li_items!);
 
         this.render(tplus.element);
-
-       const myFetch = new Fetch("html","/html/web_components.html");
-       const myFetch2 = new Fetch("html","/html/screens.html");
-
-        myFetch2.getTemplate("gallery_template").then( t => console.log(t));
-
-        myFetch.getTemplate("ui_gallery_template").then( frag => {
-
-           // init user controls
-           this.currentImage = frag.content.getElementById("current_image") as HTMLImageElement;
-           this.galleryImagesList = frag.content.getElementById("gallery_images_list") as HTMLUListElement;
-           this.galleryBtnForm = frag.content.getElementById("gallery_btn_form") as HTMLFormElement;
-           
-           let ui_gallery = document.getElementById("gallery1") as HTMLElement;
-
-           console.log("gallery ",ui_gallery);
-           console.log(this.currentImage);
-           console.log(this.galleryImagesList);
-           console.log(this.galleryBtnForm);
-
-           console.log("Gallery size",this.gallerySize );
-
-        });
-
     }
- 
-    //
+
     render(node:DocumentFragment | HTMLTemplateElement){
 
         if(node  instanceof DocumentFragment) 
             this._shadowRoot.appendChild(node);
         else
             this._shadowRoot.appendChild(node.content);
-       
+       console.log("rendering ui-gallery")
     }
     processClickEvent(event: Event){
         this.selectedElement = event.target as HTMLElement;
 
-        if (this.selectedElement.tagName.toUpperCase() !== "IMG")return;
+         alert(`processSubmitFor ${this.selectedElement.tagName}}   ${this.SelectedImageIndex}`);
+
+        return;
+
+        if (this.selectedElement!.tagName.toUpperCase() !== "IMG")return;
 
         let images = this.galleryImagesList!.getElementsByTagName("img");
 
         this.SelectedImageIndex = Array.from(images).indexOf(this.selectedElement as HTMLImageElement);
-
-      //   alert(`processSubmitFor ${this.selectedElement.tagName}}   ${this.SelectedImageIndex}`);
 
        //this.setFocus(this.SelectedImageIndex);
     }
@@ -256,7 +257,7 @@ class HTMLUiGalleryView{
 
         const fdata = new FormData(evt.target as HTMLFormElement, evt.submitter);
 
-        //   for(const [key,value] of fdata)console.log(`${key} : ${value}`);
+     //for(const [key,value] of fdata)console.log(`${key} : ${value}`);
 
         switch( <string>fdata.get("action") ){
             case "prev":
@@ -265,23 +266,47 @@ class HTMLUiGalleryView{
             case "next":
                 this.SelectedImageIndex += 1;
                 break;
+             case "image_selected":
+                this.showCurrentImage(<string>fdata.get("src"), <string>fdata.get("title"))
+                break;
         }
 
-    //    alert(`processSubmitFor ${<string>fdata.get("action")}   ${this.SelectedImageIndex}`);
-    }
-    processSlotChange(event:Event){
-        let slot = event.target as HTMLSlotElement;
-        // list of elements with slot name
-        const items = slot.assignedElements().map(el => el );
-        const items2 = slot.assignedNodes().map(el => el );
-
-        console.log(`slot      :`, slot);
-        console.log(`slot name : ${this[slot.name]}`);
-        console.log(`items     :`, items[0].children[0].children[0]);
-        console.log(`items2    :`, items2);
-        console.log(`items count : ${items.length}`);
     }
     //
+    processSlotChange(event:Event){
+        
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const li_items_dom = slot.assignedNodes().map(el => el );  
+    
+        this.li_items = [];
+
+        li_items_dom.forEach(li => {
+            
+            const image = (li as HTMLElement).querySelector("img");
+            const fcaption = (li as HTMLElement).querySelector("figcaption");
+            
+            let li_items_sdom = `
+                <li>
+                  <form>
+                    <button type="submit" name="action" value="image_selected">
+                      <img src="${image!.src}" title="${fcaption!.innerText}"
+                    </button>
+                    <input type="text" name="src" value="${image!.src}" hidden>
+                    <input type="text" name="title" value="${fcaption!.innerText}" hidden>
+                  </form>
+                </li>
+            `;
+
+            this.li_items!.push(li_items_sdom);
+            this.gallerySize = this.li_items!.length;
+        }); 
+
+        const ul = this._shadowRoot.querySelector("[id=gallery_images_list]");
+
+        ul?.replaceChildren();
+        ul?.insertAdjacentHTML("afterbegin",this.li_items.join(" "));
+    }
     setFocus(index:number){
 
         return; 
@@ -300,6 +325,14 @@ class HTMLUiGalleryView{
     //
     startSlide(){
 
+    }
+     showCurrentImage(src:string, title:string){
+
+        const currentImmage = this._shadowRoot.getElementById("current_image");
+        const bg_style = `background-image: url(${src});`
+        
+        currentImmage?.setAttribute("style",  `${bg_style}`);
+        currentImmage?.setAttribute("title",  `${title}`);
     }
 
 }
