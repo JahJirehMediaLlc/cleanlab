@@ -8,7 +8,7 @@ const cacheFiles = [
     'markup.html',
     'cls.html',
     'appshell.html',
-    'data/web_components.html',
+    'html/sdom_templates.html',
     'html/es6-ts-this.html',
     'html/js-for-loops.html',
     'manifest_welcome.json',
