@@ -1,5 +1,5 @@
-import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
-
+import {_html, _css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
 class HTMLUiContactView{
     template:TemplatePlus;
@@ -22,8 +22,6 @@ class HTMLUiContactView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-
-        this.setupTemplate();
     }
     setupTemplate() {
         const rawCss = _css`

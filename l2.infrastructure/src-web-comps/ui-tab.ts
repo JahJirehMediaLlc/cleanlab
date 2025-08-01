@@ -1,34 +1,60 @@
-import {TemplatePlus} from "../src-dom/domutils.ts";
+import {_html, _css, WebComponentLifeCycle} from '../src-dom/domutils.ts';
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
-class HTMLUiTabView{
+export class HTMLUiTabView{
     template:TemplatePlus;
     _shadowRoot: ShadowRoot;
+    _id:string;
+    _label:string;
+    _slot:string;
+    _topic:string;
+
+
+    get id():string{return this._id}
+    set id(value:string){this._id = value}
+
+    get lable():string{return this._label}
+    set lable(value:string){this._label = value}
+
+    get slot():string{return this._slot}
+    set slot(value:string){this._slot = value}
+
+    get topic():string{return this._topic}
+    set topic(value:string){this._topic = value}
 
     constructor(shadowRoot: ShadowRoot) {
 
         this._shadowRoot = shadowRoot;
-        this.template = new TemplatePlus("ui_tab_template", new URL("http://localhost:3000/data/web_components.html"));
 
-        this.setupTemplate();
     }
     setupTemplate(){
+         const rawCss = _css`
+            <style>
 
-        this.template.content().then( frag => {
+                :host{
+                    display:block;
+                    contain:paint;
+                    color: black;
+                    background-color: green;
+                }
 
-            // customize the doc fragment
+            ::slotted(h3){
+                color: yellow;
+                padding:0;
+                margin:0;
+            }
+            </style>
+        `;
 
-            fetch("http://localhost:3000/data/data.json")
-                .then(resp=> resp.json())
-                .then(data=> {
+        const rawHtml  = _html`
+         <slot name="title"><p> Tab title </p></slot>
+         `; 
+        
+        const tplus = new TemplatePlus("");
 
-                    const obj = data[0];
+        tplus.initTemplate( rawCss, rawHtml );
 
-                    // customize the doc fragment with fetch data.
-
-                    this.render(this.template.element);
-                })
-
-        });
+        this.render(tplus.element);
     }
      render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
@@ -49,12 +75,41 @@ class HTMLUiTabView{
         alert(`processSubmitFor ${<string>fdata.get("action")}   ${"this.SelectedImageIndex"}`);
     }
 }
-class HTMLUiTabController{}
-export class HTMLUiTab extends HTMLElement{
+class HTMLUiTabController{
+    view:HTMLUiTabView;
+    parent:HTMLUiTab;
+    controller:HTMLUiTabController;
+
+    constructor(parent:HTMLUiTab) {
+        this.parent = parent;
+        this.view = new HTMLUiTabView(this.parent._shadowRoot);
+    }
+
+}
+export class HTMLUiTab extends HTMLElement implements WebComponentLifeCycle{
+    _shadowRoot: ShadowRoot;
+    controller:HTMLUiTabController;
+    // satisfies webcomponentlifecycle interface
+    observedAttributes: string[];  
+    // this property must be static inorder to receive attributechangedcallback allsbe 
+   static observedAttributes = ["id", "lable","slot","topic"];
     constructor(){
         super();
 
-        console.log("ui-tab registered..");
+         this._shadowRoot = this.attachShadow({mode: 'open'});
+
+        this.controller = new HTMLUiTabController(this);
+    }
+    connectedCallback(): void {
+       this.controller.view.setupTemplate() ;
+      
+      console.log("ui-tab registered....");
+    }
+    disconnectedCallback(): void {
+        throw new Error('Method not implemented.');
+    }
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+        this.controller.view[name] = newValue;
     }
 }
 

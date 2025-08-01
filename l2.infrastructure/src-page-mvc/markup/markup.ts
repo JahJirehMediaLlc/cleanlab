@@ -1,4 +1,6 @@
-import {TemplatePlus, _css, _html} from "../../src-dom/domutils.ts";
+import {_html, _css, WebComponentLifeCycle} from '../../src-dom/domutils.ts';
+import {TemplatePlus} from  '../../src-dom/template-plus.ts';
+
 import {ServiceWorkerClient,} from "../../src-page-mvc/sw/sw-lib.ts";
 
 export * from '../../src-web-comps/web_components.ts';

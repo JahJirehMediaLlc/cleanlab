@@ -1,5 +1,6 @@
-import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
+import {_html, _css, Css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
 import {Fetch} from  '../src-dom/fetchmgr.ts';
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
 class HTMLUiGalleryView{
     _shadowRoot: ShadowRoot;
@@ -223,8 +224,6 @@ class HTMLUiGalleryView{
         const tplus = new TemplatePlus("");
 
         tplus.initTemplate( rawCss, rawHtml );
-    
-        console.log(this.li_items!);
 
         this.render(tplus.element);
     }
@@ -235,7 +234,7 @@ class HTMLUiGalleryView{
             this._shadowRoot.appendChild(node);
         else
             this._shadowRoot.appendChild(node.content);
-       console.log("rendering ui-gallery")
+      
     }
     processClickEvent(event: Event){
         this.selectedElement = event.target as HTMLElement;

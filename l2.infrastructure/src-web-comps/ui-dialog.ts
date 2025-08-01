@@ -1,14 +1,16 @@
-import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus} from  '../src-dom/domutils.ts';
+import {_html, Html , _css, Css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
 import {Fetch} from  '../src-dom/fetchmgr.ts';
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
-class HTMLUIDialogView{
+class HTMLUiDialogView{
     _shadowRoot: ShadowRoot;
-    controller:HTMLUIDialogController;
+    controller:HTMLUiDialogController;
+
     _url = new URL("http://localhost:3000/");
     _templates:string;
     _tid:string;
     _width:string;
-     _id:string;
+    _id:string;
     _height:string;
     pathName:string;
 
@@ -27,22 +29,6 @@ class HTMLUIDialogView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-    }
-
-    private initEventHandlers(){
-        this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
-        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-        this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
-    }
-
-    updateDialogTemplate(tid:string){
-        const myFetch = new Fetch("html");
-
-        myFetch.getTemplate(tid).then( t => {
-            const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
-
-            outputEl!.appendChild(t.content);
-        });
     }
 
     setupTemplate() {
@@ -118,18 +104,20 @@ class HTMLUIDialogView{
                 </header>
 
                 <div id="output" class="border1">
-                <slot></slot>
+                    <slot></slot>
                 </div>
 
-                <button type="submit" name="action" value="prev">Prev</button>
+                <div>
+                    <button type="submit" name="action" value="prev">Prev</button>
 
-                <button type="submit" name="action" value="next">Next</button>
+                    <button type="submit" name="action" value="next">Next</button>
 
-                <select name="tid">
-                    <option value="" >template...</option>
-                </select>
+                    <select name="tid">
+                        <option value="" >template...</option>
+                    </select>
 
-                <button type="submit" name="action" value="show">Show</button>
+                    <button type="submit" name="action" value="show">Show</button>
+                </div
 
             </form>`; 
 
@@ -138,9 +126,8 @@ class HTMLUIDialogView{
         const tplus = new TemplatePlus("");
 
         tplus.initTemplate( rawCss, rawHtml );
+
         this.render( tplus.element );
-        
-        this.initEventHandlers();
 
         // update template in dialog
         const myFetch = new Fetch("html");
@@ -182,38 +169,6 @@ class HTMLUIDialogView{
         else
             this._shadowRoot.appendChild(node);
     }
-   
-    processClickEvent(event: Event){
-        const selectedElement = event.target as HTMLElement;
-    }
-
-    processSubmitForm(event:SubmitEvent){
-        event.preventDefault();
-
-        const form = this._shadowRoot.querySelector("form")  as HTMLFormElement;
-        const fdata = new FormData(form, event.submitter);
-        const action = fdata.get("action") as string;
-        const tid = fdata.get("tid") as string;
-
-        alert(`${action}   ${tid}  ${this.id}`);
-
-        if( action == "close"){
-            this.show("off");
-        }
-
-        if( action == "show"){
-            this.show("on");
-        }
-
-    }
-
-    processSlotChange(event:Event){
-        let slot = event.target as HTMLSlotElement;
-        // list of elements with slot name
-        const items = slot.assignedElements().map(el => el.innerHTML );
-        
-     //   this[slot.name] = this.items;
-    }
 
     show(state:"on" | "off" = "off"){
         const ui_dialog = document.getElementById(this.id);
@@ -229,22 +184,83 @@ class HTMLUIDialogView{
         div?.classList.remove("hide");
         ui_dialog?.classList.add("full_screen");
     }
+
+    updateDialogTemplate(tid:string){
+        const myFetch = new Fetch("html");
+
+        myFetch.getTemplate(tid).then( t => {
+            const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+
+            outputEl!.replaceChildren();
+
+            outputEl!.appendChild(t.content);
+        });
+    }
+
 }
 
-class HTMLUIDialogController{
-    view:HTMLUIDialogView;
-    parent:HTMLUIDialog;
-    controller:HTMLUIDialogController;
+class HTMLUiDialogController{
+    view:HTMLUiDialogView;
+    parent:HTMLUiDialog;
+    controller:HTMLUiDialogController;
 
-    constructor(parent:HTMLUIDialog) {
+    constructor(parent:HTMLUiDialog) {
         this.parent = parent;
-        this.view = new HTMLUIDialogView(this.parent._shadowRoot);
+        this.view = new HTMLUiDialogView(this.parent._shadowRoot);
+
+        this.initEventHandlers();
+    }
+
+    private initEventHandlers(){
+        this.view._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
+        this.view._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+        this.view._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+        this.view._shadowRoot.addEventListener("change",this.processItemChange.bind(this));
+
+        console.log("dialog handlers initialized..")
+    }
+
+    processClickEvent(event: Event){
+        const selectedElement = event.target as HTMLElement;
+    }
+
+    processItemChange(event: Event){
+        const selectElement = event.target as HTMLSelectElement;
+
+        this.view.updateDialogTemplate(selectElement.value);
+
+        this.view.show("on");
+    }
+
+    processSubmitForm(event:SubmitEvent){
+        event.preventDefault();
+
+        const form = this.view._shadowRoot.querySelector("form")  as HTMLFormElement;
+        const fdata = new FormData(form, event.submitter);
+        const action = fdata.get("action") as string;
+        const tid = fdata.get("tid") as string;
+
+        if( action == "close"){
+            this.view.show("off");
+        }
+
+        if( action == "show"){
+            this.view.updateDialogTemplate(tid);
+            this.view.show("on");
+        }
+
+    }
+
+    processSlotChange(event:Event){
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const items = slot.assignedNodes().map(el => el );
     }
 }
 
-export class HTMLUIDialog extends HTMLElement implements WebComponentLifeCycle{
+export class HTMLUiDialog extends HTMLElement implements WebComponentLifeCycle{
     _shadowRoot: ShadowRoot;
-    controller:HTMLUIDialogController;
+    controller:HTMLUiDialogController;
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[];  
     // this property must be static inorder to receive attributechangedcallback allsbe 
@@ -254,7 +270,8 @@ export class HTMLUIDialog extends HTMLElement implements WebComponentLifeCycle{
         super();
 
         this._shadowRoot = this.attachShadow({mode: 'open'});
-        this.controller = new HTMLUIDialogController(this);
+        
+        this.controller = new HTMLUiDialogController(this);
     }
     connectedCallback(): void {
       this.controller.view.setupTemplate() ;
@@ -269,4 +286,4 @@ export class HTMLUIDialog extends HTMLElement implements WebComponentLifeCycle{
     }
 }
 
-window.customElements.define("ui-dialog", HTMLUIDialog);
+window.customElements.define("ui-dialog", HTMLUiDialog);

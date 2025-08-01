@@ -1,4 +1,5 @@
-import {TemplatePlus, WebComponentLifeCycle,_css,_html} from "../src-dom/domutils.ts";
+import {_css,_html,WebComponentLifeCycle} from "../src-dom/domutils.ts";
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
 class HTMLUiIconView{
     _shadowRoot: ShadowRoot;

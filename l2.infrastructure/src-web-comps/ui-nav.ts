@@ -1,4 +1,5 @@
-import {_html, Html , _css, Css, WebComponentLifeCycle, TemplatePlus, Form} from  '../src-dom/domutils.ts';
+import {_html , _css, WebComponentLifeCycle, Form} from  '../src-dom/domutils.ts';
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
 const rawCss = _css`
     <style>

@@ -5,6 +5,7 @@ export *  from './ui-tabs.ts';
 export *  from './ui-tab.ts';
 export *  from './ui-table.ts';
 export *  from './ui-gallery.ts';
+export *  from './ui-gallery-item.ts';
 export *  from './ui-folder.ts';
 
 export *  from './ui-dialog.ts';

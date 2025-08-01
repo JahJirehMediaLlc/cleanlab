@@ -6,7 +6,7 @@ export class Fetch{
     get path():string{return this.pathName};
     set path(value:string){ this.pathName = value};
 
-    constructor(context:"json" | "html", pathName:string = "/html/screens.html" ){
+    constructor(context:"json" | "html", pathName:string = "/html/dom_templates.html" ){
     this.path = pathName;
     this.url = new URL(this.baseUrl+this.path);
     }

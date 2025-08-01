@@ -1,4 +1,7 @@
-import {_html, _css, FormInput, WebComponentLifeCycle, TemplatePlus, createElement, wrapElement,} from  '../src-dom/domutils.ts';
+import {_html, _css, WebComponentLifeCycle} from '../src-dom/domutils.ts';
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import { HTMLUiTab } from  '../../l2.infrastructure/src-web-comps/web_components.ts';
+
 
 type tab_attr = {
     slot:string,
@@ -14,6 +17,7 @@ class HTMLUiTabsView{
     public currentElement: DocumentFragment;
     public currentTab: string;
 
+    private tabs:Node[];
     tabs_menu_form:HTMLElement;
     tabs_menu_ul:HTMLElement;
     tabs_output:HTMLElement;
@@ -21,37 +25,206 @@ class HTMLUiTabsView{
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
     }
-    //
+
+  private initEventHandlers(){
+        this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
+        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+    }
+    
     setupTemplate() {
-        const tplus = new TemplatePlus("ui_tabs_template", new URL("http://localhost:3000/data/web_components.html"));
+        
+        const rawCss = _css`
+            <style>
+          
+            *,
+            *::after, 
+            *::before  {
+                box-sizing: border-box;
+                margin: 0;
+                padding:0;
+            }
 
-        tplus.content().then( frag => {
+            img{
+                display: block;
+                max-width: 100%;
+                height: auto;
+                /* margin: 0px auto; */
+            }
 
-        this.tabs_menu_form = frag.getElementById("tabs_menu_form")!;
-        this.tabs_menu_ul = frag.getElementById("tabs_menu_ul")!;
-        this.tabs_output = frag.getElementById("tabs_output")!;
+            :host{
+                display:block;
+                contain:paint;
+                color: black;
+                background-color:burlywood;
+            }
 
-        // add event listner's for click and form submit
-        if (this.tabs_output && this.tabs_menu_form) {
-            this.tabs_output.addEventListener("click", evt => this.processClickEvent(evt));
-            this.tabs_menu_form.addEventListener("submit", evt => this.processSubmitForm(evt));
+            .flex_row{
+                display:flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 1rem;
+            }
 
-            console.log("event handlers initialized");
+            .flex_col{
+                display:flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .flex_col > *{
+                background-color: #605d8a;
+            }
+         
+            .text_wrap{
+                hyphens: auto;
+                overflow-wrap: break-word;
+                /* text-wrap: balance; */
+                width: 100%;
+                /* max-width: 67ch;   */
+            }
+            
+            .tabs_menu{
+                display:flex;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: center;
+                overflow-x: auto;
+            }
+
+            .tabs_output{
+                background-color: burlywood;           
+             }
+
+            @media (min-width: 650px){
+                .tabs_menu{
+                    flex-direction: row;
+                }
+                .tabs_menu li{
+                    color:black;
+                    background-color: rgb(95, 110, 110);
+                }
+            }
+
+            .tabs_menu > li{
+                /* 1=allow breaking of elementontent, 0=no breaking of element content */
+                flex-shrink: 0;
+                /* 1=allow elements to grow , 0=no growing of elements  */
+                flex-grow: 1;
+            }
+            .tabs_menu > *{
+                /* 1=allow breaking of elementontent, 0=no breaking of element content */
+                flex-shrink: 0;
+                /* 1=allow elements to grow , 0=no growing of elements  */
+                flex-grow: 1;
+            }
+
+            .tab_item{
+                color: black;
+                margin: .3rem;
+            }
+
+            .transition_width{
+                width: 100%;
+                transition: width 1000ms ease-in;
+            }
+            .transition_bg{
+                background-color: red;
+                transition: background-color 1000ms ease-in;
+            }
+            .transition_opacity{
+                opacity: 1;
+                transition: opacity 1000ms ease-in;
+            }
+            .transition_up{
+                transform: translateY(-105%);
+                transition: transform 1000ms ease-in;
+            }
+            .transition_down{
+                transform: translateY(1%);
+                transition: transform 1000ms ease-in;
+            }
+
+            li{
+                text-align: center;
+            }
+
+            button{
+                height: 100%;
+                color:white;
+                background-color:brown;
+            }
+            
+            form{
+              background-color:burlywood;
+            }
+
+            .scroll_x {
+            overflow-x: auto;
+            }
+
+            .scroll_y {
+            overflow-y: auto;
+            width: fit-content;
+            }
+
+            .menu_x {
+                display: flex;
+                gap: 2rem;
+                color:white;
+                overflow-x: auto;
+                list-style: none;
+                margin: 0px;
+                padding: 0px;
         }
-        else{
-            console.log("event handlers mot initialized");
-        } 
-        
-        // initialize tabs_menu_ul with buttons from shadow host
-        let _frag = this.initFormButtons();
 
-        this.tabs_menu_ul.replaceChildren(_frag);
+        .menu_x > li {
+            flex-shrink: 0;
+            flex-grow: 1;
+            height: auto;
+        }
 
-         // display the desired template
-        
-        this.render(tplus.element); 
-       });
+        .menu_y {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            list-style: none;
+            overflow-y: auto;
+            padding: 0;
+        }
+        .menu_y > li {
+            flex-shrink: 0;
+            flex-grow: 1;
+            height: 3rem;
+        }
 
+        </style>
+        `;
+
+        const rawHtml  = _html`
+             <div >
+                <form id="tabs_menu_form">
+                    <input type="text" name="search" value="hello world" >
+                    <button name="action" value="search">search</button>
+                </form>
+
+                <ul id="tabs_menu_ul" class="tabs_menu1 menu_x" width100>
+                    <slot name="active"></slot>
+                </ul>
+
+                <div id="tabs_output"  class="tabs_output">
+                </div>
+
+        </div>
+        `; 
+       
+        const tplus = new TemplatePlus("");
+
+        tplus.initTemplate( rawCss, rawHtml );
+
+         this.render(tplus.element); 
+
+         this.initEventHandlers();
     }
     initFormButtons():DocumentFragment{
         let ui_tab_items = document.getElementsByTagName("ui-tab");
@@ -78,20 +251,30 @@ class HTMLUiTabsView{
         else
             this._shadowRoot.appendChild(node);
      }
+    getTab(tabid:string):HTMLUiTab{
+        let aTab:HTMLUiTab = new HTMLUiTab();
+
+             this.tabs.forEach( node  => {
+
+             const tab:HTMLUiTab = node as unknown as HTMLUiTab;
+
+             if(tabid == tab.id) aTab = tab;
+        }); 
+
+        return aTab;
+    }
     showTab(tabid:string){
-        
-        const currenttab =  document.querySelectorAll(`ui-tab[slot=active]`);
-        const newtab =  document.querySelectorAll(`ui-tab[value=${tabid}]`);
+     const  h3 =  this.getTab(tabid).querySelector("h3");
+       const article =  this.getTab(tabid).querySelector("article");
 
-        if(!newtab.length){
-            console.log(`tabid ${tabid} does not exist in in lightdom`);
-            return;
-        }
-
-        currenttab[0].setAttribute("slot", "");
-        newtab[0].setAttribute("slot", "active");
+        // console.log("showing tabid:",tabid , this.getTab(tabid), article);
 
         this.currentTab = tabid;
+
+        if(h3 && article){
+            this.tabs_output?.replaceChildren(h3.cloneNode(true));
+            this.tabs_output?.appendChild(article.cloneNode(true));
+        }
     }
     processClickEvent(evt:Event){
         const articleName = (evt.target as HTMLElement).getAttribute("name");
@@ -104,20 +287,61 @@ class HTMLUiTabsView{
     processSubmitForm(evt:SubmitEvent){
         evt.preventDefault();
 
-    //    console.log("processSubmitForm evt.target ",evt.target);
-
         const fdata = new FormData(evt.target as HTMLFormElement, evt.submitter);
 
-        if( <string>fdata.get("action") )
-            this.showTab( <string>fdata.get("action") );
-        else
-            console.log("no frmdata provided...");
+        this.showTab( <string>fdata.get("id") );
+  
+    }
+    processSlotChange(event:Event){
+        
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const tab_items_dom = slot.assignedNodes().map(el => el );  
+
+        //console.log("tab_items_dom ",tab_items_dom);
+    
+        const tab_items:string[] = [];
+
+        tab_items_dom.forEach( node  => {
+
+             const tab:HTMLUiTab = node as unknown as HTMLUiTab;
+            
+            let tab_items_sdom = `
+                <li>
+                  <form>
+                    <button type="submit" name="action" value="tab_selected">
+                     <p> ${tab.controller.view.topic} </p>
+                    </button>
+                    <input type="text" name="id" value="${tab.controller.view.id}" hidden>
+                    <input type="text" name="lable" value="${tab.controller.view.lable}" hidden>
+                    <input type="text" name="slot" value="${tab.controller.view.slot}" hidden>
+                    <input type="text" name="topic" value="${tab.controller.view.topic}" hidden>
+                  </form>
+                </li>
+            `;
+
+            tab_items!.push(tab_items_sdom);
+
+     //       console.log(tab_items_sdom);
+     //       console.log(tab_items_sdom.replaceAll(" ",""));
+           
+        }); 
+
+        this.tabs = tab_items_dom;
+
+        const tabs_form  = this._shadowRoot.querySelector("[id=tabs_menu_form]");
+
+        this.tabs_menu_ul = this._shadowRoot.querySelector("[id=tabs_menu_ul]")!;
+        this.tabs_output = this._shadowRoot.querySelector("[id=tabs_output]")!;
+
+        this.tabs_menu_ul?.replaceChildren();
+        this.tabs_menu_ul?.insertAdjacentHTML("afterbegin", tab_items.join(" "));
     }
  }
 //
 class HTMLUiTabsController{
     view:HTMLUiTabsView;
-    _parent:HTMLUiTabs;
+    parent:HTMLUiTabs;
     tabs:tab_attr[] = [];
     version = "1.0.0";
     fi:FormInput = new FormInput(null as unknown as HTMLFormElement);
@@ -125,13 +349,13 @@ class HTMLUiTabsController{
     set currentTab(value){this.view.showTab(value)};
     //
     constructor(parent:HTMLUiTabs) {
-        this._parent = parent;
-        this.view = new HTMLUiTabsView(this._parent._shadowRoot);
+        this.parent = parent;
+        this.view = new HTMLUiTabsView(this.parent._shadowRoot);
         this.version = "1.0.0";
     }
     initTabsAttributes(){
 
-    for(let h of this._parent.children){
+    for(let h of this.parent.children){
 
             let ta:tab_attr = {
                 name: h.getAttribute("name")!,
@@ -170,7 +394,7 @@ class HTMLUiTabsController{
 //
 export class HTMLUiTabs extends HTMLElement implements WebComponentLifeCycle{
     controller:HTMLUiTabsController;
-    _shadowRoot: ShadowRoot = this.attachShadow({mode: 'open'});
+    _shadowRoot: ShadowRoot;
         // satisfies webcomponentlifecycle interface
     observedAttributes: string[];  
     // this property must be static inorder to receive attributechangedcallback allsbe 
@@ -178,13 +402,14 @@ export class HTMLUiTabs extends HTMLElement implements WebComponentLifeCycle{
 
     constructor(){
         super();
+        
+        this._shadowRoot = this.attachShadow({mode: 'open'});
 
         this.controller = new HTMLUiTabsController(this);
-
-        console.log("...ui-tabs registered..");
     }
     connectedCallback(): void {
         this.controller.view.setupTemplate();
+        console.log("...ui-tabs registered..");
     }
     disconnectedCallback(): void {
         throw new Error('Method not implemented.');

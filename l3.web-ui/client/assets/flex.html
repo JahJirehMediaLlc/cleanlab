@@ -105,8 +105,26 @@
         <section id="output" class="container_item  width100">
             <h1>Flex Project</h1>
 
-           <ui-view url="/html/es6-ts-this.html">
-           </ui-view> 
+            <!-- <ui-tab name="action" value="tab1" topic="Article 1" article_id="1" slot="active">
+                <h3 slot="title">Article 1</h3>
+                <article>
+                    <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur 
+                    adipisicing elit.</p>
+                    
+                    <p>Animi aspernatur cupiditate esse hic obcaecati sequi totam. 
+                    Aliquam, dolorum eum explicabo, illum inventore modi molestias 
+                    nemo non nulla qui sapiente, vel?</p>
+                </article>
+            </ui-tab> -->
+
+        <ui-table title="Budget" rows="10" cols="10" borders="2px">
+            <h3>UI-table</h3>
+            <div slot="slot1">Legend data 1</div>
+            <div slot="slot2">Legend data 2</div>
+        </ui-table>
+
+           <!-- <ui-view url="/html/es6-ts-this.html">
+           </ui-view>  -->
 
             <div id="log"></div>
         </section>
@@ -124,7 +142,7 @@
     </div>
 </main>
 
- <ui-dialog id="dlg1" class="full_screen" templates="/html/dom_templates.html" tid="gallery_template">
+ <ui-dialog id="dlg1" class="hide full_screen" templates="/html/dom_templates.html" tid="gallery_template">
     <b slot="title">dialog</b>
     <span slot="close">X</span>
 </ui-dialog> 

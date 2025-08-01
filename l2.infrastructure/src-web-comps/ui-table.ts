@@ -1,4 +1,5 @@
-import {TemplatePlus} from "../src-dom/domutils.ts";
+import {_html, _css, WebComponentLifeCycle} from '../src-dom/domutils.ts';
+import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
 function createRow(text:string[]):string{
 return   "<tr>" + text.map(h=>`<td>${h}</td>`).join("") +"<tr>";
@@ -13,9 +14,9 @@ class HTMLUiTableView{
     //
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.template = new TemplatePlus("ui_table_template", new URL("http://localhost:3000/data/web_components.html"));
     }
     setupTemplate(){
+        this.template = new TemplatePlus("ui_table_template");
 
         this.template.content().then( frag => {
 
