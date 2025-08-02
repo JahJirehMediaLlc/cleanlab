@@ -92,7 +92,7 @@ export class HTMLUiTab extends HTMLElement implements WebComponentLifeCycle{
     // satisfies webcomponentlifecycle interface
     observedAttributes: string[];  
     // this property must be static inorder to receive attributechangedcallback allsbe 
-   static observedAttributes = ["id", "lable","slot","topic"];
+    static observedAttributes = ["id", "lable","slot","topic"];
     constructor(){
         super();
 
@@ -106,7 +106,7 @@ export class HTMLUiTab extends HTMLElement implements WebComponentLifeCycle{
       console.log("ui-tab registered....");
     }
     disconnectedCallback(): void {
-        throw new Error('Method not implemented.');
+      //  throw new Error('Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
         this.controller.view[name] = newValue;

@@ -26,11 +26,6 @@ class HTMLUiNullView{
         this._shadowRoot = shadowRoot;
       //  this.setupTemplate();
     }
-    private initEventHandlers(){
-        this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
-        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-        this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
-    }
 
     setupTemplate() {
 
@@ -63,34 +58,12 @@ class HTMLUiNullView{
         tplus.initTemplate( rawCss, rawHtml );
 
         this.render( tplus.element );
-
-        this.initEventHandlers();
     }
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)
             this._shadowRoot.appendChild(node.content);
         else
             this._shadowRoot.appendChild(node);
-    }
-    processClickEvent(event: Event){
-        const selectedElement = event.target as HTMLElement;
-         alert(selectedElement.tagName);
-    }
-    processSubmitForm(event:SubmitEvent){
-        event.preventDefault();
-
-        const form = this._shadowRoot.querySelector("form")  as HTMLFormElement ;
-        const fdata = new FormData(form, event.submitter);
-        const form_input = fdata.get("action") as string;
-
-        alert(form_input);
-    }
-    processSlotChange(event:Event){
-        let slot = event.target as HTMLSlotElement;
-        // list of elements with slot name
-        const items = slot.assignedElements().map(el => el.innerHTML );
-        
-        this[slot.name] = this.items;
     }
 }
 
@@ -102,6 +75,44 @@ class HTMLUiNullController{
     constructor(parent:HTMLUiNull) {
         this.parent = parent;
         this.view = new HTMLUiNullView(this.parent._shadowRoot);
+
+        this.initEventHandlers();
+    }
+
+    setupTemplate(){
+        this.view.setupTemplate();
+    }
+
+    private initEventHandlers(){
+        this.view._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
+        this.view._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+        this.view._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+        this.view._shadowRoot.addEventListener("change",this.processItemChange.bind(this));
+
+        console.log("dialog handlers initialized..")
+    }
+
+    processClickEvent(event: Event){
+        const selectedElement = event.target as HTMLElement;
+    }
+
+    processItemChange(event: Event){
+        const selectElement = event.target as HTMLSelectElement;
+    }
+
+    processSubmitForm(event:SubmitEvent){
+        event.preventDefault();
+
+        const form = this.view._shadowRoot.querySelector("form")  as HTMLFormElement;
+        const fdata = new FormData(form, event.submitter);
+        const action = fdata.get("action") as string;
+        const tid = fdata.get("tid") as string;
+    }
+
+    processSlotChange(event:Event){
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const items = slot.assignedNodes().map(el => el );
     }
 }
 
@@ -120,12 +131,12 @@ export class HTMLUiNull extends HTMLElement implements WebComponentLifeCycle{
         this.controller = new HTMLUiNullController(this);
     }
     connectedCallback(): void {
-      this.controller.view.setupTemplate();
+      this.controller.setupTemplate();
       
        console.log("ui-null registered....");
     }
     disconnectedCallback(): void {
-     //   console.log('disconnectedCallback Method not implemented.');
+        console.log('disconnectedCallback Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
         this.controller.view[name] = newValue;

@@ -1,4 +1,4 @@
-import {_html, _css, WebComponentLifeCycle} from '../src-dom/domutils.ts';
+import {_html, _css, WebComponentLifeCycle, createElement, wrapElement, FormInput } from '../src-dom/domutils.ts';
 import {TemplatePlus} from  '../src-dom/template-plus.ts';
 import { HTMLUiTab } from  '../../l2.infrastructure/src-web-comps/web_components.ts';
 
@@ -237,7 +237,7 @@ class HTMLUiTabsView{
             let _topic = item.getAttribute("topic");
             let _name = item.getAttribute("name");
             let _value = item.getAttribute("value");
-            let _btn    = createElement("button",{name:_name,value:_value,class:"tabs_item"},_topic!)!;
+            let _btn    =createElement ("button",{name:_name,value:_value,class:"tabs_item"},_topic!)!;
             let _li = wrapElement("li",{},_btn);
 
             _frag.appendChild(_li);
@@ -412,7 +412,7 @@ export class HTMLUiTabs extends HTMLElement implements WebComponentLifeCycle{
         console.log("...ui-tabs registered..");
     }
     disconnectedCallback(): void {
-        throw new Error('Method not implemented.');
+       // throw new Error('Method not implemented.');
     }
     attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
         this.controller.view[name] = newValue;

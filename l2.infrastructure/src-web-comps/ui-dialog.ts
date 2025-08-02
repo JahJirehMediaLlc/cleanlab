@@ -54,8 +54,20 @@ class HTMLUiDialogView{
                    color: red;
                 }
 
-                .border3{
-                    border: 3px red solid;
+                .border1{
+                    border: 3px blue solid;
+                }
+
+                .height75{
+                    height: 75vh;
+                }
+
+                .height90{
+                    height: 90vh;
+                }
+
+                .scroll_y{
+                  overflow-y: auto;
                 }
 
                 .flex_row{
@@ -87,39 +99,37 @@ class HTMLUiDialogView{
 
                 .hide{display:none;}
 
-            </style>`;
+            </style>
+            `;
 
         const rawHtml  = _html`
-            <form class="border3">
+               <form >
+        <header class="flex_row space_between">
 
-                <header class="flex_row space_between">
+            <div>
+                <slot name="title"> </slot> : <span>${this.tid}</span>
+            </div>
 
-                    <div>
-                        <slot name="title"> </slot> : <span>${this.tid}</span>
-                    </div>
-                    
-                    <button type="submit" name="action" value="close">
-                         <slot name="close"> </slot>
-                    </button>
-                </header>
+            <button type="submit" name="action" value="close">
+                <slot name="close"> </slot>
+            </button>
+        </header>
 
-                <div id="output" class="border1">
-                    <slot></slot>
-                </div>
+        <div>
+            <button type="submit" name="action" value="prev">Prev</button>
 
-                <div>
-                    <button type="submit" name="action" value="prev">Prev</button>
+            <button type="submit" name="action" value="next">Next</button>
 
-                    <button type="submit" name="action" value="next">Next</button>
+            <select name="tid">
+                <option value="" >template...</option>
+            </select>
+        </div>
 
-                    <select name="tid">
-                        <option value="" >template...</option>
-                    </select>
-
-                    <button type="submit" name="action" value="show">Show</button>
-                </div
-
-            </form>`; 
+        <div id="output" class="height90 scroll_y border1">
+            <slot></slot>
+        </div>
+    </form>
+        `; 
 
         // show dialog
         
@@ -196,7 +206,6 @@ class HTMLUiDialogView{
             outputEl!.appendChild(t.content);
         });
     }
-
 }
 
 class HTMLUiDialogController{
