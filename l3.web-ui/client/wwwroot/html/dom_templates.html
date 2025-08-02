@@ -78,7 +78,14 @@
     </ui-gallery>
 </template>
 
-<template id="gallery_template2">
+<template id="gallery_item_template">
+    <ui-gallery-item slot="image" src="src" caption="caption">
+        <img class="gallery_item" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
+        <figcaption>Architecural</figcaption>
+    </ui-gallery-item>
+</template>
+
+<template id="gallery2_template">
     <ui-gallery id="gallery1">
 
         <ui-gallery-item slot="image" src="src" caption="caption">
@@ -210,6 +217,37 @@
 
 
     </ui-tabs>
+</template>
+
+<template id="menu_template">
+    <ui-menu id="ui_menu_header">
+        <span slot="title">Title</span>
+        <span slot="left_icon">#</span>
+
+        <li slot="item"><a href="/welcome.html">Welcome</a></li>
+        <li slot="item"><a href="/cls.html">Cls</a></li>
+        <li slot="item"><a href="/markup.html">Markup Project</a></li>
+        <li slot="item"><a href="/appshell.html">App Shell</a></li>
+        <li slot="item"><a href="/flex.html">Flex Project</a></li>
+
+        <span slot="right_icon">[]</span>
+    </ui-menu>
+</template>
+
+<template id="panel_template">
+    <ui-panel id="panel_left" height1="14rem" template="aside_left_template">
+        <ul slot="menu" class="menu_y">
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoPrint">Print</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoEmail">Email</ui-action></li>
+            <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoContac">Contact</ui-action></li>
+        </ul>
+    </ui-panel>
+</template>
+
+<template id="action_template">
+    <ul>
+        <li><ui-action href="hef" dialog="dialog" slot="slot" action="DoPrint">Print</ui-action></li>
+    </ul>
 </template>
 
 <template id="contact_template">

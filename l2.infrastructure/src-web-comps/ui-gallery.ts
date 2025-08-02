@@ -1,6 +1,6 @@
 import {_html, _css, Css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
-import {Fetch} from  '../src-dom/fetchmgr.ts';
 import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import {Fetch} from  '../src-dom/fetchmgr.ts';
 
 class HTMLUiGalleryView{
     _shadowRoot: ShadowRoot;
@@ -44,16 +44,8 @@ class HTMLUiGalleryView{
     //
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
-        this.initEventHandlers();
     }
 
-    private initEventHandlers(){
-        this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
-        this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
-     //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
-    }
-
-    //
     setupTemplate(){
         const rawCss = _css`
             <style>
@@ -73,11 +65,10 @@ class HTMLUiGalleryView{
                 }
 
                 ::slotted(li){
-                    color:red;
+                    color: blue;
                     list-style: none;
                     margin: 0 2rem;
                     width: fit-content;
-                    border: 3px blue solid;
                 }
 
                 img{
@@ -101,10 +92,11 @@ class HTMLUiGalleryView{
                 .menu_y {
                     display: flex;
                     flex-direction: column;
-                    gap: 1rem;
+                    gap: .31rem;
                     list-style: none;
                     overflow-y: auto;
                     padding: 0;
+                    margin: 0;
                 }
 
                 .flex_row{
@@ -171,7 +163,11 @@ class HTMLUiGalleryView{
                     background-color: red};
                 }
 
-
+            .reset{
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding:0;
+                }
             </style>`;
 
         const rawHtml  = _html`
@@ -197,25 +193,17 @@ class HTMLUiGalleryView{
 
                      <!--  Thumbnails List-->
 
-                        <div class="border text_center height20 grow_off width25" >
-                      
-                            <ul id="gallery_images_list" class="menu_y scroll_y height15">
+                        <div class="text_center height20 grow_off width25" >
+                            <ul id="gallery_images_list" class="menu_y scroll_y height20">
                               <slot name="image"></slot>
                             </ul>
-                        
                         </div>
 
                         <!--  Current Image -->
 
-                        <div id="current_image" class="border bg_blue height20 width100 bg_image" style="background-image: url(images/a-task-event-function-call.png);">
-                          <!--
-                                <figure>
-                                    <img  class="img_current height15" src="images/ArchitecuralDiagrams.jpg" alt="Hello Alt">
-                                    <figcaption class="text_center">current figure.</figcaption>
-                                </figure>
-
-                                -->
+                        <div id="current_image" class="bg_blue height20 width100 bg_image" style="background-image: url(images/a-task-event-function-call.png);">
                         </div>
+
                     </div>
                     <br>
 
@@ -236,76 +224,7 @@ class HTMLUiGalleryView{
             this._shadowRoot.appendChild(node.content);
       
     }
-    processClickEvent(event: Event){
-        this.selectedElement = event.target as HTMLElement;
 
-         alert(`processSubmitFor ${this.selectedElement.tagName}}   ${this.SelectedImageIndex}`);
-
-        return;
-
-        if (this.selectedElement!.tagName.toUpperCase() !== "IMG")return;
-
-        let images = this.galleryImagesList!.getElementsByTagName("img");
-
-        this.SelectedImageIndex = Array.from(images).indexOf(this.selectedElement as HTMLImageElement);
-
-       //this.setFocus(this.SelectedImageIndex);
-    }
-    processSubmitForm(evt:SubmitEvent){
-        evt.preventDefault();
-
-        const fdata = new FormData(evt.target as HTMLFormElement, evt.submitter);
-
-     //for(const [key,value] of fdata)console.log(`${key} : ${value}`);
-
-        switch( <string>fdata.get("action") ){
-            case "prev":
-                this.SelectedImageIndex -= 1;
-                break;
-            case "next":
-                this.SelectedImageIndex += 1;
-                break;
-             case "image_selected":
-                this.showCurrentImage(<string>fdata.get("src"), <string>fdata.get("title"))
-                break;
-        }
-
-    }
-    //
-    processSlotChange(event:Event){
-        
-        let slot = event.target as HTMLSlotElement;
-        // list of elements with slot name
-        const li_items_dom = slot.assignedNodes().map(el => el );  
-    
-        this.li_items = [];
-
-        li_items_dom.forEach(li => {
-            
-            const image = (li as HTMLElement).querySelector("img");
-            const fcaption = (li as HTMLElement).querySelector("figcaption");
-            
-            let li_items_sdom = `
-                <li>
-                  <form>
-                    <button type="submit" name="action" value="image_selected">
-                      <img src="${image!.src}" title="${fcaption!.innerText}"
-                    </button>
-                    <input type="text" name="src" value="${image!.src}" hidden>
-                    <input type="text" name="title" value="${fcaption!.innerText}" hidden>
-                  </form>
-                </li>
-            `;
-
-            this.li_items!.push(li_items_sdom);
-            this.gallerySize = this.li_items!.length;
-        }); 
-
-        const ul = this._shadowRoot.querySelector("[id=gallery_images_list]");
-
-        ul?.replaceChildren();
-        ul?.insertAdjacentHTML("afterbegin",this.li_items.join(" "));
-    }
     setFocus(index:number){
 
         return; 
@@ -325,7 +244,7 @@ class HTMLUiGalleryView{
     startSlide(){
 
     }
-     showCurrentImage(src:string, title:string){
+    showCurrentImage(src:string, title:string){
 
         const currentImmage = this._shadowRoot.getElementById("current_image");
         const bg_style = `background-image: url(${src});`
@@ -343,6 +262,85 @@ class HTMLUiGalleryController{
     constructor(parent:HTMLUiGallery) {
         this.parent = parent;
         this.view = new HTMLUiGalleryView(this.parent._shadowRoot);
+        this.initEventHandlers();
+    }
+    private initEventHandlers(){
+        this.view._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
+        this.view._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
+     //   this._shadowRoot.addEventListener("click",this.processClickEvent.bind(this));
+    }
+    setupTemplate(){
+        this.view.setupTemplate();
+    }
+    processClickEvent(event: Event){
+        this.view.selectedElement = event.target as HTMLElement;
+
+         alert(`processSubmitFor ${this.view.selectedElement.tagName}}   ${this.view.SelectedImageIndex}`);
+
+        return;
+
+        if (this.view.selectedElement!.tagName.toUpperCase() !== "IMG")return;
+
+        let images = this.view.galleryImagesList!.getElementsByTagName("img");
+
+        this.view.SelectedImageIndex = Array.from(images).indexOf(this.view.selectedElement as HTMLImageElement);
+
+       //this.setFocus(this.SelectedImageIndex);
+    }
+    processSubmitForm(evt:SubmitEvent){
+        evt.preventDefault();
+
+        const fdata = new FormData(evt.target as HTMLFormElement, evt.submitter);
+
+     //for(const [key,value] of fdata)console.log(`${key} : ${value}`);
+
+        switch( <string>fdata.get("action") ){
+            case "prev":
+                this.view.SelectedImageIndex -= 1;
+                break;
+            case "next":
+                this.view.SelectedImageIndex += 1;
+                break;
+             case "image_selected":
+                this.view.showCurrentImage(<string>fdata.get("src"), <string>fdata.get("title"))
+                break;
+        }
+
+    }
+    //
+    processSlotChange(event:Event){
+        
+        let slot = event.target as HTMLSlotElement;
+        // list of elements with slot name
+        const li_items_dom = slot.assignedNodes().map(el => el );  
+    
+        this.view.li_items = [];
+
+        li_items_dom.forEach(li => {
+            
+            const image = (li as HTMLElement).querySelector("img");
+            const fcaption = (li as HTMLElement).querySelector("figcaption");
+            
+            let li_items_sdom = `
+                <li>
+                  <form>
+                    <button type="submit" name="action" value="image_selected">
+                      <img src="${image!.src}" title="${fcaption!.innerText}"
+                    </button>
+                    <input type="text" name="src" value="${image!.src}" hidden>
+                    <input type="text" name="title" value="${fcaption!.innerText}" hidden>
+                  </form>
+                </li>
+            `;
+
+            this.view.li_items!.push(li_items_sdom);
+            this.view.gallerySize = this.view.li_items!.length;
+        }); 
+
+        const ul = this.view._shadowRoot.querySelector("[id=gallery_images_list]");
+
+        ul?.replaceChildren();
+        ul?.insertAdjacentHTML("afterbegin",this.view.li_items.join(" "));
     }
 }
 //
