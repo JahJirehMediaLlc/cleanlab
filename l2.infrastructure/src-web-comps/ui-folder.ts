@@ -1,5 +1,6 @@
 import {_html, _css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
 import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import {sdom} from  '../src-dom/sdom.ts';
 
 class HTMLUiFolderView{
     _shadowRoot: ShadowRoot;

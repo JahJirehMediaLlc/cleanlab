@@ -1,4 +1,5 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
+import {sdom} from  '../src-dom/sdom.ts';
 import {Fetch} from  '../src-dom/fetchmgr.ts';
 import {TemplatePlus} from  '../src-dom/template-plus.ts';
 
@@ -13,6 +14,9 @@ class HTMLUiDialogView{
     _id:string;
     _height:string;
     pathName:string;
+
+    selectedTemplateId:sdom;
+    output:sdom;
 
     get url(): URL{return this._url}
     set url(pathName:string){this._url.pathname = pathName;this.setupTemplate();}
@@ -29,6 +33,13 @@ class HTMLUiDialogView{
 
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
+    }
+
+    initSdom(){
+        this.selectedTemplateId = new sdom("selected_template_id", this._shadowRoot);
+        this.output = new sdom("output", this._shadowRoot);
+
+        console.log(this.selectedTemplateId, this.output);
     }
 
     setupTemplate() {
@@ -104,31 +115,31 @@ class HTMLUiDialogView{
 
         const rawHtml  = _html`
                <form >
-        <header class="flex_row space_between">
+                    <header class="flex_row space_between">
 
-            <div>
-                <slot name="title"> </slot> : <span>${this.tid}</span>
-            </div>
+                        <div>
+                            <slot name="title"> </slot> : <span>${this.tid}</span>
+                        </div>
 
-            <button type="submit" name="action" value="close">
-                <slot name="close"> </slot>
-            </button>
-        </header>
+                        <button type="submit" name="action" value="close">
+                            <slot name="close"> </slot>
+                        </button>
+                    </header>
 
-        <div>
-            <button type="submit" name="action" value="prev">Prev</button>
+                    <div>
+                        <button type="submit" name="action" value="prev">Prev</button>
 
-            <button type="submit" name="action" value="next">Next</button>
+                        <button type="submit" name="action" value="next">Next</button>
 
-            <select name="tid">
-                <option value="" >template...</option>
-            </select>
-        </div>
+                        <select id="selected_template_id" name="tid">
+                            <option value="" >template...</option>
+                        </select>
+                    </div>
 
-        <div id="output" class="height90 scroll_y border1">
-            <slot></slot>
-        </div>
-    </form>
+                    <div id="output" class="height90 scroll_y border1">
+                        <slot></slot>
+                    </div>
+                </form>
         `; 
 
         // show dialog
@@ -139,6 +150,8 @@ class HTMLUiDialogView{
 
         this.render( tplus.element );
 
+        this.initSdom();
+
         // update template in dialog
         const myFetch = new Fetch("html");
 
@@ -146,6 +159,7 @@ class HTMLUiDialogView{
 
         myFetch.fetchHtml("template").then( alist => {
             const select = this._shadowRoot.querySelector(`select`);
+            // const select = this._shadowRoot.querySelector(`select`);
 
             const opts = alist.map(item => `<option value="${item.id}">${item.id}</option>`);
 
@@ -182,16 +196,17 @@ class HTMLUiDialogView{
 
     show(state:"on" | "off" = "off"){
         const ui_dialog = document.getElementById(this.id);
-        const div = this._shadowRoot.querySelector("div")  as HTMLDivElement;
+        // const div = this._shadowRoot.querySelector("div")  as HTMLDivElement;
+         const div = this.output;
 
         if(state == "off"){
-            div?.classList.add("hide");
+            div.element?.classList.add("hide");
             ui_dialog?.classList.remove("full_screen");
 
             return;
         }
 
-        div?.classList.remove("hide");
+        div.element?.classList.remove("hide");
         ui_dialog?.classList.add("full_screen");
     }
 
@@ -199,7 +214,7 @@ class HTMLUiDialogView{
         const myFetch = new Fetch("html");
 
         myFetch.getTemplate(tid).then( t => {
-            const outputEl = this._shadowRoot.querySelector(`[id="output"]`);
+            const outputEl = this.output.element;
 
             outputEl!.replaceChildren();
 

@@ -1,18 +1,21 @@
 import {_html, _css, Css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
 import {TemplatePlus} from  '../src-dom/template-plus.ts';
 import {Fetch} from  '../src-dom/fetchmgr.ts';
+import {sdom} from  '../src-dom/sdom.ts';
 
 class HTMLUiGalleryView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiGalleryController;
-    template:TemplatePlus;
-    galleryImagesList:HTMLElement | null = null;
-    li_items:string[] | null = null;
-    currentImage:HTMLImageElement | null = null;
-    selectedElement:HTMLElement| null = null;
-    galleryBtnForm:HTMLElement | null = null;
+
+    
+    selectedImageElement:sdom;
+    galleryImagesList:sdom;
+    selectedElement:sdom;
+    galleryBtnForm:sdom;
+
     selectedImageIndex:number = 0;
     gallerySize:number = 0;
+    li_items:string[] | null = null;
 
     _imageid:string;
     _width:string;
@@ -201,7 +204,7 @@ class HTMLUiGalleryView{
 
                         <!--  Current Image -->
 
-                        <div id="current_image" class="bg_blue height20 width100 bg_image" style="background-image: url(images/a-task-event-function-call.png);">
+                        <div id="selected_image" class="bg_blue height20 width100 bg_image" style="background-image: url(images/a-task-event-function-call.png);">
                         </div>
 
                     </div>
@@ -212,10 +215,18 @@ class HTMLUiGalleryView{
         const tplus = new TemplatePlus("");
 
         tplus.initTemplate( rawCss, rawHtml );
-
+   
         this.render(tplus.element);
+
+        this.initSdom();
     }
 
+    initSdom(){
+    this.galleryImagesList = new sdom("gallery_images_list", this._shadowRoot);
+    this.selectedImageElement = new sdom("selected_image", this._shadowRoot);
+    this.galleryBtnForm = new sdom("gallery_btn_form", this._shadowRoot);
+
+    }
     render(node:DocumentFragment | HTMLTemplateElement){
 
         if(node  instanceof DocumentFragment) 
@@ -229,28 +240,27 @@ class HTMLUiGalleryView{
 
         return; 
 
-        let newSelectedImage = this.galleryImagesList!.getElementsByTagName("img")[index];
-        let oldSelectedImage = this.galleryImagesList!.getElementsByClassName("border")[0] as HTMLElement;
+        // let newSelectedImage = this.galleryImagesList!.getElementsByTagName("img")[index];
+        // let oldSelectedImage = this.galleryImagesList!.getElementsByClassName("border")[0] as HTMLElement;
 
-        let image = this.galleryImagesList!.getElementsByTagName("img")[index];
+        // let image = this.galleryImagesList!.getElementsByTagName("img")[index];
      
-        this.currentImage!.setAttribute("src", image.getAttribute("src")!);
+        // this.currentImage!.setAttribute("src", image.getAttribute("src")!);
 
-        if( oldSelectedImage)Css.border(oldSelectedImage,false);
+        // if( oldSelectedImage)Css.border(oldSelectedImage,false);
 
-        Css.border(newSelectedImage,true);
+        // Css.border(newSelectedImage,true);
     } 
     //
     startSlide(){
 
     }
     showCurrentImage(src:string, title:string){
-
-        const currentImmage = this._shadowRoot.getElementById("current_image");
+        const selectedImmage = this._shadowRoot.getElementById("selected_image");
         const bg_style = `background-image: url(${src});`
         
-        currentImmage?.setAttribute("style",  `${bg_style}`);
-        currentImmage?.setAttribute("title",  `${title}`);
+        selectedImmage?.setAttribute("style",  `${bg_style}`);
+        selectedImmage?.setAttribute("title",  `${title}`);
     }
 
 }
@@ -273,17 +283,17 @@ class HTMLUiGalleryController{
         this.view.setupTemplate();
     }
     processClickEvent(event: Event){
-        this.view.selectedElement = event.target as HTMLElement;
+        this.view.selectedElement.element = event.target as HTMLElement;
 
-         alert(`processSubmitFor ${this.view.selectedElement.tagName}}   ${this.view.SelectedImageIndex}`);
+         alert(`processSubmitFor ${this.view.selectedElement.element.tagName}}   ${this.view.SelectedImageIndex}`);
 
         return;
 
-        if (this.view.selectedElement!.tagName.toUpperCase() !== "IMG")return;
+        if (this.view.selectedElement.element!.tagName.toUpperCase() !== "IMG")return;
 
-        let images = this.view.galleryImagesList!.getElementsByTagName("img");
+        let images = this.view.galleryImagesList.element!.getElementsByTagName("img");
 
-        this.view.SelectedImageIndex = Array.from(images).indexOf(this.view.selectedElement as HTMLImageElement);
+        this.view.SelectedImageIndex = Array.from(images).indexOf(this.view.selectedElement.element as HTMLImageElement);
 
        //this.setFocus(this.SelectedImageIndex);
     }
@@ -337,10 +347,10 @@ class HTMLUiGalleryController{
             this.view.gallerySize = this.view.li_items!.length;
         }); 
 
-        const ul = this.view._shadowRoot.querySelector("[id=gallery_images_list]");
+        const ul:sdom = new sdom("gallery_images_list",this.view._shadowRoot);
 
-        ul?.replaceChildren();
-        ul?.insertAdjacentHTML("afterbegin",this.view.li_items.join(" "));
+        ul.element?.replaceChildren();
+        ul.element?.insertAdjacentHTML("afterbegin",this.view.li_items.join(" "));
     }
 }
 //
