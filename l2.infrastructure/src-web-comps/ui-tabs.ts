@@ -1,5 +1,6 @@
 import {_html, _css, WebComponentLifeCycle, createElement, wrapElement, FormInput } from '../src-dom/domutils.ts';
-import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import {TemplatePlus, Template} from  '../src-dom/template-plus.ts';
+import {sdom} from  '../src-dom/sdom.ts';
 import { HTMLUiTab } from  '../../l2.infrastructure/src-web-comps/web_components.ts';
 
 
@@ -18,19 +19,24 @@ class HTMLUiTabsView{
     public currentTab: string;
 
     private tabs:Node[];
-    tabs_menu_form:HTMLElement;
-    tabs_menu_ul:HTMLElement;
-    tabs_output:HTMLElement;
+    tabs_menu_form:sdom;
+    tabs_menu_ul:sdom;
+    tabs_output:sdom;
     //
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
     }
 
-  private initEventHandlers(){
+    private initEventHandlers(){
         this._shadowRoot.addEventListener("slotchange",this.processSlotChange.bind(this));
         this._shadowRoot.addEventListener("submit",this.processSubmitForm.bind(this));
     }
-    
+    initSdom(){
+        this.tabs_menu_form = new sdom("gallery_images_list", this._shadowRoot);
+        this.tabs_menu_ul = new sdom("selected_image", this._shadowRoot);
+        this.tabs_output = new sdom("gallery_btn_form", this._shadowRoot);
+    }
+
     setupTemplate() {
         
         const rawCss = _css`
@@ -218,13 +224,13 @@ class HTMLUiTabsView{
         </div>
         `; 
        
-        const tplus = new TemplatePlus("");
+        const template = new Template(rawCss, rawHtml);
 
-        tplus.initTemplate( rawCss, rawHtml );
-
-         this.render(tplus.element); 
+         this.render(template.asElement()); 
 
          this.initEventHandlers();
+
+         this.initSdom();
     }
     initFormButtons():DocumentFragment{
         let ui_tab_items = document.getElementsByTagName("ui-tab");
@@ -272,8 +278,8 @@ class HTMLUiTabsView{
         this.currentTab = tabid;
 
         if(h3 && article){
-            this.tabs_output?.replaceChildren(h3.cloneNode(true));
-            this.tabs_output?.appendChild(article.cloneNode(true));
+            this.tabs_output.element?.replaceChildren(h3.cloneNode(true));
+            this.tabs_output.element?.appendChild(article.cloneNode(true));
         }
     }
     processClickEvent(evt:Event){
@@ -331,11 +337,11 @@ class HTMLUiTabsView{
 
         const tabs_form  = this._shadowRoot.querySelector("[id=tabs_menu_form]");
 
-        this.tabs_menu_ul = this._shadowRoot.querySelector("[id=tabs_menu_ul]")!;
-        this.tabs_output = this._shadowRoot.querySelector("[id=tabs_output]")!;
+        this.tabs_menu_ul.element = this._shadowRoot.querySelector("[id=tabs_menu_ul]")!;
+        this.tabs_output.element = this._shadowRoot.querySelector("[id=tabs_output]")!;
 
-        this.tabs_menu_ul?.replaceChildren();
-        this.tabs_menu_ul?.insertAdjacentHTML("afterbegin", tab_items.join(" "));
+        this.tabs_menu_ul.element?.replaceChildren();
+        this.tabs_menu_ul.element?.insertAdjacentHTML("afterbegin", tab_items.join(" "));
     }
  }
 //
@@ -375,7 +381,7 @@ class HTMLUiTabsController{
     saveFormData(){
 
         const tplate_Form = this.view.currentElement.querySelector<HTMLFormElement>("form");
-        const tab_output_Form = this.view.tabs_output.querySelector<HTMLFormElement>("form");
+        const tab_output_Form = this.view.tabs_output.element.querySelector<HTMLFormElement>("form");
 
         if(!tab_output_Form  && !tplate_Form)return;
 

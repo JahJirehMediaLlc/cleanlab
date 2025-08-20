@@ -1,5 +1,5 @@
 import {_html, _css, Css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
-import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import {Template, TemplatePlus} from  '../src-dom/template-plus.ts';
 import {Fetch} from  '../src-dom/fetchmgr.ts';
 import {sdom} from  '../src-dom/sdom.ts';
 
@@ -49,7 +49,7 @@ class HTMLUiGalleryView{
         this._shadowRoot = shadowRoot;
     }
 
-    setupTemplate(){
+    setupTemplate():Template{
         const rawCss = _css`
             <style>
                 *,
@@ -211,14 +211,14 @@ class HTMLUiGalleryView{
                     <br>
 
              </section>`; 
-  
-        const tplus = new TemplatePlus("");
 
-        tplus.initTemplate( rawCss, rawHtml );
-   
-        this.render(tplus.element);
+        const template = new Template(rawCss,rawHtml);
+
+        this.render(template.asElement());
 
         this.initSdom();
+
+        return {} as Template
     }
 
     initSdom(){

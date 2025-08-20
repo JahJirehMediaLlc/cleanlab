@@ -157,7 +157,7 @@ export class TemplatePlus{
 
     this._url = url!;
 
-// load templates from template db
+  // load templates from template db
     const resp = await fetch(this._url);
     const text = await resp.text();
 
@@ -217,25 +217,39 @@ export class Template{
     rawcss:string;
     rawhtml:string;
     url:URL;
+    _element:HTMLTemplateElement;
 
     get rawCss():string{return this.rawcss}
     set rawCss(value:string){ this.rawcss = value}
+    get element():HTMLTemplateElement{return this._element}
+    set element(value:HTMLTemplateElement){ this._element = value}
     get rawHtml():string{return this.rawhtml}
     set rawHtml(value:string){ this.rawhtml = value}
 
-    constructor(rawcss:string, rawhtml:string){
+    constructor(rawcss:string="<style></style>", rawhtml:string="<div></div>"){
         this.rawcss = rawcss;
         this.rawhtml = rawhtml;
+
+        this.element = new TemplatePlus("").initTemplate(rawcss,rawhtml);
+
     }
 
-    fromUrl(url:URL){
+    fromHtmlTemplate(template:HTMLTemplateElement):Template{
+        console.log("fromHtmlTemplate")
+        return this;
+    }
+
+    fromUrl(url:URL):Template{
         console.log("fromURL")
         return this;
     }
 
-    load(tid:string){
+    load(tid:string):Template{
         console.log("load", tid)
         
         return this;
+    }
+    asElement():HTMLTemplateElement{
+      return this.element;
     }
 }

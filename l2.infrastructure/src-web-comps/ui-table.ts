@@ -1,5 +1,7 @@
 import {_html, _css, WebComponentLifeCycle} from '../src-dom/domutils.ts';
-import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import {TemplatePlus, Template} from  '../src-dom/template-plus.ts';
+import {sdom} from  '../src-dom/sdom.ts';
+import {Fetch} from  '../src-dom/fetchmgr.ts';
 
 function createRow(text:string[]):string{
 return   "<tr>" + text.map(h=>`<td>${h}</td>`).join("") +"<tr>";
@@ -8,20 +10,67 @@ return   "<tr>" + text.map(h=>`<td>${h}</td>`).join("") +"<tr>";
 class HTMLUiTableView{
     _shadowRoot: ShadowRoot;
     controller:HTMLUiTableController;
-    template:TemplatePlus;
-    thead:HTMLElement;
-    tbody:HTMLElement;
+   
+
+    thead:sdom;
+    tbody:sdom;
     //
     constructor(shadowRoot: ShadowRoot) {
         this._shadowRoot = shadowRoot;
     }
+    initSdom(){
+        this.thead = new sdom("table_thead", this._shadowRoot);
+        this.tbody = new sdom("table_tbody", this._shadowRoot);
+
+        console.log(this.thead);
+        console.log(this.tbody);
+    }
+    
     setupTemplate(){
-        this.template = new TemplatePlus("ui_table_template");
+        const rawCss = _css`
+            <style>
+            </style>
+        `;
 
-        this.template.content().then( frag => {
+        const rawHtml  = _html`
+            <div></div>
+        `; 
 
-            this.thead = frag.querySelectorAll("table thead")[0] as HTMLElement;
-            this.tbody = frag.querySelectorAll("table tbody")[0] as HTMLElement;
+        const template = new Template(rawCss, rawHtml);
+        const tableTemplate = template.load("ui_table_template");
+
+         this.render( template.asElement() ); 
+
+         this.initSdom();
+
+         this.updateTable2();
+    }
+
+    //
+    render(node: HTMLTemplateElement|DocumentFragment){
+        if(node instanceof HTMLTemplateElement)
+            this._shadowRoot.appendChild(node.content);
+        else
+            this._shadowRoot.appendChild(node);
+     }
+    
+     processClickEvent(event: Event){
+        const selectedElement = event.target as HTMLElement;
+    }
+
+    processSubmitForm(evt:SubmitEvent){}
+
+
+    
+    updateTable(){
+      console.log("updating table...")
+
+      const tplus = new TemplatePlus("ui_table_template");
+
+      tplus.content().then( frag => {
+
+            this.thead.element = frag.querySelectorAll("table thead")[0] as HTMLElement;
+            this.tbody.element = frag.querySelectorAll("table tbody")[0] as HTMLElement;
 
             fetch("http://localhost:3000/data/persons.json")
                 .then(resp=> resp.json())
@@ -30,7 +79,7 @@ class HTMLUiTableView{
                     const obj = data[0];
                     const rows = [];
 
-                    this.thead.innerHTML = createRow( Object.keys(obj) );
+                    this.thead.element.innerHTML = createRow( Object.keys(obj) );
 
                     data.forEach( o => {
                         let row = createRow( Object.values(o) );
@@ -40,7 +89,7 @@ class HTMLUiTableView{
                     
                     } );
 
-                    this.tbody.innerHTML = rows.join('');
+                    this.tbody.element.innerHTML = rows.join('');
 
                     //         console.log(this.thead, this.tbody, frag);
 
@@ -50,17 +99,24 @@ class HTMLUiTableView{
         });
 
     }
-    //
-    render(node: HTMLTemplateElement|DocumentFragment){
-        if(node instanceof HTMLTemplateElement)
-            this._shadowRoot.appendChild(node.content);
-        else
-            this._shadowRoot.appendChild(node);
-     }
-    processClickEvent(event: Event){
-        const selectedElement = event.target as HTMLElement;
+
+
+
+    updateTable2(){
+        
+        const tplus = new TemplatePlus("ui_table_template");
+        const template = new Template();
+        const myFetch = new Fetch("json");
+        
+        console.log("updateTable2()...");
+
+       myFetch.getJson("34").then(  p => console.log(p) );
+ 
+
     }
-    processSubmitForm(evt:SubmitEvent){}
+
+
+
 }
 //
 class HTMLUiTableController{

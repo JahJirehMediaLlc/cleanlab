@@ -1,5 +1,5 @@
 import {_html, _css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
-import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import {TemplatePlus, Template} from  '../src-dom/template-plus.ts';
 
 class HTMLUiNullView{
     _shadowRoot: ShadowRoot;
@@ -27,6 +27,10 @@ class HTMLUiNullView{
       //  this.setupTemplate();
     }
 
+    initSdom(){
+
+
+    }
     setupTemplate() {
 
         const rawCss = _css`
@@ -53,11 +57,11 @@ class HTMLUiNullView{
         </slot>
         `;
 
-        const tplus = new TemplatePlus("");
-        
-        tplus.initTemplate( rawCss, rawHtml );
+        const template = new Template(rawCss, rawHtml);
 
-        this.render( tplus.element );
+        this.render( template.asElement() );
+
+        this.initSdom();
     }
     render(node: HTMLTemplateElement|DocumentFragment){
         if(node instanceof HTMLTemplateElement)

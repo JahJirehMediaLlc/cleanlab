@@ -1,7 +1,7 @@
 import {_html, Html , _css, Css, WebComponentLifeCycle} from  '../src-dom/domutils.ts';
 import {sdom} from  '../src-dom/sdom.ts';
 import {Fetch} from  '../src-dom/fetchmgr.ts';
-import {TemplatePlus} from  '../src-dom/template-plus.ts';
+import {TemplatePlus, Template} from  '../src-dom/template-plus.ts';
 
 class HTMLUiDialogView{
     _shadowRoot: ShadowRoot;
@@ -144,18 +144,18 @@ class HTMLUiDialogView{
 
         // show dialog
         
-        const tplus = new TemplatePlus("");
+        const template = new Template(rawCss, rawHtml);
 
-        tplus.initTemplate( rawCss, rawHtml );
-
-        this.render( tplus.element );
+        this.render( template.asElement() );
 
         this.initSdom();
 
         // update template in dialog
-        const myFetch = new Fetch("html");
+   
 
         this.updateDialogTemplate(this.tid);
+
+        const myFetch = new Fetch("html");
 
         myFetch.fetchHtml("template").then( alist => {
             const select = this._shadowRoot.querySelector(`select`);
@@ -214,6 +214,7 @@ class HTMLUiDialogView{
         const myFetch = new Fetch("html");
 
         myFetch.getTemplate(tid).then( t => {
+            
             const outputEl = this.output.element;
 
             outputEl!.replaceChildren();

@@ -1,7 +1,4 @@
 
-
-
-
 <template id="ui_contact_template">
 <style>
     ::slotted(img){
@@ -218,184 +215,6 @@ color:yellow;
 </article>
 </template>
 
-<template id="tab1_template">
-<style>
-    .flex_column{
-        display: flex;
-        flex-direction: column;
-    }
-    .tab_item{
-        background-color: green;
-        border: none;
-        opacity: .30;
-        overflow: hidden;
-        transform: translateY(-105%);
-        z-index: 0;
-    }
-    .transition_width{
-        width: 100%;
-        transition: width 1000ms ease-in;
-    }
-    .transition_bg{
-        background-color: red;
-        transition: background-color 1000ms ease-in;
-    }
-    .transition_opacity{
-        opacity: 1;
-        transition: opacity 1000ms ease-in;
-    }
-    .transition_up{
-        transform: translateY(-105%);
-        transition: transform 1000ms ease-in;
-    }
-    .transition_down{
-        transform: translateY(1%);
-        transition: transform 1000ms ease-in;
-    }
-</style>
-<article id="tab1" class="tab_item" data-parent="tab1">
-    <h3>A Dialog 1</h3>
-    <p>This is a dialog simulation</p>
-    <form id="dialog1_Form" name="dialog1_Form" action="#" class="flex_column">
-        <label for="first_name1">first_name</label>
-        <input id="first_name1" name="first_name" type="text">
-
-        <label for="age1">age</label>
-        <input id="age1" name="age" type="number">
-
-        <button name="action" type="submit" value="process_form">submit</button>
-    </form>
-</article>
-</template>
-
-<template id="tab2_template">
-<style>
-    .flex_column{
-        display: flex;
-        flex-direction: column;
-    }
-    .tab_item{
-        background-color: green;
-        border: none;
-        opacity: .30;
-        overflow: hidden;
-        transform: translateY(-105%);
-    }
-    .transition_width{
-        width: 100%;
-        transition: width 1000ms ease-in;
-    }
-    .transition_bg{
-        background-color: red;
-        transition: background-color 1000ms ease-in;
-    }
-    .transition_opacity{
-        opacity: 1;
-        transition: opacity 1000ms ease-in;
-    }
-    .transition_up{
-        transform: translateY(-105%);
-        transition: transform 1000ms ease-in;
-    }
-    .transition_down{
-        transform: translateY(1%);
-        transition: transform 1000ms ease-in;
-    }
-</style>
-<article id="tab2" class="tab_item" data-parent="tab2">
-    <h3>A Dialog 2</h3>
-    <p>This is a dialog simulation</p>
-    <form id="dialog2_Form" name="dialog2_Form"  action="#" class="flex_column">
-        <label for="first_name">first_name</label>
-        <input id="first_name" name="first_name" type="text">
-
-        <label for="age">age</label>
-        <input id="age" name="age" type="number">
-
-        <button name="action" type="submit" value="process_form">submit</button>
-    </form>
-</article>
-</template>
-
-<template id="tab3_template">
-<style>
-    .flex_column{
-        display: flex;
-        flex-direction: column;
-    }
-    .tab_item{
-        background-color: green;
-        border: none;
-        opacity: .30;
-        overflow: hidden;
-        transform: translateY(-105%);
-    }
-    .transition_width{
-        width: 100%;
-        transition: width 1000ms ease-in;
-    }
-    .transition_bg{
-        background-color: red;
-        transition: background-color 1000ms ease-in;
-    }
-    .transition_opacity{
-        opacity: 1;
-        transition: opacity 1000ms ease-in 1000ms;
-    }
-    .transition_up{
-        transform: translateY(-105%);
-        transition: transform 1000ms ease-in;
-    }
-    .transition_down{
-        transform: translateY(1%);
-        transition: transform 1000ms ease-in;
-    }
-</style>
-<article id="tab3" class="tab_item" data-parent="tab3">
-    <nav class="toc">
-        <span class="toc_icon">
-
-        <label for="topic">Topics</label>
-        <select id="topic" class="toc_list">
-            <option>A Dialog 3</option>
-            <option>A Dialog 2</option>
-            <option>A Dialog 4</option>
-        </select>
-
-        <label for="search">Search</label>
-        <input id="search" type="text">
-        </span>
-    </nav>
-    <section class="article_section">
-        <h3 class="header">A Dialog 3</h3>
-        <p>This is a dialog simulation</p>
-        <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
-            delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
-            modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
-        </p>
-    </section>
-    <section class="article_section">
-        <h3 class="header">A Dialog 2</h3>
-        <p>This is a dialog simulation</p>
-        <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
-            delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
-            modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
-        </p>
-    </section>
-    <section class="article_section">
-        <h3 class="header">A Dialog 4</h3>
-        <p>This is a dialog simulation</p>
-        <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam fugit
-            delectus eligendi optio mollitia enim veniam aliquid repudiandae, aut eos
-            modi fuga maiores suscipit similique hic ullam beatae assumenda sunt?
-        </p>
-    </section>
-</article>
-</template>
-
 <template id="ui_table_template">
 <style>
     *,
@@ -437,13 +256,13 @@ height: auto;
 </style>
 <section>
     <table>
-        <thead>
+        <thead id="table_thead">
         <tr>
             <td>header col 1</td>
             <td>Header col 2</td>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="table_tbody">
         <tr>
             <td>1</td>
             <td>soap</td>
